@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Mboehao</string>
+    <string name="parse_server_url">https://testing.sodep.com.py/parse</string>
+    <string name="parse_app_id">DqiNAD6RDWT</string>
+    <string name="remembercredentials">Remember Credentials?</string>
+    <string name="dataSaved">Choose your image!</string>
+    <string name="dataHint">Note Description</string>
+    <string name="title">Title</string>
+    <string name="imageViewTitle">User Image</string>
+    <string name="saveButton">Save</string>
+    <string name="selectImage">What image you want for your profile?</string>
+    <string name="logo_description">icon</string>
+    <string name="test_drawer">test</string>
+    <string name="about_image">about_imagen</string>
+    <string name="action_logout">Sign Out</string>
+    <string name="picture1">FirstPicture</string>
+    <string name="picture2">SecondPicture</string>
+    <string name="share_label">Compartir</string>
+    <string name="trophy_gallery">Palmarés</string>
+    <string name="parent_images">Imagenes</string>
+    <string name="navigation_drawer_open">Abrir barra de navegación</string>
+    <string name="navigation_drawer_close">Cerrar barra de navegación</string>
+    <string name="refresh_label">Refresh</string>
+
+</resources>

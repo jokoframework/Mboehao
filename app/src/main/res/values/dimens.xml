@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="drawer_item_image">32dp</dimen>
+    <dimen name="drawer_item_text_margin">10dp</dimen>
+    <dimen name="drawer_item_image_margin_left">10dp</dimen>
+    <dimen name="navigation_drawer_width">240dp</dimen>
+    <dimen name="nav_drawer_width">235dp</dimen>
+    <dimen name="divider_height">0.5dp</dimen>
+</resources>
