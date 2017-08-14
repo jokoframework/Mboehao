@@ -5,11 +5,10 @@ import android.os.AsyncTask;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long> {
@@ -23,7 +22,7 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long>
         final List<ParseObject> logsToParse = new ArrayList<ParseObject>();
 //        final List<Map<String,String>> logsToParse = new ArrayList<Map<String,String>>();
 
-        RemoteLogCapable remoteLogCapable = new LoggerCapable();
+        RemoteLogCapable remoteLogCapable = new ParseLogger();
         for (RemoteLogPojo remoteLogPojo : remoteLogPojos) {
             //BEGIN-IGNORE-SONARQUBE
             ParseObject log = new ParseObject(Constants.PARSE_CLASS_REMOTE_LOG);
@@ -55,7 +54,7 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long>
             logsToParse.add(log);
         }
         if (!logsToParse.isEmpty() && DEVELOP_MODE) {
-            remoteLogCapable.flushLogs(logsToParse);
+            //remoteLogCapable.flushLogs(logsToParse);
         }
         return (long) logsToParse.size();
     }
