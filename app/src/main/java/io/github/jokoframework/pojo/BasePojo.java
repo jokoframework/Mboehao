@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.pojo;
 
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -12,6 +12,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.jokoframework.aplicationconstants.Constants;
 
 
 public class BasePojo {
@@ -40,13 +42,13 @@ public class BasePojo {
     }
 
     public static <T extends BasePojo> List<T> deserializeList(String arrayString, Type type) {
-        List<T> list = new ArrayList<T>();
+        List<T> list = new ArrayList<>();
         if (StringUtils.isNotBlank(arrayString)) {
             Gson gson = new Gson();
             try {
                 list = gson.fromJson(arrayString, type);
             } catch (JsonSyntaxException exception) {
-                list = new ArrayList<T>();
+                list = new ArrayList<>();
                 Log.e(LOG_TAG, String.format("Error deserializando el json para: %s. %s ", exception.getMessage(), type), exception);
             }
         }

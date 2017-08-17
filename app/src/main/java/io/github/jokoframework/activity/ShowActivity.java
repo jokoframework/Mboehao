@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -21,13 +21,5 @@ public class ShowActivity extends Activity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_info);
 
-        Storaging descriptionData = new ParseSave();
-
-        descriptionData.getDataFrom(new FindCallback<ParseObject>() {
-            @Override
-            public void done(List<ParseObject> objects, ParseException e) {
-
-            }
-        });
     }
 }

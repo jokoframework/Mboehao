@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.logger;
 
 
 import android.util.Log;
@@ -7,12 +7,15 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.pojo.RemoteLogPojo;
+
 public class RemoteLogger {
 
         private static final int MAX_LOG_COUNT_TO_FLUSH = 1; // se cambio para poder probar y tener una vista, anterior era 20...(Configurable)
         private static final String LOG_TAG = RemoteLogger.class.getSimpleName();
 
-        private static List<RemoteLogPojo> logPojos = new ArrayList<RemoteLogPojo>();
+        private static List<RemoteLogPojo> logPojos = new ArrayList<>();
 
         private static Date latestUpdate = new Date();
 
@@ -41,7 +44,7 @@ public class RemoteLogger {
             if (logPojos.size() >= MAX_LOG_COUNT_TO_FLUSH || (System.currentTimeMillis() - latestUpdate.getTime() > Constants.ONE_MINUTE)) {
                 Log.d(LOG_TAG, "Flushing logs to parse");
                 new AsyncRemoteLogToParse().execute(logPojos.toArray(new RemoteLogPojo[logPojos.size()]));
-                logPojos = new ArrayList<RemoteLogPojo>();
+                logPojos = new ArrayList<>();
                 latestUpdate = new Date();
             } else {
                 Log.d(LOG_TAG, String.format("Cantidad de remotelogs: %s", logPojos.size()));

@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.utilitys;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -27,7 +27,7 @@ public class Utils {
 
     public static String getPrefs(Context context, String id) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, true);
+            SharedPreferences prefs = getSharedPreferences(context);
             return prefs.getString(id, "");
         } else {
             Log.e(LOG_TAG, "Se intentó guardar una preferencia con el context null. getPrefs)");
@@ -36,7 +36,7 @@ public class Utils {
     }
 
     //BEGIN-IGNORE-SONARQUBE
-    private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
+    private static SharedPreferences getSharedPreferences(Context context) {
         // afeltes - 2017-01-23
         //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
@@ -45,7 +45,7 @@ public class Utils {
 
     public static boolean getBoolPrefs(Context context, String id) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, true);
+            SharedPreferences prefs = getSharedPreferences(context);
             return prefs.getBoolean(id, false);
         } else {
             Log.e(LOG_TAG, "Se intentó guardar una preferencia con el context null. getBoolPrefs)");
@@ -55,7 +55,7 @@ public class Utils {
 
     public static int getIntPrefs(Context context, String id) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, true);
+            SharedPreferences prefs = getSharedPreferences(context);
             return prefs.getInt(id, 0);
         } else {
             Log.e(LOG_TAG, "Se intentó guardar una preferencia con el context null. getInt)");
@@ -65,7 +65,7 @@ public class Utils {
 
     public static long getLongPrefs(Context context, String id) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, true);
+            SharedPreferences prefs = getSharedPreferences(context);
             long myLongValue = 0;
             return prefs.getLong(id, myLongValue);
         } else {
@@ -76,7 +76,7 @@ public class Utils {
 
     public static void addPrefs(Context context, String id, String value) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, false);
+            SharedPreferences prefs = getSharedPreferences(context);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putString(id, value);
             edit.commit();

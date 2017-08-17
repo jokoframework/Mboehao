@@ -24,3 +24,9 @@ proguard/
 
 #Log Files
 *.log
+
+# Personal Configuration
+gradle.properties
+.idea/*
+*.iml
+**/*.iml

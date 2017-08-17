@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.logger;
 
 import android.util.Log;
 
@@ -42,8 +42,8 @@ public class ParseLogger implements RemoteLogCapable {
         Iterator<Map<String, Object>> iteratorLogs = logsToParse.iterator();
         while (iteratorLogs.hasNext()) {
             Map<String, Object> currentLog = iteratorLogs.next();
-            ParseObject currentParseObject = new ParseObject("AAAA");
-            Iterator<String> keyIterator = currentLog.keySet().iterator();
+            ParseObject currentParseObject = new ParseObject("RemoteParseLogger");
+            Iterator<String> keyIterator = currentLog.keySet().iterator(); // iterador del Map...
             while (keyIterator.hasNext()) {
                 String currentKey = keyIterator.next();
                 Object currentValue = currentLog.get(currentKey);

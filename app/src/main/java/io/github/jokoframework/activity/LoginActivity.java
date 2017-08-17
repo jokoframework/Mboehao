@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.activity;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -9,6 +9,13 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 
 import com.example.simplerel.R;
+
+import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.login.Authenticable;
+import io.github.jokoframework.login.CredentialsTextView;
+import io.github.jokoframework.login.ParseLogin;
+import io.github.jokoframework.utilitys.SecurityUtils;
+import io.github.jokoframework.utilitys.Utils;
 
 public class LoginActivity extends Activity {
 
@@ -22,7 +29,7 @@ public class LoginActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         mySelf = this;
-        final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this,Constants.USER_PREFS_USER));
+        final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_PW));
 
         enterButton = (Button) findViewById(R.id.buttonEnter);

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">jokoFramework</string>
+    <string name="app_name">Mboehao</string>
     <string name="parse_server_url">https://testing.sodep.com.py/parse</string>
     <string name="parse_app_id">DqiNAD6RDWT</string>
     <string name="remembercredentials">Remember Credentials?</string>

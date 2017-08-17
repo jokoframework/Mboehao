@@ -1,14 +1,10 @@
-package io.github.jokoframework;
+package io.github.jokoframework.login;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,6 +14,11 @@ import com.parse.ParseUser;
 
 import java.util.Map;
 
+import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.logger.RemoteLogger;
+import io.github.jokoframework.utilitys.SecurityUtils;
+import io.github.jokoframework.activity.ShowActivity;
+import io.github.jokoframework.utilitys.Utils;
 
 
 public class ParseLogin implements Authenticable {
@@ -128,8 +129,6 @@ public class ParseLogin implements Authenticable {
             }
         });
         RemoteLogger.e(LOG_TAG,"");
-
-
     }
 
     private void usernameOrPasswordIsInvalid(ParseException e){
@@ -145,7 +144,6 @@ public class ParseLogin implements Authenticable {
                 toast = Toast.makeText(getActivity(), "No se pudo hacer login", Toast.LENGTH_LONG);
         }
         toast.show();
-//        Log.e(LOG_TAG, e.getMessage(),e);
 
         RemoteLogger.e(LOG_TAG,e.getMessage());
         /* TODO: cambio por la clase REMOTELOGGER...
@@ -154,7 +152,6 @@ public class ParseLogin implements Authenticable {
     }
 
     private void somethingWentWrong(){
-//        Log.e(LOG_TAG, "Error al conectarse al servidor. ParseUser es null");
 
         RemoteLogger.e(LOG_TAG,"Error al conectarse al servidor. ParseUser es null");
         /* TODO: cambio por la clase REMOTELOGGER...

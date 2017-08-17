@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.login;
 
 import android.text.Editable;
 import android.text.TextWatcher;

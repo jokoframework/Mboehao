@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.aplicationconstants;
 
 /**
  * Created by joaquin on 10/08/17.
@@ -27,4 +27,9 @@ public class Constants {
     public static final long ONE_MINUTE = ONE_SECOND * 60L;
     public static final long ONE_HOUR = ONE_MINUTE * 60L;
     public static final long ONE_DAY = ONE_HOUR * 24L;
+
+    private Constants() {
+        // Porque los constructores no tienen que tener instanciados...
+        // Y menos esta clase de constantes...
+    }
 }

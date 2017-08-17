@@ -1,8 +1,10 @@
-package io.github.jokoframework;
+package io.github.jokoframework.pojo;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
+
+import io.github.jokoframework.aplicationconstants.Constants;
 
 public class RemoteLogPojo extends BasePojo {
     private String logTag;

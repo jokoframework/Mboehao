@@ -1,4 +1,4 @@
-package io.github.jokoframework;
+package io.github.jokoframework.utilitys;
 
 import android.util.Base64;
 import android.util.Log;
@@ -65,7 +65,8 @@ public final class SecurityUtils {
             byte[] encrypted = c.doFinal(message.getBytes(ENCODING));
             ret = byteToBase64(encrypted);
         } catch (Exception e) {
-            Log.e(LOG_TAG, "No se pudo encriptar la cadena: " + e.getMessage());
+//            throw new RuntimeException(e); // Solucion del Sonar...
+            Log.e(LOG_TAG, "No se pudo encriptar la cadena: " + e.getMessage(),e);
         }
 
         return ret;
@@ -104,7 +105,7 @@ public final class SecurityUtils {
             ret = new String(raw, ENCODING);
         } catch (Exception e) {
             if (!quiet) {
-                Log.e(LOG_TAG, "No se pudo desencriptar la cadena: " + encrypted);
+                Log.e(LOG_TAG, "No se pudo desencriptar la cadena: " + encrypted,e);
                 Log.d(LOG_TAG, "\tclave: " + new String(key));
             }
         }
