@@ -6,11 +6,10 @@ import android.util.Log;
 import android.widget.EditText;
 
 
-public class CredentialsTextView implements Textwatcher {
+public class CredentialsTextView implements Passwordwatcher {
     private String LOG_TAG =  CredentialsTextView.class.getSimpleName();
 
     private EditText userTextField, passTextField;
-
 
     public CredentialsTextView(EditText userTextField, EditText passTextField) {
         this.userTextField = userTextField;

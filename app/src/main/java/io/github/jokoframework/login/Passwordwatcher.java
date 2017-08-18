@@ -2,7 +2,7 @@ package io.github.jokoframework.login;
 
 
 @FunctionalInterface
-public interface Textwatcher {
+public interface Passwordwatcher {
 
     void userTextListener();
 }

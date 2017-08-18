@@ -99,7 +99,6 @@ public class ParseLogin implements Authenticable {
                     }
                 });
             }
-
         });
         return false;
     }

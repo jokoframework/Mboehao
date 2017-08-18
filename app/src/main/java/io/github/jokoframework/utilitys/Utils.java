@@ -1,7 +1,10 @@
 package io.github.jokoframework.utilitys;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
@@ -83,6 +86,21 @@ public class Utils {
         } else {
             Log.e(LOG_TAG, "El Context que se desea utilizar es nulo. addPrefs(..String)");
         }
+    }
+
+    public static boolean isNetworkAvailable(Activity activity) {
+        return isNetworkAvailable((Context) activity);
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        boolean isNetworkAvailable = false;
+        if (context != null) {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            isNetworkAvailable = activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+        return isNetworkAvailable;
     }
 
 }
