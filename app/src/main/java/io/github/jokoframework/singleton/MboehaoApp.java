@@ -6,7 +6,7 @@ package io.github.jokoframework.singleton;
 import com.parse.Parse;
 import android.app.Application;
 //This class just initialize the Parse Server with the URL and appID... configuration in the Android Manifest
-public class SimpleApp extends Application {
+public class MboehaoApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();

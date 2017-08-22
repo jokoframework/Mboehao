@@ -12,7 +12,7 @@ import io.github.jokoframework.pojo.RemoteLogPojo;
 
 public class RemoteLogger {
 
-        private static final int MAX_LOG_COUNT_TO_FLUSH = 1; // se cambio para poder probar y tener una vista, anterior era 20...
+        private static final int MAX_LOG_COUNT_TO_FLUSH = 3; // se cambio para poder probar y tener una vista, anterior era 20...
         private static final String LOG_TAG = RemoteLogger.class.getSimpleName();
 
         private static List<RemoteLogPojo> logPojos = new ArrayList<>();
