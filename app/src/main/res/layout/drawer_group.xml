@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:background="@color/background_drawer_group"
+    >
+    <TextView
+        android:id="@+id/listTitle"
+        android:gravity="left"
+        android:layout_marginLeft="25dp"
+        android:minHeight="?android:attr/listPreferredItemHeightSmall"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"
+        android:text="@string/test_drawer"
+        android:textAllCaps="true"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        />
+
+</LinearLayout>

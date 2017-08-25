@@ -10,5 +10,7 @@
     <string name="imageViewTitle">Imagen del Usuario</string>
     <string name="saveButton">Guardar</string>
     <string name="selectImage">Que imagen prefiere para su perfil?</string>
+    <string name="logo_description">icono</string>
+    <string name="test_drawer">examen</string>
 
 </resources>

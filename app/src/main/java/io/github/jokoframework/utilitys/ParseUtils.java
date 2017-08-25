@@ -66,54 +66,12 @@ public class ParseUtils {
         return objectById;
     }
 
-    /**
-     * Retorna true si el usuario no pertenece al HCB
-     *
-     * @param currentUser
-     * @return
-     */
-
-    public static boolean isNonHCBUser(ParseUser currentUser) {
-        return currentUser != null
-                && currentUser.getBoolean(Constants.PARSE_ATTRIBUTE_NON_HCB_USER);
-    }
-
-    public static Double getAverageForQuestion(String pQuestionId, Integer pDaysRangeStart, Integer pDaysCount) {
-        Double average = 0.0;
-        final ParseUser currentUser = ParseUser.getCurrentUser();
-        ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.PARSE_CLASS_DAILY_TEST);
-        //Calculamos el promedio de la última semana
-        // 14 días = 1209600000
-        query.whereGreaterThanOrEqualTo(Constants.PARSE_ATTRIBUTE_SAVED_AT,
-                new Date(new Date().getTime() - Constants.ONE_DAY * pDaysRangeStart));
-        // 7 días = 604800000
-        query.whereLessThanOrEqualTo(Constants.PARSE_ATTRIBUTE_SAVED_AT,
-                new Date(new Date().getTime() - Constants.ONE_DAY * pDaysCount));
-        query.orderByAscending(Constants.PARSE_ATTRIBUTE_SAVED_AT);
-        query.whereEqualTo(Constants.PARSE_ATTRIBUTE_RELATION_TO_USER, currentUser);
-        try {
-            int scoresLastWeekCount = 0;
-            double cumulative = 0.0;
-            List<ParseObject> scoreList = query.find();
-            for (ParseObject aScoreList : scoreList) {
-                scoresLastWeekCount++;
-                //Pregunta de la Energía del usuario
-                final double currentLoopEnergyValue = aScoreList.getDouble(Constants.PARSE_ATTRIBUTE_Q2);
-                cumulative += currentLoopEnergyValue;
-            }
-            if (scoresLastWeekCount > 0) {
-                average = cumulative / scoresLastWeekCount;
-            }
-        } catch (ParseException e) {
-            Log.e(LOG_TAG, String.format("Error calculando promedio para %s", pQuestionId), e);
-        }
-        return average;
-    }
-
 
     public static ParseACL getDefaultAcl(ParseUser currentUser) {
-        DEFAULT_ACL.setReadAccess(currentUser, true);
-        DEFAULT_ACL.setWriteAccess(currentUser, true);
+        if (currentUser != null){
+            DEFAULT_ACL.setReadAccess(currentUser, true);
+            DEFAULT_ACL.setWriteAccess(currentUser, true);
+        }
         return DEFAULT_ACL;
     }
 }

@@ -20,6 +20,14 @@
             android:name="io.github.jokoframework.activity.ShowActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="io.github.jokoframework.activity.FirstImageActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="io.github.jokoframework.activity.SecondImageActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden" />
 
         <meta-data
             android:name="com.parse.SERVER_URL"

@@ -54,11 +54,11 @@ public class LoginActivity extends Activity {
             final String password = passTextField.getText().toString(); // PasswordText enlace...
             final View progress = findViewById(R.id.progressMainWindow); // progress bar...
             Authenticable parseLogin = new ParseLogin(enterButton,progress, mySelf,saveCredentials);
+            parseLogin.setPassword(password);
+            parseLogin.setUser(username);
             parseLogin.saveCredentials();
             // ShowActivity progress
             progress.setVisibility(View.VISIBLE); // Muestra el progress bar mientras se obtine el acceso...
-            parseLogin.setPassword(password);
-            parseLogin.setUser(username);
             parseLogin.authenticate();
         }
 
