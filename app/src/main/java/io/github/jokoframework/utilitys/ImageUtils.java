@@ -23,7 +23,7 @@ public class ImageUtils {
     private static final String DEFAULT_FONT_SIZE = "2";
     private static final String HD_FONT_SIZE = "3";
     private static final String TABLET_FONT_SIZE = "4";
-    private static Map<Integer, Integer> warningPoints = new HashMap<Integer, Integer>();
+    private static Map<Integer, Integer> warningPoints = new HashMap<>();
 
     static {
         warningPoints.put(Constants.RISK, R.drawable.joko);

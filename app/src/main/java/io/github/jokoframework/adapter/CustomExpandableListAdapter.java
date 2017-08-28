@@ -92,7 +92,7 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
     public View getGroupView(int listPosition, boolean isExpanded,
                              View converterView, ViewGroup parent) {
         EventParent eventParent = (EventParent) getGroup(listPosition);
-        View currentConvertView = converterView;
+        View currentConvertView;
         // Performance wise, this should not be commented,
         // but for now we avoid a weird bug of reordering of
         // the menu items
@@ -101,12 +101,8 @@ public class CustomExpandableListAdapter extends BaseExpandableListAdapter{
             // Menu drawer item with image and no childs
             Event e = eventParent.getEvent();
             currentConvertView = mLayoutInflater.inflate(R.layout.drawer_item_parent, null);
-
             TextView txtTitle = (TextView) currentConvertView.findViewById(R.id.drawerText);
-//            ImageView imageView = (ImageView) currentConvertView.findViewById(R.id.imageViewSideMenu);
             txtTitle.setText(e.getDescription());
-//            imageView.setImageResource(R.drawable.picture);
-
         } else {
             currentConvertView = mLayoutInflater.inflate(R.layout.drawer_group, null);
             TextView listTitleTextView = (TextView) currentConvertView

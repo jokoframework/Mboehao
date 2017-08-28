@@ -200,9 +200,9 @@ public class NavigationDrawerFragment extends Fragment {
 
         // set up the drawer's list view with items and click listener
 
-        ActionBar actionBar = getActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeButtonEnabled(true);
+//        ActionBar actionBar = getActionBar();
+//        actionBar.setDisplayHomeAsUpEnabled(true);
+//        actionBar.setHomeButtonEnabled(true);
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
@@ -299,7 +299,7 @@ public class NavigationDrawerFragment extends Fragment {
         return super.onOptionsItemSelected(item);
     }
 
-    private ActionBar getActionBar() { // getActivity() in a Fragment returns the Activity the Fragment is currently associated with.This case would be HomeActivity ?
+    private ActionBar getActionBar() { // getActivity() in a Fragment returns the Activity the Fragment is currently associated with
         return getActivity().getActionBar();
     }
 
@@ -307,6 +307,7 @@ public class NavigationDrawerFragment extends Fragment {
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
+    @FunctionalInterface
     public interface NavigationDrawerCallbacks {
         /**
          * Called when an menu item in the navigation drawer is selected.

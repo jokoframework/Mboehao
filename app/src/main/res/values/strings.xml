@@ -20,5 +20,6 @@
     <string name="parent_images">Imagenes</string>
     <string name="navigation_drawer_open">Abrir barra de navegación</string>
     <string name="navigation_drawer_close">Cerrar barra de navegación</string>
+    <string name="refresh_label">Refresh</string>
 
 </resources>

@@ -25,7 +25,7 @@ public class EventParent {
 
     public EventParent(Event event) {
         this.title = event.getDescription();
-        this.events = new ArrayList<Event>();
+        this.events = new ArrayList<>();
         this.event = event;
     }
 

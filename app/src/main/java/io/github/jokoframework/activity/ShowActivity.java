@@ -1,7 +1,5 @@
 package io.github.jokoframework.activity;
 
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,15 +10,10 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.example.simplerel.R;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import java.util.List;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.pojo.Event;
 
@@ -35,6 +28,21 @@ public class ShowActivity extends FragmentActivity implements NavigationDrawerFr
         setContentView(R.layout.activity_home);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        /**
+         * Se crea el action bar y se muestra solo en el Show cuando el
+         * navigation drawer esta cerrado
+         */
+        if (mNavigationDrawerFragment == null || !mNavigationDrawerFragment.isDrawerOpen()) {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.activity_home_menu_bar, menu);
+            return true;
+        } else {
+            return false;
+        }
+
+    }
 
     @Override
     public void navigationDrawerMenuSelected(Event event) {
@@ -42,14 +50,14 @@ public class ShowActivity extends FragmentActivity implements NavigationDrawerFr
         //Si el evento es Login, que es el que se asimila al Logout...
         if (event.getActivity().equals(LoginActivity.class)) {
             //Se quita del parseUser y ademas vuelve a mostrar la pantalla de Login por si quiera volver a entrar...
-            doLogout(this, intent);
+            doLogout(intent);
         }else {
             startActivity(intent);
             // Si no es igual lanza la actividad, que podria ser mostrar alguns de las imagenes o alguna otra opcion...
         }
     }
 
-    private void doLogout(Context context, Intent intent) {
+    private void doLogout(Intent intent) {
         ParseUser.logOut();
         startActivity(intent);
         finish();
@@ -70,7 +78,7 @@ public class ShowActivity extends FragmentActivity implements NavigationDrawerFr
         }
 
     }
-    
+
     private void setupNavigationDrawerFragment() {
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.menuFragment);
@@ -82,23 +90,9 @@ public class ShowActivity extends FragmentActivity implements NavigationDrawerFr
         }
     }
 
+
     public void loadData() {
         setupNavigationDrawerFragment();
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        /**
-         * Se crea el action bar y se muestra solo en el Show cuando el
-         * navigation drawer esta cerrado
-         */
-        if (mNavigationDrawerFragment == null || !mNavigationDrawerFragment.isDrawerOpen()) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.activity_home_menu_bar, menu);
-            return true;
-        } else {
-            return false;
-        }
-
-    }
 }
