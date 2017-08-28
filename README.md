@@ -8,38 +8,38 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 
 ## Lista de funcionalidades que se muestran en el proyecto
 
-Login vía API Rest
-Almacenamiento en MBAAS
-Menu "hamburguer" lateral
-Progress bar:
-	Carga de contenido en activity
-	Carga de una página web dentro de un webview
-Fabric/Crashlytics
-Cambio de contraseña modal con medida de fuerza de la contraseña
-Pantalla EULA (aceptar licencia)
-Pantalla modal con advertencia para medidas de seguridad
-Gráfico (plot) XY, con bitmaps tipo puntos de interés (POI)
-Compartir una imagen captura de sección de un activity (panel)
-Ejecución de tareas periódicas
-Uso de bases de datos SQLite con pattern tipo Service de Spring
-	Copia mediante easter-egg del archivo de la base de datos
-Uso de librería propia (bipolarlib) compartida como módulo Gradle y publicación a artifactory
-Gamification (puntos y medallas)
-Notificaciones tipo cortina superior deslizante (Crouton)
-Logs Remotos vía API
-Splay screen/About
-Modal con información de ayuda
-Noticias periódicas vía API (Parse server, pero generalizable)
+- Login vía API Rest
+- Almacenamiento en MBAAS
+- Menu "hamburguer" lateral
+- Progress bar:
+	- Carga de contenido en activity
+	- Carga de una página web dentro de un webview
+- Fabric/Crashlytics
+- Cambio de contraseña modal con medida de fuerza de la contraseña
+- Pantalla EULA (aceptar licencia)
+- Pantalla modal con advertencia para medidas de seguridad
+- Gráfico (plot) XY, con bitmaps tipo puntos de interés (POI)
+- Compartir una imagen captura de sección de un activity (panel)
+- Ejecución de tareas periódicas
+- Uso de bases de datos SQLite con pattern tipo Service de Spring
+	- Copia mediante easter-egg del archivo de la base de datos
+- Uso de librería propia (bipolarlib) compartida como módulo Gradle y publicación a artifactory
+- Gamification (puntos y medallas)
+- Notificaciones tipo cortina superior deslizante (Crouton)
+- Logs Remotos vía API
+- Splay screen/About
+- Modal con información de ayuda
+- Noticias periódicas vía API (Parse server, pero generalizable)
 
 ## Funcionalidades proveídas por el proyecto hasta el momento
 
 Se listan a continuación las funcionalidades básicas que ya pueden ser vistas en el repositorio:
--Login vía API Rest
--Almacenamiento en MBAAS
--Menu "hamburguer" lateral 
--Progress bar:
-	Carga de contenido en activity login
--Logs Remotos vía API
+- Login vía API Rest
+- Almacenamiento en MBAAS
+- Menu "hamburguer" lateral 
+- Progress bar:
+	- Carga de contenido en activity login
+- Logs Remotos vía API
 
 ## Parse
 
