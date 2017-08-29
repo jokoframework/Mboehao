@@ -14,10 +14,10 @@ import com.parse.ParseUser;
 
 import java.util.Map;
 
+import io.github.jokoframework.activity.HomeActivity;
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.logger.RemoteLogger;
 import io.github.jokoframework.utilitys.SecurityUtils;
-import io.github.jokoframework.activity.ShowActivity;
 import io.github.jokoframework.utilitys.Utils;
 
 
@@ -122,7 +122,7 @@ public class ParseLogin implements Authenticable {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(getActivity(), ShowActivity.class);
+                Intent i = new Intent(getActivity(), HomeActivity.class);
                 getActivity().startActivity(i);
                 getActivity().finish();
             }

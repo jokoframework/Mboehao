@@ -6,20 +6,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:weightSum="1"
-    tools:context="io.github.jokoframework.activity.ShowActivity">
+    tools:context="io.github.jokoframework.activity.HomeActivity">
 
     <TextView
-        android:id="@+id/imagendeUsuario"
+        android:id="@+id/webviewtext"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:text="@string/MediaWiki"
         android:gravity="center"
-        android:text="@string/imageViewTitle" />
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@android:color/black" />
 
-    <ImageView
-        android:id="@+id/imageView"
+    <WebView
+        android:id="@+id/webview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/joko"
-        app:srcCompat="@mipmap/ic_launcher" />
+        android:layout_gravity="center">
+    </WebView>
 
 </LinearLayout>

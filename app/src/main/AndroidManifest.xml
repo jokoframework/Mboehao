@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.simplerel">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:name="io.github.jokoframework.singleton.MboehaoApp"
         android:allowBackup="true"
@@ -17,7 +19,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="io.github.jokoframework.activity.ShowActivity"
+            android:name="io.github.jokoframework.activity.HomeActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="stateHidden" />
         <activity

@@ -4,11 +4,11 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="io.github.jokoframework.activity.ShowActivity">
+    tools:context="io.github.jokoframework.activity.HomeActivity">
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="io.github.jokoframework.activity.ShowActivity$MainViewFragment"
+        android:name="io.github.jokoframework.activity.HomeActivity$MainViewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/activity_show_info" />

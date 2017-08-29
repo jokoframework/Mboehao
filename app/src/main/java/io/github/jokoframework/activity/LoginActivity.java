@@ -57,7 +57,7 @@ public class LoginActivity extends Activity {
             parseLogin.setPassword(password);
             parseLogin.setUser(username);
             parseLogin.saveCredentials();
-            // ShowActivity progress
+            // HomeActivity progress
             progress.setVisibility(View.VISIBLE); // Muestra el progress bar mientras se obtine el acceso...
             parseLogin.authenticate();
         }

@@ -21,5 +21,7 @@
     <string name="navigation_drawer_open">Abrir barra de navegación</string>
     <string name="navigation_drawer_close">Cerrar barra de navegación</string>
     <string name="refresh_label">Refresh</string>
+    <string name="back_label">Back</string>
+    <string name="MediaWiki">Mbo`ehao Proyect</string>
 
 </resources>
