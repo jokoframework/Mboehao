@@ -1,14 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item
-        android:id="@+id/action_back"
-        android:title="@string/back_label"
-        android:icon="@android:drawable/ic_media_previous"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:alphabeticShortcut="r"
-        android:orderInCategory="1"
-        />
-
 </menu>

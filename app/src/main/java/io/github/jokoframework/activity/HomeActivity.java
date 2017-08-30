@@ -1,22 +1,22 @@
 package io.github.jokoframework.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebResourceError;
-import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
 import com.example.simplerel.R;
 import com.parse.ParseUser;
@@ -27,66 +27,87 @@ import io.github.jokoframework.pojo.Event;
 
 public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
+    private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-
         WebView webView = (WebView) this.findViewById(R.id.webview);
-
+        webView.setWebViewClient(new MyWebViewClient(this));
         webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl("http://wiki.hq.sodep.com.py/index.php/Mbo%60ehao");
-        webView.setWebViewClient(new WebViewClient());
-
+        webView.loadUrl(getString(R.string.urlWiki));
 
     }
 
     private class MyWebViewClient extends WebViewClient {
+        private final Activity activity;
+        private ProgressDialog progressDialog;// TODO: ProgresDialog change to ProgressBar
+
+        private MyWebViewClient(Activity activity) {
+            this.activity = activity;
+        }
+
+        @Override
+        public void onPageStarted(WebView view, String url, Bitmap favicon) {
+            Log.d(LOG_TAG, String.format("Loading %s", url));
+            if (progressDialog == null) {
+                // in standard case YourActivity.this
+                progressDialog = new ProgressDialog(HomeActivity.this);
+                progressDialog.setMessage(getString(R.string.loading_web_page));
+                progressDialog.show();
+                Log.d(LOG_TAG, String.format("Showing for %s", url));
+            }
+        }
+
+        public void onPageFinished(WebView view, String url) {
+            showFinalResults();
+        }
+
+        private void showFinalResults() {
+            try {
+                if (progressDialog != null && progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    progressDialog = null;
+                }
+            } catch (Exception exception) {
+                Log.e(LOG_TAG, "Error cargando la página", exception);
+            }
+        }
+
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             return true;
         }
 
-        @Override
-        public void onLoadResource(WebView view, String url) {
-            super.onLoadResource(view, url);
-        }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        /**
-         * Se crea el action bar y se muestra solo en el Show cuando el
-         * navigation drawer esta cerrado
-         */
-        if (mNavigationDrawerFragment == null || !mNavigationDrawerFragment.isDrawerOpen()) {
-            MenuInflater inflater = getMenuInflater();
-            inflater.inflate(R.menu.activity_home_menu_bar, menu);
-            return true;
-        } else {
-            return false;
-        }
-
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.activity_home_menu_bar, menu);
+        return true;
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /**
-         * Se obtiene el id del item del action bar seleccionado
-         * y se realiza la acción de acuerdo a éste
-         */
-        int id = item.getItemId();
-        if (id == R.id.action_back) {
-            backToHome();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void backToHome() {
-        setContentView(R.layout.activity_show_info);
-    }
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        /**
+//         * Se obtiene el id del item del action bar seleccionado
+//         * y se realiza la acción de acuerdo a éste
+//         */
+//        int id = item.getItemId();
+//        if (id == R.id.action_back) {
+//            backToHome();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+//
+//    private void backToHome() {
+//        Intent intent = new Intent(this,HomeActivity.class);
+//        startActivity(intent);
+//    }
 
     @Override
     public void navigationDrawerMenuSelected(Event event) {
@@ -106,14 +127,13 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         startActivity(intent);
         finish();
     }
+
     private void setupNavigationDrawerFragment() {
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.menuFragment);
         // It might happen while rotating that   ?¿...
         if (mNavigationDrawerFragment != null) {
-            mNavigationDrawerFragment.setUp(
-                    R.id.menuFragment,
-                    (DrawerLayout) findViewById(R.id.drawer_layout));
+            mNavigationDrawerFragment.setUp(R.id.menuFragment, (DrawerLayout) findViewById(R.id.drawer_layout));
         }
     }
 
@@ -123,6 +143,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
 
     public static class MainViewFragment extends android.support.v4.app.Fragment {
+
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {

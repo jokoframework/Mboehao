@@ -23,5 +23,7 @@
     <string name="refresh_label">Refresh</string>
     <string name="back_label">Back</string>
     <string name="MediaWiki">Mbo`ehao Proyect</string>
+    <string name="loading_web_page">Cargando desde la web...</string>
+    <string name="urlWiki">http://wiki.hq.sodep.com.py/index.php/Mbo%60ehao</string>
 
 </resources>

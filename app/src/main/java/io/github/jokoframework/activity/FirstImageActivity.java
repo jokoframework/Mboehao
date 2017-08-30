@@ -1,5 +1,6 @@
 package io.github.jokoframework.activity;
 
+import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -22,20 +23,31 @@ public class FirstImageActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_image);
+
+        ActionBar actionBar = getActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
         ImageView imageView = (ImageView) findViewById(R.id.imageView1);
         imageView.setImageResource(R.drawable.paraguay);
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        /**
+         * Se obtiene el id del item del action bar seleccionado
+         * y se realiza la acción de acuerdo a éste
+         */
         if (item.getItemId() == android.R.id.home) {
-            // Respond to the action bar's Up/Home button
-            Intent i = new Intent(FirstImageActivity.this,HomeActivity.class).setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            startActivity(i);
-            finish();
-            return true;
+            backToHome();
         }
         return super.onOptionsItemSelected(item);
     }
 
+    private void backToHome() {
+        Intent intent = new Intent(this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
 }

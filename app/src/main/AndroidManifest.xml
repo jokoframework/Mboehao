@@ -12,7 +12,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="io.github.jokoframework.activity.LoginActivity">
+        <activity
+            android:name="io.github.jokoframework.activity.LoginActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -21,14 +23,17 @@
         <activity
             android:name="io.github.jokoframework.activity.HomeActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.FirstImageActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.SecondImageActivity"
             android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.Light"
             android:windowSoftInputMode="stateHidden" />
 
         <meta-data
