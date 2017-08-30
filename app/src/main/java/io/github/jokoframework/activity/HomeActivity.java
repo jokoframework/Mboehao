@@ -91,24 +91,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         return true;
     }
 
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        /**
-//         * Se obtiene el id del item del action bar seleccionado
-//         * y se realiza la acción de acuerdo a éste
-//         */
-//        int id = item.getItemId();
-//        if (id == R.id.action_back) {
-//            backToHome();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-//
-//    private void backToHome() {
-//        Intent intent = new Intent(this,HomeActivity.class);
-//        startActivity(intent);
-//    }
-
     @Override
     public void navigationDrawerMenuSelected(Event event) {
         Intent intent = new Intent(this, event.getActivity());
