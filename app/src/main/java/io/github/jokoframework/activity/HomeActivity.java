@@ -22,6 +22,7 @@ import com.example.simplerel.R;
 import com.parse.ParseUser;
 
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
+import io.github.jokoframework.logger.RemoteLogger;
 import io.github.jokoframework.pojo.Event;
 
 
@@ -73,7 +74,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
                     progressDialog = null;
                 }
             } catch (Exception exception) {
-                Log.e(LOG_TAG, "Error cargando la página", exception);
+                RemoteLogger.e(LOG_TAG,getString(R.string.errorLoadingPage));
             }
         }
 
@@ -139,6 +140,5 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             activity.loadData();
         }
     }
-
 
 }

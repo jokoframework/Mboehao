@@ -65,5 +65,5 @@ El proyecto siguee las convenciones del [Android Code Style Guidelines](http://s
 ## MediaWiki
 
 Este proyecto tiene una documentacion via Wiki, donde se va detallando con mayor precision las funcionalidades e implementaciones, y algunas referencias más
-que se pueden observar al llevar a cabo el proyecto. [Wiki Project](http://wiki.hq.sodep.com.py/index.php/Mbo%60ehao).
+que se pueden observar al llevar a cabo el proyecto. [Wiki Project](https://joko.miraheze.org/wiki/Mbo%60ehao).
 

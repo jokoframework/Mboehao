@@ -21,7 +21,6 @@ import io.github.jokoframework.utilitys.ParseUtils;
 
 public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long> {
 
-    static final String LOG_TAG = AsyncRemoteLogToParse.class.getSimpleName();
     //Sólo en etapa de desarrollo habilitamos el log remoto al Parse para diagnósticos
     private static final boolean DEVELOP_MODE = true;
 

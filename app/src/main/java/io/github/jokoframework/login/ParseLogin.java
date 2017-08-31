@@ -127,7 +127,7 @@ public class ParseLogin implements Authenticable {
                 getActivity().finish();
             }
         });
-        RemoteLogger.e(LOG_TAG,"");
+        RemoteLogger.e(LOG_TAG,"Login Successfully Done!");
     }
 
     private void usernameOrPasswordIsInvalid(ParseException e){
@@ -145,16 +145,11 @@ public class ParseLogin implements Authenticable {
         toast.show();
 
         RemoteLogger.e(LOG_TAG,e.getMessage());
-        /* TODO: cambio por la clase REMOTELOGGER...
-        * */
 
     }
 
     private void somethingWentWrong(){
-
         RemoteLogger.e(LOG_TAG,"Error al conectarse al servidor. ParseUser es null");
-        /* TODO: cambio por la clase REMOTELOGGER...
-        * */
     }
 
     public void saveCredentials(){

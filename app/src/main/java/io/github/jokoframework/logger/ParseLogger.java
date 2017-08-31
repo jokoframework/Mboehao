@@ -19,7 +19,7 @@ import io.github.jokoframework.aplicationconstants.Constants;
 
 public class ParseLogger implements RemoteLogCapable {
 
-    private static final String LOG_TAG = AsyncRemoteLogToParse.class.getSimpleName();
+    private static final String LOG_TAG = ParseLogger.class.getSimpleName();
 
     private void flushLogsToParseServer(final List<ParseObject> logsToParse) {
         ParseObject.saveAllInBackground(logsToParse, new SaveCallback() {

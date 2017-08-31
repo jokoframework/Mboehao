@@ -105,10 +105,10 @@ public class NavigationDrawerFragment extends Fragment {
     private void addDrawerItems() {
         CustomExpandableListAdapter adapter = new CustomExpandableListAdapter(this.getActivity(), mEventParents);
 
-        ExpandableListView mExpandableListView = (ExpandableListView) mDrawerListView.findViewById(R.id.menuList);
+        ExpandableListView mExpandableListView = mDrawerListView.findViewById(R.id.menuList);
         mExpandableListView.setAdapter(adapter);
 
-        // Expand all groups by default
+        // Expandir todos los grupos por default...
         for (int i = 0; i < adapter.getGroupCount(); i++) {
             mExpandableListView.expandGroup(i);
         }
@@ -117,7 +117,7 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                // Se maneja el evento por hijo
+                // Se maneja el evento por hijo...
                 selectGroupItem(groupPosition, childPosition);
                 return false;
             }
@@ -127,8 +127,8 @@ public class NavigationDrawerFragment extends Fragment {
             @Override
             public boolean onGroupClick(ExpandableListView expandableListView, View view, int groupPosition, long id) {
                 int childrenCount = expandableListView.getExpandableListAdapter().getChildrenCount(groupPosition);
-                // Only if it is a group without children
-                // will have an action associated to the click event
+                // Solo es es un grupo sin hijos
+                // va a tener una accion asociada
                 if (childrenCount == 0) {
                     selectGroupItem(groupPosition, null);
                 }
