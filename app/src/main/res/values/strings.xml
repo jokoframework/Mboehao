@@ -26,5 +26,17 @@
     <string name="loading_web_page">Cargando desde la web...</string>
     <string name="urlWiki">http://wiki.hq.sodep.com.py/index.php/Mbo%60ehao</string>
     <string name="errorLoadingPage">Error cargando la página</string>
+    <string name="optionsDescription">Change Password</string>
+    <string name="boton_guardar_titulo">Save</string>
+    <string name="boton_cancelar_titulo">Back</string>
+    <string name="settings_password2">Rewrite Password</string>
+    <string name="settings_password">New Password</string>
+    <string name="current_password">Current Password</string>
+    <string name="current_password_warning">Enter your current Password</string>
+    <string name="change_password_error">Couldn´t save Password</string>
+    <string name="change_password_success">Password successfully changed !</string>
+    <string name="settings_pwd_equal">New passwords are equal</string>
+    <string name="settings_pwd_not_equal">New passwords are not equal</string>
+    <string name="settings_pwd_too_short">New password must have at least 8 characters</string>
 
 </resources>

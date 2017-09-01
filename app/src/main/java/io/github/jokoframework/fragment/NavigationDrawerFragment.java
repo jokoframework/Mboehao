@@ -22,6 +22,7 @@ import com.example.simplerel.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.jokoframework.activity.OptionsActivity;
 import io.github.jokoframework.activity.SecondImageActivity;
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.pojo.Event;
@@ -42,6 +43,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE1 = 1L;
     private static final long MENU_ID_IMAGE2 = 2L;
     private static final long MENU_ID_LOGOUT = 3L;
+    private static final long MENU_ID_OPTIONS = 4L;
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -144,20 +146,30 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
 /*
-* Idea del Menu...*/
+    *   Menu...*/
     /**
      *  > Imagenes
      *  ---> Imagen1
      *  ---> Imagen2
+     *  > Change Password
      *  > Salir
      */
 
     public void initializeEvents() {
 
         if (mEvents == null || !mEvents.isEmpty()) {
-            //Constructur del grupo de imagenes
 
+            //Constructor de los Grupos o Elementos Padres
+            //1.Images...
             buildImageGroup();
+
+            // 2.Change Password...
+            Event optionsEvent = new Event(MENU_ID_OPTIONS);
+            optionsEvent.setDescription(getString(R.string.optionsDescription));
+            optionsEvent.setActivity(OptionsActivity.class);
+            optionsEvent.setIconMenu(R.drawable.picture);
+            mEventParents.add(new EventParent(optionsEvent));
+
             // 2. Salir
             Event exitEvent = new Event(MENU_ID_LOGOUT);
             exitEvent.setDescription(getString(R.string.action_logout));

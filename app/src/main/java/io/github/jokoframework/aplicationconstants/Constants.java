@@ -91,6 +91,7 @@ public class Constants {
             "afyn11.net", "googleadservices.com", "googletagservices.com",
             "adroll.com", "advertising", "mookiel.com", "maps.googleapis.com",
             "developers.google.com");
+    public static final int MIN_PASSWORD_LENGTH = 8;
 
 
     public static List<String> getWebViewUrlsWithoutProgressBar() {

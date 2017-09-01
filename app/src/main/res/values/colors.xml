@@ -7,5 +7,7 @@
     <color name="group_divider_color">#80CBC4</color>
     <color name="drawer_text">#575757</color>
     <color name="background_drawer_group">#e5e3e3</color>
+    <color name="warningColor">#f2685f</color>
+
 
 </resources>
