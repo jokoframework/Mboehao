@@ -16,6 +16,8 @@ import io.github.jokoframework.login.CredentialsTextView;
 import io.github.jokoframework.login.ParseLogin;
 import io.github.jokoframework.utilitys.SecurityUtils;
 import io.github.jokoframework.utilitys.Utils;
+import com.crashlytics.android.Crashlytics;
+import io.fabric.sdk.android.Fabric;
 
 public class LoginActivity extends Activity {
 
@@ -28,6 +30,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        Fabric.with(this, new Crashlytics());
         mySelf = this;
         final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_PW));

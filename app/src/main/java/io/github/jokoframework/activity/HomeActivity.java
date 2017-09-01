@@ -10,11 +10,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -38,9 +40,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         setContentView(R.layout.activity_home);
         WebView webView = (WebView) this.findViewById(R.id.webview);
         webView.setWebViewClient(new MyWebViewClient(this));
-        webView.getSettings().setJavaScriptEnabled(true);
-        webView.loadUrl(getString(R.string.urlWiki));
-
+        displayWebView(webView); //display de webUrl after set some settings of the WebView...
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -61,6 +61,22 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
                 progressDialog.show();
                 Log.d(LOG_TAG, String.format("Showing for %s", url));
             }
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
+            view.loadUrl(String.valueOf(request.getUrl())); //TODO:check it out...
+            return super.shouldOverrideUrlLoading(view, request);
+        }
+
+        @Override
+        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+            return super.shouldOverrideKeyEvent(view, event);
+        }
+
+        @Override
+        public void onLoadResource(WebView view, String url) {
+            super.onLoadResource(view, url);
         }
 
         public void onPageFinished(WebView view, String url) {
@@ -139,6 +155,15 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             final HomeActivity activity =  (HomeActivity) getActivity();
             activity.loadData();
         }
+    }
+
+    private void displayWebView(WebView webView){
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.loadUrl(getString(R.string.urlWiki));
     }
 
 }

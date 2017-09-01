@@ -25,7 +25,7 @@ public class SecondImageActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
         ImageView imagen = (ImageView) findViewById(R.id.imageView1);
-        imagen.setImageResource(R.drawable.joko_round);
+        imagen.setImageResource(R.drawable.joko);
     }
 
     @Override

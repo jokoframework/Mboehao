@@ -14,7 +14,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="io.github.jokoframework.activity.LoginActivity"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,17 +23,17 @@
         <activity
             android:name="io.github.jokoframework.activity.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light"
+            android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.FirstImageActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light"
+            android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.SecondImageActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light"
+            android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" />
 
         <meta-data
@@ -42,6 +42,9 @@
         <meta-data
             android:name="com.parse.APPLICATION_ID"
             android:value="@string/parse_app_id" />
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="f66595d9e071f4871fbeda4d6d8f0957c9a85bae" />
     </application>
 
 </manifest>
