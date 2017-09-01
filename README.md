@@ -9,12 +9,17 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 ## Lista de funcionalidades que se muestran en el proyecto
 
 - Login vía API Rest
+- Selección de SERVIDOR antes del Login
+- Login con FaceBook y Twitter (Amazon Cognito)
+- Login con JWT
 - Almacenamiento en MBAAS
+- Logs Remotos vía API
 - Menu "hamburguer" lateral
 - Progress bar:
 	- Carga de contenido en activity
 	- Carga de una página web dentro de un webview
 - Fabric/Crashlytics
+- Fabric en modo release
 - Cambio de contraseña modal con medida de fuerza de la contraseña
 - Pantalla EULA (aceptar licencia)
 - Pantalla modal con advertencia para medidas de seguridad
@@ -26,10 +31,26 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Uso de librería propia (bipolarlib) compartida como módulo Gradle y publicación a artifactory
 - Gamification (puntos y medallas)
 - Notificaciones tipo cortina superior deslizante (Crouton)
-- Logs Remotos vía API
+- Manejo de notificaciones dentro de la propia APP
+- Integración con Notification Server
 - Splay screen/About
 - Modal con información de ayuda
 - Noticias periódicas vía API (Parse server, pero generalizable)
+- Recycler / Card view
+- Google Analytics
+- Lista seleccionable (ListDialog)
+- Filtro TimeLine
+- SQLite para guardar datos localmente 
+- Extracción de datos desde Menú logueado y deslogueado con combinación de teclas
+- Manejo de pestañas o tabs
+- Listado con agrupación por proyecto de formularios y documentos
+- Manejo de atributos en el header para ser multitenant
+- Cardview
+- Custom Share a redes sociales con conteo de estadísticas
+- Buzón de entrada de tareas asignadas
+
+
+
 
 ## Funcionalidades proveídas por el proyecto hasta el momento
 
