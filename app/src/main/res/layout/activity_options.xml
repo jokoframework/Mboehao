@@ -69,14 +69,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/boton_guardar_titulo" />
+            android:text="@string/button_save" />
 
         <Button
             android:id="@+id/cancel_change_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/boton_cancelar_titulo" />
+            android:text="@string/button_back" />
     </LinearLayout>
 
 </LinearLayout>

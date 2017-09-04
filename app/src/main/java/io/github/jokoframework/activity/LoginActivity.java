@@ -18,6 +18,7 @@ import io.github.jokoframework.utilitys.SecurityUtils;
 import io.github.jokoframework.utilitys.Utils;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
+import io.github.jokoframework.eula.Eula;
 
 public class LoginActivity extends Activity {
 
@@ -32,6 +33,7 @@ public class LoginActivity extends Activity {
         setContentView(R.layout.activity_login);
         Fabric.with(this, new Crashlytics());
         mySelf = this;
+        Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_PW));
 

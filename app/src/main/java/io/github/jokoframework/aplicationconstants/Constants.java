@@ -93,6 +93,9 @@ public class Constants {
             "developers.google.com");
     public static final int MIN_PASSWORD_LENGTH = 8;
 
+    public static final String HTML_SCALED_FONT_SIZE = "3";
+
+
 
     public static List<String> getWebViewUrlsWithoutProgressBar() {
         return WEB_VIEW_URLS_WITHOUT_PROGRESS_BAR;

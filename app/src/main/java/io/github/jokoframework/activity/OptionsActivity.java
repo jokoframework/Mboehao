@@ -127,7 +127,7 @@ public class OptionsActivity extends Activity {
 
     protected void doChangePassword(final String strPassword2, TextView error, EditText currentPasswodEdit) {
         error.setText(null);
-        currentPasswodEdit.setBackgroundColor(Color.WHITE);
+        currentPasswodEdit.setBackgroundColor(Color.GREEN);
         currentPasswodEdit.requestFocus();
         currentUser.setPassword(strPassword2);
         currentUser.setACL(ParseUtils.getDefaultAcl(currentUser));
