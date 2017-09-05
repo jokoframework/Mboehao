@@ -44,7 +44,7 @@ public class OptionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        final EditText currentPasswodEdit = (EditText) findViewById(R.id.EditTextCurrentPassword);
+        final EditText currentPasswordEdit = (EditText) findViewById(R.id.EditTextCurrentPassword);
         final EditText password1 = (EditText) findViewById(R.id.EditText_Pwd1);
         final EditText password2 = (EditText) findViewById(R.id.EditText_Pwd2);
         final TextView error = (TextView) findViewById(R.id.TextView_PwdProblem);
@@ -83,19 +83,19 @@ public class OptionsActivity extends Activity {
             public void onClick(View view) {
                 String currentStoredPassword = SecurityUtils.decrypt(Utils.getPrefs(self, Constants.USER_PREFS_PW));
                 Log.d(LOG_TAG, "Guardando contraseña");
-                if (currentPasswodEdit.getText() != null) {
-                    String currentPassword = currentPasswodEdit.getText().toString();
-                    if (StringUtils.isBlank(currentPassword) || !currentPassword.equals(currentStoredPassword)) {
-                        showCurrentPasswordWarning(error, currentPasswodEdit);
+                if (currentPasswordEdit.getText() != null) {
+                    String currentPassword = currentPasswordEdit.getText().toString();
+                    if (StringUtils.isBlank(currentPassword) || !currentPassword.equals(currentStoredPassword)) { // No es doble comprobante de que esta vacia la currentPassword.?
+                        showCurrentPasswordWarning(error, currentPasswordEdit);
                     } else {
                         String strPassword1 = password1.getText().toString();
                         final String strPassword2 = password2.getText().toString();
                         if (strPassword1.equals(strPassword2)) {
-                            doChangePassword(strPassword2, error, currentPasswodEdit);
+                            doChangePassword(strPassword2, error, currentPasswordEdit);
                         }
                     }
                 } else {
-                    showCurrentPasswordWarning(error, currentPasswodEdit);
+                    showCurrentPasswordWarning(error, currentPasswordEdit);
                 }
             }
         });

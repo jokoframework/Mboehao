@@ -2,6 +2,7 @@ package io.github.jokoframework.login;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -127,7 +128,7 @@ public class ParseLogin implements Authenticable {
                 getActivity().finish();
             }
         });
-        RemoteLogger.e(LOG_TAG,"Login Successfully Done!");
+        RemoteLogger.v(LOG_TAG,"Login Successfully Done!");
     }
 
     private void usernameOrPasswordIsInvalid(ParseException e){

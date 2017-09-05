@@ -57,9 +57,7 @@ public class Eula {
             final CheckBox checkBox = (CheckBox) eulaView.findViewById(R.id.checkBoxAcceptEula);
             dialogBuilder.setView(eulaView);
             final AlertDialog alert = dialogBuilder.create();
-//            if (scrollEulaAtEnd == true){
-//                checkBox.setEnabled(true);
-//            }
+//TODO:se puede agregar que el check se pueda habilitar solo cuando se termina de leer el EULA...
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

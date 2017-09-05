@@ -34,7 +34,7 @@
             android:checked="false"
             android:layout_gravity="center"
             android:text="@string/eula_checkbox"
-            android:enabled="false"/>
+            android:enabled="true"/>
 
         <TableLayout
             android:layout_width="wrap_content"

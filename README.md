@@ -60,6 +60,10 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Menu "hamburguer" lateral 
 - Progress bar:
 	- Carga de contenido en activity login
+- Fabric/Crashlytics
+- Cambio de contraseña modal con medida de fuerza de la contraseña
+- Pantalla EULA (aceptar licencia)
+- Pantalla modal con advertencia para medidas de seguridad
 - Logs Remotos vía API
 
 ## Parse

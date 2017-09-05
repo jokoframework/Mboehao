@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ProgressBar;
 
 import com.example.simplerel.R;
 import com.parse.ParseUser;
@@ -45,6 +46,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
     private class MyWebViewClient extends WebViewClient {
         private final Activity activity;
+        public View progressBarHomeView = findViewById(R.id.progressHomeWindow);
         private ProgressDialog progressDialog;// TODO: ProgresDialog change to ProgressBar
 
         private MyWebViewClient(Activity activity) {
@@ -54,6 +56,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Log.d(LOG_TAG, String.format("Loading %s", url));
+            progressBarHomeView.setVisibility(View.VISIBLE);
             if (progressDialog == null) {
                 // in standard case YourActivity.this
                 progressDialog = new ProgressDialog(HomeActivity.this);
@@ -65,7 +68,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            view.loadUrl(String.valueOf(request.getUrl())); //TODO:check it out...
+            view.loadUrl(String.valueOf(request.getUrl()));
             return super.shouldOverrideUrlLoading(view, request);
         }
 
@@ -90,7 +93,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
                     progressDialog = null;
                 }
             } catch (Exception exception) {
-                RemoteLogger.e(LOG_TAG,getString(R.string.errorLoadingPage));
+                Log.e(LOG_TAG,getString(R.string.errorLoadingPage));
             }
         }
 
