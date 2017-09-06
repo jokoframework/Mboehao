@@ -1,6 +1,5 @@
 package io.github.jokoframework.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -19,13 +18,11 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ProgressBar;
 
 import com.example.simplerel.R;
 import com.parse.ParseUser;
 
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
-import io.github.jokoframework.logger.RemoteLogger;
 import io.github.jokoframework.pojo.Event;
 
 
@@ -45,10 +42,8 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     private class MyWebViewClient extends WebViewClient {
-        private final Activity activity;
-        public View progressBarHomeView = findViewById(R.id.progressHomeWindow);
-        private ProgressDialog progressDialog;// TODO: ProgresDialog change to ProgressBar
-
+        final View progressbar = findViewById(R.id.progressHomeWindow); // progress bar Parent...
+        Activity activity;
         private MyWebViewClient(Activity activity) {
             this.activity = activity;
         }
@@ -56,14 +51,8 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Log.d(LOG_TAG, String.format("Loading %s", url));
-            progressBarHomeView.setVisibility(View.VISIBLE);
-            if (progressDialog == null) {
-                // in standard case YourActivity.this
-                progressDialog = new ProgressDialog(HomeActivity.this);
-                progressDialog.setMessage(getString(R.string.loading_web_page));
-                progressDialog.show();
-                Log.d(LOG_TAG, String.format("Showing for %s", url));
-            }
+            progressbar.setVisibility(View.VISIBLE);
+            progressbar.setActivated(true);
         }
 
         @Override
@@ -88,12 +77,11 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
         private void showFinalResults() {
             try {
-                if (progressDialog != null && progressDialog.isShowing()) {
-                    progressDialog.dismiss();
-                    progressDialog = null;
+                if(progressbar != null && progressbar.isActivated()){
+                    progressbar.setVisibility(View.INVISIBLE);
                 }
             } catch (Exception exception) {
-                Log.e(LOG_TAG,getString(R.string.errorLoadingPage));
+                Log.e(LOG_TAG,getString(R.string.errorLoadingPage),exception);
             }
         }
 

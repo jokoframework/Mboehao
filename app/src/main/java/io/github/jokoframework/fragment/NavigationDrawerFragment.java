@@ -61,7 +61,7 @@ public class NavigationDrawerFragment extends Fragment {
 
     private View mFragmentContainerView;
 
-    private boolean mFromSavedInstanceState;
+    boolean mFromSavedInstanceState;
 
     private boolean mUserLearnedDrawer;
 

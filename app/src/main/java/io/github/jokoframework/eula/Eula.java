@@ -51,13 +51,13 @@ public class Eula {
                     + "</p> "
                     + "</body></html>";
             mWebView.loadData(eulaBodyText, "text/html; charset=utf-8", "utf-8");
-
+            
             View acceptButton = eulaView.findViewById(R.id.eula_accept_btn);
             View refusetButton = eulaView.findViewById(R.id.eula_refuse_btn);
             final CheckBox checkBox = (CheckBox) eulaView.findViewById(R.id.checkBoxAcceptEula);
             dialogBuilder.setView(eulaView);
             final AlertDialog alert = dialogBuilder.create();
-//TODO:se puede agregar que el check se pueda habilitar solo cuando se termina de leer el EULA...
+            //TODO:se puede agregar que el check se pueda habilitar solo cuando se termina de leer el EULA...
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

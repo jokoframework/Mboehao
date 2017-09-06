@@ -55,9 +55,11 @@ public class OptionsActivity extends Activity {
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //not needed...
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //not needed...
             }
         });
 
@@ -69,9 +71,11 @@ public class OptionsActivity extends Activity {
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                //not needed...
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //not needed...
             }
         });
 

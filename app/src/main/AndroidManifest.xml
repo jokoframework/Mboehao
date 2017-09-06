@@ -24,7 +24,12 @@
             android:name="io.github.jokoframework.activity.HomeActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo"
-            android:windowSoftInputMode="stateHidden" />
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.jokoframework.activity.LoginActivity" />
+        </activity>
+
         <activity
             android:name="io.github.jokoframework.activity.FirstImageActivity"
             android:label="@string/app_name"
