@@ -57,5 +57,6 @@
     <string name="continue_button">Continue</string>
     <string name="security_dialog_body">Por ahora la aplicación NO almacenará datos personales del usuario, aun asi recuerde SIEMPRE utilizar alguna medida de seguridad para bloquear su dispositivo móvil</string>
     <string name="security_dialog_title">Data Proteccion</string>
+    <string name="chart_description">Joko</string>
 
 </resources>
