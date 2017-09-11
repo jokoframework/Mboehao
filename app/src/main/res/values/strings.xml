@@ -13,11 +13,11 @@
     <string name="test_drawer">test</string>
     <string name="about_image">about_imagen</string>
     <string name="action_logout">Sign Out</string>
-    <string name="picture1">FirstPicture</string>
-    <string name="picture2">SecondPicture</string>
+    <string name="line_chart">LineChart</string>
+    <string name="bar_chart">BarChart</string>
     <string name="share_label">Compartir</string>
     <string name="trophy_gallery">Palmarés</string>
-    <string name="parent_images">Imagenes</string>
+    <string name="parent_charts">Charts</string>
     <string name="navigation_drawer_open">Abrir barra de navegación</string>
     <string name="navigation_drawer_close">Cerrar barra de navegación</string>
     <string name="refresh_label">Refresh</string>

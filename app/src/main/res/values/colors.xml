@@ -4,10 +4,12 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
     <color name="group_divider_color">#80CBC4</color>
     <color name="drawer_text">#575757</color>
     <color name="background_drawer_group">#e5e3e3</color>
     <color name="warningColor">#f2685f</color>
+    <color name="progress_bar">#397aa3</color>
 
 
 </resources>

@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jokoframework.activity.OptionsActivity;
-import io.github.jokoframework.activity.SecondImageActivity;
+import io.github.jokoframework.activity.BarChartActivity;
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.pojo.Event;
 import io.github.jokoframework.pojo.EventParent;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.activity.LoginActivity;
-import io.github.jokoframework.activity.FirstImageActivity;
+import io.github.jokoframework.activity.LineChartActivity;
 
 /**
  * Created by joaquin on 23/08/17.
@@ -148,9 +148,9 @@ public class NavigationDrawerFragment extends Fragment {
 /*
     *   Menu...*/
     /**
-     *  > Imagenes
-     *  ---> Imagen1
-     *  ---> Imagen2
+     *  > Graficos...
+     *  ---> LineChart
+     *  ---> BarChart
      *  > Change Password
      *  > Salir
      */
@@ -161,7 +161,7 @@ public class NavigationDrawerFragment extends Fragment {
 
             //Constructor de los Grupos o Elementos Padres
             //1.Images...
-            buildImageGroup();
+            buildChartsGroup();
 
             // 2.Change Password...
             Event optionsEvent = new Event(MENU_ID_OPTIONS);
@@ -179,24 +179,24 @@ public class NavigationDrawerFragment extends Fragment {
         }
     }
 
-    private void buildImageGroup() {
+    private void buildChartsGroup() {
         List<Event> eventsList = new ArrayList<>();
 
-        // 1. Imagen1...
-        Event firstImageEvent = new Event(MENU_ID_IMAGE1);
-        firstImageEvent.setDescription(getString(R.string.picture1));
-        firstImageEvent.setActivity(FirstImageActivity.class);
-        firstImageEvent.setIconMenu(R.drawable.picture);
-        eventsList.add(firstImageEvent);
+        // 1. LineChart...
+        Event firstChartEvent = new Event(MENU_ID_IMAGE1);
+        firstChartEvent.setDescription(getString(R.string.line_chart));
+        firstChartEvent.setActivity(LineChartActivity.class);
+        firstChartEvent.setIconMenu(R.drawable.picture);
+        eventsList.add(firstChartEvent);
 
-        // 2. Imagen2...
-        Event secondImageEvent = new Event(MENU_ID_IMAGE2);
-        secondImageEvent.setDescription(getString(R.string.picture2));
-        secondImageEvent.setActivity(SecondImageActivity.class);
-        secondImageEvent.setIconMenu(R.drawable.picture);
-        eventsList.add(secondImageEvent);
+        // 2. BarChart...
+        Event secondChartEvent = new Event(MENU_ID_IMAGE2);
+        secondChartEvent.setDescription(getString(R.string.bar_chart));
+        secondChartEvent.setActivity(BarChartActivity.class);
+        secondChartEvent.setIconMenu(R.drawable.picture);
+        eventsList.add(secondChartEvent);
 
-        mEventParents.add(new EventParent(getString(R.string.parent_images), eventsList));
+        mEventParents.add(new EventParent(getString(R.string.parent_charts), eventsList));
     }
 
     /**

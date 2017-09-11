@@ -1,7 +1,6 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -42,7 +41,8 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     private class MyWebViewClient extends WebViewClient {
-        final View progressbar = findViewById(R.id.progressHomeWindow); // progress bar Parent...
+        final View progressBarView = findViewById(R.id.progressHomeWindow);         // progress bar Parent...
+        WebView webView = (WebView)findViewById(R.id.webview);
         Activity activity;
         private MyWebViewClient(Activity activity) {
             this.activity = activity;
@@ -51,8 +51,9 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {
             Log.d(LOG_TAG, String.format("Loading %s", url));
-            progressbar.setVisibility(View.VISIBLE);
-            progressbar.setActivated(true);
+            progressBarView.setVisibility(View.VISIBLE);
+            webView.setVisibility(View.INVISIBLE);
+            progressBarView.setActivated(true);
         }
 
         @Override
@@ -77,8 +78,9 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
         private void showFinalResults() {
             try {
-                if(progressbar != null && progressbar.isActivated()){
-                    progressbar.setVisibility(View.INVISIBLE);
+                if(progressBarView != null && progressBarView.isActivated()){
+                    progressBarView.setVisibility(View.INVISIBLE);
+                    webView.setVisibility(View.VISIBLE);
                 }
             } catch (Exception exception) {
                 Log.e(LOG_TAG,getString(R.string.errorLoadingPage),exception);

@@ -6,7 +6,7 @@ Trabajo para relevar lista de funcionalidades que puedan ser reutilizadas en dis
 
 Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un relevamiento de la lista de pantallas y tecnologías de las aplicaciones Android, con el objetivo de identificar funcionalidades que pueda ser comunes a las aplicaciones Android, y puedan ser reutilizadas en otros proyectos.
 
-## Lista de funcionalidades que se muestran en el proyecto
+## Lista de funcionalidades que se pretenden mostrar en el proyecto
 
 - Login vía API Rest
 - Selección de SERVIDOR antes del Login
@@ -48,9 +48,6 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Cardview
 - Custom Share a redes sociales con conteo de estadísticas
 - Buzón de entrada de tareas asignadas
-
-
-
 
 ## Funcionalidades proveídas por el proyecto hasta el momento
 

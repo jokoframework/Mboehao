@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="140dp"
+    android:background="@drawable/marker" >
+
+    <TextView
+        android:id="@+id/textmarkerContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="7dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:text=""
+        android:textSize="12dp"
+        android:textColor="@android:color/white"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <ImageView
+        android:id="@+id/dialogmarkerImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/markerContent"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+</RelativeLayout>
