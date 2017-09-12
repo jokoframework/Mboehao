@@ -8,7 +8,6 @@ import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
 import com.example.simplerel.R;
-import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -25,7 +24,6 @@ import java.util.List;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
 import io.github.jokoframework.mark.MyDialogMarkView;
-import io.github.jokoframework.mark.MyMarkView;
 
 /**
  * Created by joaquin on 12/09/17.
@@ -54,18 +52,17 @@ public class HorizontalBarChartActivity extends Activity {
 
         // The Chart whe are gonna use...
         HorizontalBarChart horizontalBarChart = findViewById(R.id.horizontalbar_chart);
-//        //Configs...
+        //Configs...
         Description desc = new Description();
         desc.setText(getString(R.string.chart_description));
         desc.setTextColor(R.color.white);
         horizontalBarChart.setDescription(desc);
         horizontalBarChart.setBackgroundColor(getResources().getColor(R.color.white));
-        horizontalBarChart.setDrawGridBackground(false);
         horizontalBarChart.setMarker(new MyDialogMarkView(this,R.layout.marker_dialog)); // se puede hacer varias clases de Marks, segun graficos o topicos...
         horizontalBarChart.setScaleEnabled(true);
         horizontalBarChart.animateXY(2000,2000);
 
-//        //More configs to Axis representation...
+        //More configs to Axis representation...
         setFormatAxis(horizontalBarChart);
 
         // insertion of the entries ...
@@ -83,7 +80,6 @@ public class HorizontalBarChartActivity extends Activity {
 
         BarDataSet dataSet = new BarDataSet(entries, "Testing HorizontalBarChart");
         // add entries to dataset
-//        dataSet.setStackLabels();
         dataSet.setColors(new int[]{getResources().getColor(R.color.background_drawer_group),
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary),
@@ -136,7 +132,6 @@ public class HorizontalBarChartActivity extends Activity {
         YAxis yAxisL = hbarChart.getAxisLeft();
         yAxisL.setDrawAxisLine(true);
         yAxisL.setDrawGridLines(false);
-
 
         hbarChart.setDrawGridBackground(false);
         hbarChart.setFitBars(true); // make the x-axis fit exactly all bars

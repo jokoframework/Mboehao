@@ -25,9 +25,6 @@ import java.util.List;
 import io.github.jokoframework.datacharts.FloatDataPair;
 import io.github.jokoframework.mark.MyMarkView;
 
-/**
- * Created by joaquin on 25/08/17.
- */
 
 public class BarChartActivity extends Activity {
 
@@ -80,7 +77,6 @@ public class BarChartActivity extends Activity {
 
         BarDataSet dataSet = new BarDataSet(entries, "Testing BarChart");
         // add entries to dataset
-//        dataSet.setStackLabels();
         dataSet.setColors(new int[]{getResources().getColor(R.color.background_drawer_group),
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary),

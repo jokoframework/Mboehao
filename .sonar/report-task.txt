@@ -1,5 +1,5 @@
 projectKey=Mboehao
 serverUrl=http://localhost:9000
 dashboardUrl=http://localhost:9000/dashboard/index/Mboehao
-ceTaskId=AV5XztTPj-3S28n-Kig7
-ceTaskUrl=http://localhost:9000/api/ce/task?id=AV5XztTPj-3S28n-Kig7
+ceTaskId=AV522EnHkLapmJ3oLwZP
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AV522EnHkLapmJ3oLwZP

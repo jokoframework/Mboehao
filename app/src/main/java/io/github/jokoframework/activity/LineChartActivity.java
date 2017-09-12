@@ -64,7 +64,6 @@ public class LineChartActivity extends Activity {
         lineChart.animateX(3000);
         lineChart.setHighlightPerDragEnabled(false);
         lineChart.setHighlightPerTapEnabled(true);
-//        lineChart.setMarker(new MarkerImage(this,R.drawable.check));
 
         //More configs to Axis representation...
         setFormatAxis(lineChart);
@@ -75,10 +74,7 @@ public class LineChartActivity extends Activity {
     }
 
     public void dataChartInsertion(List<FloatDataPair> dataObjects, LineChart chart){
-
         List<Entry> entries = new ArrayList<>();
-        Resources res = getResources();
-        Drawable icon = res.getDrawable(R.drawable.bubble);
 
         for (FloatDataPair data : dataObjects) {
             entries.add(new Entry(data.getX(), data.getY()));// The constructer gives you the chance to add a Drawable icon...
@@ -103,22 +99,10 @@ public class LineChartActivity extends Activity {
     }
 
     private void setFormatAxis(LineChart mLineChart){
-
-        final String[] quarters = new String[] {"Q0","Q1","Q2","Q3","Q4"};
-
-        IAxisValueFormatter formatter = new IAxisValueFormatter() {
-
-            @Override
-            public String getFormattedValue(float value, AxisBase axis) {
-                return quarters[(int) value];
-            }
-        };
-
         // Eje X...
         XAxis xAxis = mLineChart.getXAxis();
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
-//        xAxis.setValueFormatter(formatter);
 
         // Eje Y...
         //Right
