@@ -22,6 +22,7 @@ import com.example.simplerel.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.OptionsActivity;
 import io.github.jokoframework.activity.BarChartActivity;
 import io.github.jokoframework.aplicationconstants.Constants;
@@ -42,8 +43,9 @@ public class NavigationDrawerFragment extends Fragment {
 
     private static final long MENU_ID_IMAGE1 = 1L;
     private static final long MENU_ID_IMAGE2 = 2L;
-    private static final long MENU_ID_LOGOUT = 3L;
-    private static final long MENU_ID_OPTIONS = 4L;
+    private static final long MENU_ID_IMAGE3 = 3L;
+    private static final long MENU_ID_LOGOUT = 4L;
+    private static final long MENU_ID_OPTIONS = 5L;
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -151,6 +153,7 @@ public class NavigationDrawerFragment extends Fragment {
      *  > Graficos...
      *  ---> LineChart
      *  ---> BarChart
+     *  ---> HorizontalBarChart
      *  > Change Password
      *  > Salir
      */
@@ -195,6 +198,13 @@ public class NavigationDrawerFragment extends Fragment {
         secondChartEvent.setActivity(BarChartActivity.class);
         secondChartEvent.setIconMenu(R.drawable.picture);
         eventsList.add(secondChartEvent);
+
+        // 3. HorizontalBarChart...
+        Event thirdChartEvent = new Event(MENU_ID_IMAGE3);
+        thirdChartEvent.setDescription(getString(R.string.horizontal_bar_chart));
+        thirdChartEvent.setActivity(HorizontalBarChartActivity.class);
+        thirdChartEvent.setIconMenu(R.drawable.picture);
+        eventsList.add(thirdChartEvent);
 
         mEventParents.add(new EventParent(getString(R.string.parent_charts), eventsList));
     }

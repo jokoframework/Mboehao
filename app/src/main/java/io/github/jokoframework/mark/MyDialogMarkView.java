@@ -4,18 +4,18 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.github.mikephil.charting.components.MarkerView;
-
 import com.example.simplerel.R;
+import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
 
 /**
- * Created by joaquin on 11/09/17.
+ * Created by joaquin on 12/09/17.
  */
 
-public class MyMarkView extends MarkerView {
+public class MyDialogMarkView extends MarkerView {
+
     /**
      * Constructor. Sets up the MarkerView with a custom layout resource.
      *
@@ -26,20 +26,21 @@ public class MyMarkView extends MarkerView {
     private TextView textContent;
     private ImageView iconDraw;
 
-    public MyMarkView(Context context, int layoutResource) {
+    public MyDialogMarkView(Context context, int layoutResource) {
         super(context, layoutResource);
+
         // find your layout components
-        textContent = (TextView) findViewById(R.id.markerContent);
-        iconDraw = (ImageView)findViewById(R.id.markerImage);
+        textContent = (TextView) findViewById(R.id.textmarkerContent);
+        iconDraw = (ImageView)findViewById(R.id.dialogmarkerImage);
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        textContent.setText("" + e.getY() + e.getX());
-        iconDraw.setImageResource(R.drawable.bubble);
-            // this will perform necessary layouting
+        textContent.setText("This is where you put your EntryData!!");
+        iconDraw.setImageResource(R.drawable.info);
+        // this will perform necessary layouting
         super.refreshContent(e, highlight);
     }
 
@@ -50,7 +51,7 @@ public class MyMarkView extends MarkerView {
 
         if(mOffset == null) {
             // center the marker horizontally and vertically
-            mOffset = new MPPointF(-(getWidth() / 2), -getHeight());
+            mOffset = new MPPointF(-getWidth(), -(getHeight() / 2));
         }
 
         return mOffset;

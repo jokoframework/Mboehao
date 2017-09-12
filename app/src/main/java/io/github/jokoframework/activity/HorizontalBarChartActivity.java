@@ -9,6 +9,7 @@ import android.view.MenuItem;
 
 import com.example.simplerel.R;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
@@ -23,18 +24,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
+import io.github.jokoframework.mark.MyDialogMarkView;
 import io.github.jokoframework.mark.MyMarkView;
 
 /**
- * Created by joaquin on 25/08/17.
+ * Created by joaquin on 12/09/17.
  */
 
-public class BarChartActivity extends Activity {
+public class HorizontalBarChartActivity extends Activity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_barchart);
+        setContentView(R.layout.activity_horizontalbarchart);
 
         ActionBar actionBar = getActionBar();
         if (actionBar != null) {
@@ -43,34 +45,35 @@ public class BarChartActivity extends Activity {
 
         //Points to be in the graph...
         List<FloatDataPair> data = new ArrayList<>();
-        data.add(new FloatDataPair(0,150f));
-        data.add(new FloatDataPair(1,130f));
-        data.add(new FloatDataPair(2,200f));
-        data.add(new FloatDataPair(3,300f));
-        data.add(new FloatDataPair(4,473f));
+
+        data.add(new FloatDataPair(0,110f));
+        data.add(new FloatDataPair(1,70f));
+        data.add(new FloatDataPair(2,300f));
+        data.add(new FloatDataPair(3,220f));
+        data.add(new FloatDataPair(4,350f));
 
         // The Chart whe are gonna use...
-        BarChart barChart = findViewById(R.id.bar_chart);
+        HorizontalBarChart horizontalBarChart = findViewById(R.id.horizontalbar_chart);
 //        //Configs...
         Description desc = new Description();
         desc.setText(getString(R.string.chart_description));
         desc.setTextColor(R.color.white);
-        barChart.setDescription(desc);
-        barChart.setBackgroundColor(getResources().getColor(R.color.white));
-        barChart.setDrawGridBackground(false);
-        barChart.setMarker(new MyMarkView(this,R.layout.marker_tryout));
-        barChart.setScaleEnabled(true);
-        barChart.animateXY(2000,2000);
+        horizontalBarChart.setDescription(desc);
+        horizontalBarChart.setBackgroundColor(getResources().getColor(R.color.white));
+        horizontalBarChart.setDrawGridBackground(false);
+        horizontalBarChart.setMarker(new MyDialogMarkView(this,R.layout.marker_dialog)); // se puede hacer varias clases de Marks, segun graficos o topicos...
+        horizontalBarChart.setScaleEnabled(true);
+        horizontalBarChart.animateXY(2000,2000);
 
 //        //More configs to Axis representation...
-        setFormatAxis(barChart);
+        setFormatAxis(horizontalBarChart);
 
         // insertion of the entries ...
-        dataChartInsertion(data, barChart); // data introduccio & styling,others...
+        dataChartInsertion(data, horizontalBarChart); // data introduccio & styling,others...
 
     }
 
-    public void dataChartInsertion(List<FloatDataPair> dataObjects, BarChart chart){
+    public void dataChartInsertion(List<FloatDataPair> dataObjects, HorizontalBarChart chart){
 
         List<BarEntry> entries = new ArrayList<>();
 
@@ -78,7 +81,7 @@ public class BarChartActivity extends Activity {
             entries.add(new BarEntry(data.getXi(), data.getY()));// The constructer gives you the chance to add a Drawable icon...
         }
 
-        BarDataSet dataSet = new BarDataSet(entries, "Testing BarChart");
+        BarDataSet dataSet = new BarDataSet(entries, "Testing HorizontalBarChart");
         // add entries to dataset
 //        dataSet.setStackLabels();
         dataSet.setColors(new int[]{getResources().getColor(R.color.background_drawer_group),
@@ -99,7 +102,7 @@ public class BarChartActivity extends Activity {
         chart.invalidate(); // refresh, could be a sync button...
     }
 
-    private void setFormatAxis(BarChart mbarChart){
+    private void setFormatAxis(HorizontalBarChart hbarChart){
         String[] labels = new String[] {"08/2017","09/2017","10/2017","11/2017","12/2017"};
 
         class LabelFormatter implements IAxisValueFormatter {
@@ -113,10 +116,11 @@ public class BarChartActivity extends Activity {
             public String getFormattedValue(float value, AxisBase axis) {
                 return mLabels[(int) value];
             }
+
         }
 
         // Eje X...
-        XAxis xAxis = mbarChart.getXAxis();
+        XAxis xAxis = hbarChart.getXAxis();
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(false);
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -124,18 +128,18 @@ public class BarChartActivity extends Activity {
 
         // Eje Y...
         //Right
-        YAxis yAxisR = mbarChart.getAxisRight();
-        yAxisR.setDrawAxisLine(false);
+        YAxis yAxisR = hbarChart.getAxisRight();
+        yAxisR.setDrawAxisLine(true);
         yAxisR.setDrawGridLines(false);
-        yAxisR.setDrawLabels(false);
+        yAxisR.setDrawLabels(true);
         //Left
-        YAxis yAxisL = mbarChart.getAxisLeft();
+        YAxis yAxisL = hbarChart.getAxisLeft();
         yAxisL.setDrawAxisLine(true);
         yAxisL.setDrawGridLines(false);
 
 
-        mbarChart.setDrawGridBackground(false);
-        mbarChart.setFitBars(true); // make the x-axis fit exactly all bars
+        hbarChart.setDrawGridBackground(false);
+        hbarChart.setFitBars(true); // make the x-axis fit exactly all bars
 
     }
 

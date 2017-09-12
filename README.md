@@ -23,7 +23,7 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Cambio de contraseña modal con medida de fuerza de la contraseña
 - Pantalla EULA (aceptar licencia)
 - Pantalla modal con advertencia para medidas de seguridad
-- Gráfico (plot) XY, con bitmaps tipo puntos de interés (POI)
+- Gráfico MPAndroidChart
 - Compartir una imagen captura de sección de un activity (panel)
 - Ejecución de tareas periódicas
 - Uso de bases de datos SQLite con pattern tipo Service de Spring
@@ -61,6 +61,7 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Cambio de contraseña modal con medida de fuerza de la contraseña
 - Pantalla EULA (aceptar licencia)
 - Pantalla modal con advertencia para medidas de seguridad
+- Gráfico MPAndroidChart
 - Logs Remotos vía API
 
 ## Parse

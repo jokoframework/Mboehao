@@ -15,6 +15,7 @@
     <string name="action_logout">Sign Out</string>
     <string name="line_chart">LineChart</string>
     <string name="bar_chart">BarChart</string>
+    <string name="horizontal_bar_chart">HorizontalBarChart</string>
     <string name="share_label">Compartir</string>
     <string name="trophy_gallery">Palmarés</string>
     <string name="parent_charts">Charts</string>

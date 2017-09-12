@@ -98,7 +98,6 @@ public class LineChartActivity extends Activity {
 
         LineData lineData = new LineData(dataSets);
 
-        chart.setDrawGridBackground(false);
         chart.setData(lineData);
         chart.invalidate(); // refresh, could be a sync button...
     }
@@ -132,6 +131,7 @@ public class LineChartActivity extends Activity {
         yAxisL.setDrawAxisLine(true);
         yAxisL.setDrawGridLines(false);
 
+        mLineChart.setDrawGridBackground(false);
     }
 
 
