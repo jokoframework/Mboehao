@@ -15,6 +15,8 @@ public class FloatDataPair {
     public FloatDataPair(float x, float y) {this.x=x;this.y=y;}
     public FloatDataPair(int x, float y) {this.xi=x;this.y=y;}
     public FloatDataPair(float x, int y) {this.x=x;this.yi=y;}
+    public FloatDataPair(int x, int y) {this.xi=x;this.yi=y;}
+
 
     public float getX(){
         return this.x;

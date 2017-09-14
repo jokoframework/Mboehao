@@ -12,15 +12,18 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ShareActionProvider;
 
 import com.example.simplerel.R;
 import com.parse.ParseUser;
 
+import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.pojo.Event;
 
@@ -28,8 +31,12 @@ import io.github.jokoframework.pojo.Event;
 public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+    private static final int PICK_IMAGE_REQUEST = 1;
+
+    private ShareActionProvider mShareActionProvider;
 
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -98,8 +105,50 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_home_menu_bar, menu);
+        // Locate MenuItem with ShareActionProvider
+        MenuItem item = menu.findItem(R.id.menu_item_share);
+        // Fetch and store ShareActionProvider
+        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+//        setShareIntent(pickImage());
         return true;
     }
+
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+
+        if (item.getItemId() == R.id.menu_item_share) {
+            Intent share = new Intent(HomeActivity.this, ShareActivity.class);
+            startActivity(share);
+            finish();
+        }
+        return super.onMenuItemSelected(featureId, item);
+    }
+
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        /**
+//         * Se obtiene el id del item del action bar seleccionado
+//         * y se realiza la acción de acuerdo a éste
+//         */
+//        if (item.getItemId() == R.id.menu_item_share) {
+//            Intent share = new Intent(HomeActivity.this, ShareActivity.class);
+//            startActivity(share);
+//            finish();
+//        }
+//        return super.onOptionsItemSelected(item);
+//    }
+
+//    private Intent pickImage() {
+//        Intent share = new Intent(HomeActivity.this, ShareActivity.class);
+//        return share;
+//    }
+//
+//    // Call to update the share intent
+//    private void setShareIntent(Intent shareIntent) {
+//        if (mShareActionProvider != null) {
+//            mShareActionProvider.setShareIntent(shareIntent);
+//        }
+//    }
 
     @Override
     public void navigationDrawerMenuSelected(Event event) {

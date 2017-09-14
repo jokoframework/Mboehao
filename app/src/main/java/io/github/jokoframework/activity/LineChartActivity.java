@@ -8,6 +8,8 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
+import android.view.View;
+
 import io.github.jokoframework.mark.MyMarkView;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
@@ -98,7 +100,7 @@ public class LineChartActivity extends Activity {
         chart.invalidate(); // refresh, could be a sync button...
     }
 
-    private void setFormatAxis(LineChart mLineChart){
+    public void setFormatAxis(LineChart mLineChart){
         // Eje X...
         XAxis xAxis = mLineChart.getXAxis();
         xAxis.setDrawAxisLine(true);

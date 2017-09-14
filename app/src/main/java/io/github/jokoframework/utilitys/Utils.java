@@ -5,10 +5,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 
@@ -92,6 +98,15 @@ public class Utils {
         return isNetworkAvailable((Context) activity);
     }
 
+    public static String getShareableImageName(String suffix) {
+        return String.format("mboehao-linechart-%s-%s.png", StringUtils.isBlank(suffix) ? "test" : suffix, Utils.getFormattedDate(new Date()));
+    }
+
+    public static String getFormattedDate(Date savedAt) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yy");
+        return sdf.format(savedAt);
+    }
+
     public static boolean isNetworkAvailable(Context context) {
         boolean isNetworkAvailable = false;
         if (context != null) {
@@ -103,4 +118,7 @@ public class Utils {
         return isNetworkAvailable;
     }
 
+    public static File getShareImagesFolder() {
+        return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Mboehao/");
+    }
 }

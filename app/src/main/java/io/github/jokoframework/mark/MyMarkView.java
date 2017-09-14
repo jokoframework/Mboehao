@@ -37,7 +37,7 @@ public class MyMarkView extends MarkerView {
     // content (user-interface)
     @Override
     public void refreshContent(Entry e, Highlight highlight) {
-        textContent.setText("" + e.getY() + e.getX());
+        textContent.setText(String.format("%s, %s" , e.getY(), e.getX()));
         iconDraw.setImageResource(R.drawable.bubble);
             // this will perform necessary layouting
         super.refreshContent(e, highlight);

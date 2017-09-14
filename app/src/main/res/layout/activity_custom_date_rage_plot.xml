@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/linechart_sharing"
+        android:layout_width="match_parent"
+        android:layout_height="450dp"
+        android:layout_gravity="center_horizontal"
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/linechart_sharing">
+
+        <ImageView
+            android:layout_width="145dp"
+            android:layout_height="45dp"
+            android:id="@+id/imageShareCustomPlot"
+            android:contentDescription="@string/share_label"
+            android:layout_gravity="center"
+            android:src="@android:drawable/ic_menu_share"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

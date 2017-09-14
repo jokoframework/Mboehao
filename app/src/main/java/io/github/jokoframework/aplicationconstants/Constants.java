@@ -75,6 +75,8 @@ public class Constants {
     public static final String PARSE_CLASS_REMOTE_LOG = "RemoteLog";
 
     public static final String PARSE_ATTRIBUTE_LEVEL = "level";
+    public static final String IMAGE_PNG = "image/png";
+    public static final String IMAGE_SELECTION = "image/*";
     public static final String PARSE_ATTRIBUTE_LOG_TAG = "logTag";
     public static final String PARSE_ATTRIBUTE_MESSAGE = "message";
     public static final String PARSE_ATTRIBUTE_OBJECT_ID = "objectId";
@@ -94,7 +96,7 @@ public class Constants {
     public static final int MIN_PASSWORD_LENGTH = 8;
 
     public static final String HTML_SCALED_FONT_SIZE = "3";
-
+    public static final String EXTENDED_FILE = "extended";
 
 
     public static List<String> getWebViewUrlsWithoutProgressBar() {
@@ -105,4 +107,5 @@ public class Constants {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }
+
 }
