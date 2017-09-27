@@ -6,22 +6,26 @@
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/linechart_sharing"
         android:layout_width="match_parent"
-        android:layout_height="450dp"
-        android:layout_gravity="center_horizontal"
-        />
+        android:layout_height="match_parent"
+        android:layout_gravity="center_horizontal" />
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_below="@+id/linechart_sharing">
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignBottom="@+id/linechart_sharing"
+        android:layout_centerInParent="true"
+        android:layout_above="@+id/linechart_sharing"
+        android:background="@android:color/transparent">
 
         <ImageView
-            android:layout_width="145dp"
-            android:layout_height="45dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:id="@+id/imageShareCustomPlot"
             android:contentDescription="@string/share_label"
             android:layout_gravity="center"
+            android:backgroundTint="@android:color/transparent"
+            android:background="@android:color/transparent"
             android:src="@android:drawable/ic_menu_share"/>
 
     </LinearLayout>

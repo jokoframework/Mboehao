@@ -2,27 +2,26 @@ package io.github.jokoframework.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.drawable.Drawable;
+
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
-import android.view.View;
+
 
 import io.github.jokoframework.mark.MyMarkView;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
 import com.example.simplerel.R;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.components.AxisBase;
+
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineDataSet;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 
@@ -71,11 +70,11 @@ public class LineChartActivity extends Activity {
         setFormatAxis(lineChart);
 
         // insertion of the entries ...
-        dataChartInsertion(data, lineChart); // data introduccio & styling,others...
+        dataChartInsertion(data, lineChart,this); // data introduccio & styling,others...
 
     }
 
-    public void dataChartInsertion(List<FloatDataPair> dataObjects, LineChart chart){
+    public void dataChartInsertion(List<FloatDataPair> dataObjects, LineChart chart, Context context){
         List<Entry> entries = new ArrayList<>();
 
         for (FloatDataPair data : dataObjects) {
@@ -83,13 +82,16 @@ public class LineChartActivity extends Activity {
         }
 
         LineDataSet dataSet = new LineDataSet(entries, "Testing Chart");// add entries to dataset
-        dataSet.setColor(getResources().getColor(R.color.group_divider_color));
+        dataSet.setColors(new int[] { R.color.group_divider_color, R.color.colorPrimary}, context);
         dataSet.setHighlightEnabled(true);
-        dataSet.setCircleColor(getResources().getColor(R.color.colorAccent));
+        dataSet.setCircleColors(new int[] {R.color.group_divider_color},context);
         dataSet.setCircleRadius(0.4f);
         dataSet.setAxisDependency(YAxis.AxisDependency.RIGHT);
         dataSet.setLineWidth(0.5f);
-        dataSet.setValueTextColor(getResources().getColor(R.color.progress_bar));
+        List<Integer> colorText = new ArrayList();
+        colorText.add(R.color.progress_bar);
+        dataSet.setValueTextColors(colorText);
+
 
         List<ILineDataSet> dataSets = new ArrayList<>(); // if it must be more than 1 dataset...
         dataSets.add(dataSet);

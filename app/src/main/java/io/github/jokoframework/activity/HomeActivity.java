@@ -23,7 +23,6 @@ import android.widget.ShareActionProvider;
 import com.example.simplerel.R;
 import com.parse.ParseUser;
 
-import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.pojo.Event;
 
@@ -105,11 +104,13 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_home_menu_bar, menu);
+
         // Locate MenuItem with ShareActionProvider
-        MenuItem item = menu.findItem(R.id.menu_item_share);
+//        MenuItem item = menu.findItem(R.id.menu_item_share);
         // Fetch and store ShareActionProvider
-        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
+//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
 //        setShareIntent(pickImage());
+
         return true;
     }
 

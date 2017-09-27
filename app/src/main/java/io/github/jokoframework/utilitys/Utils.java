@@ -13,9 +13,12 @@ import android.widget.Toast;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
+
+import io.github.jokoframework.aplicationconstants.Constants;
 
 
 public class Utils {
@@ -49,6 +52,12 @@ public class Utils {
         // afeltes - 2017-01-23
         //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
+    }
+
+    private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
+        // afeltes - 2017-01-23
+        //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
+        return context.getSharedPreferences(Constants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
     }
     //BEGIN-IGNORE-SONARQUBE
 
@@ -93,6 +102,18 @@ public class Utils {
             Log.e(LOG_TAG, "El Context que se desea utilizar es nulo. addPrefs(..String)");
         }
     }
+
+    public static void addPrefs(Context context, String id, long value) {
+        if (context != null) {
+            SharedPreferences prefs = getSharedPreferences(context, id, false);
+            SharedPreferences.Editor edit = prefs.edit();
+            edit.putLong(id, value);
+            edit.commit();
+        } else {
+            Log.e(LOG_TAG, "Se intentó guardar una preferencia con el context null. addPrefs(... long)");
+        }
+    }
+
 
     public static boolean isNetworkAvailable(Activity activity) {
         return isNetworkAvailable((Context) activity);

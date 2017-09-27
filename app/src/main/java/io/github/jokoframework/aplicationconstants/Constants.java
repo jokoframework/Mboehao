@@ -10,6 +10,9 @@ import java.util.List;
  */
 
 public class Constants {
+
+    public static final double DATABASE_VERSION = 1.0;
+    public static final String DATABASE_NAME = String.format("mboehao-v%s.db", DATABASE_VERSION);
     public static final int VERSION_CODE = 33;
 
     /**
@@ -76,6 +79,8 @@ public class Constants {
 
     public static final String PARSE_ATTRIBUTE_LEVEL = "level";
     public static final String IMAGE_PNG = "image/png";
+    public static final String IMAGE_JPG = "image/jpg";
+    public static final String TEXT_PLAIN = "text/plain";
     public static final String IMAGE_SELECTION = "image/*";
     public static final String PARSE_ATTRIBUTE_LOG_TAG = "logTag";
     public static final String PARSE_ATTRIBUTE_MESSAGE = "message";
@@ -97,15 +102,15 @@ public class Constants {
 
     public static final String HTML_SCALED_FONT_SIZE = "3";
     public static final String EXTENDED_FILE = "extended";
+    public static final String SHARED_MBOEHAO_PREF = "MboehaoPref";
 
-
-    public static List<String> getWebViewUrlsWithoutProgressBar() {
-        return WEB_VIEW_URLS_WITHOUT_PROGRESS_BAR;
-    }
 
     private Constants() {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }
+
+    public static final String GRAPH_DATA_LAST_MODIFIED = "graphLastModified";
+    public static final String GRAPH_DATE_CREATED = "graphDateCreated";
 
 }
