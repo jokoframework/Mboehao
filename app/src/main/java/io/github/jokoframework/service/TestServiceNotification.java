@@ -82,4 +82,8 @@ public class TestServiceNotification extends PeriodicService {
         }
     }
 
+    public static void cancelAlarm(Context context){
+        PeriodicService.cancelAlarm(context,TestServiceNotification.class);
+    }
+
 }

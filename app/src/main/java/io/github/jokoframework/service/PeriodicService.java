@@ -62,6 +62,30 @@ public class PeriodicService extends Service {
         }
     }
 
+    protected static void setAlarm(Context context,int hour,int minutes,long interval,Class<? extends PeriodicService> clazz) {
+        AlarmManager alarmMgr;
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minutes);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        // RTC_WAKEUP...
+        int type = AlarmManager.RTC_WAKEUP;
+        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+
+        long triggerAt = calendar.getTimeInMillis();
+
+        Log.d(LOG_TAG, String.format("Alarma %s hora: %s", clazz.getSimpleName(), calendar.getTime()));
+
+        if (Build.VERSION.SDK_INT >= 19) {
+            alarmMgr.setExact(type, triggerAt, getPendingIntent(context, clazz));
+        } else {
+            alarmMgr.setRepeating(type, triggerAt,interval, getPendingIntent(context, clazz));
+        }
+    }
+
     protected static void cancelAlarm(Context context, Class<? extends PeriodicService> clazz) {
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent pendingIntent = getPendingIntent(context, clazz, PendingIntent.FLAG_UPDATE_CURRENT);

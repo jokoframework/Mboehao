@@ -131,6 +131,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
     private void doLogout(Intent intent) {
         ParseUser.logOut();
+        cancelAlarmServices(this);
         startActivity(intent);
         finish();
     }
@@ -177,8 +178,20 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         if (context != null) {
             TestServiceNotification.setAlarm(context);
         } else {
-            Log.e(LOG_TAG, "Intentando inciar los servicios de timeTable con un context null");
+            Log.e(LOG_TAG, "Intentando inciar los servicios periodicos con un context null");
         }
     }
 
+    public static void cancelAlarmServices(Context context) {
+        if (context != null) {
+            TestServiceNotification.cancelAlarm(context);
+        } else {
+            Log.e(LOG_TAG, "Intentando inciar los servicios periodicos con un context null");
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
 }

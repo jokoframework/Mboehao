@@ -31,6 +31,7 @@ public class LoginActivity extends Activity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        HomeActivity.cancelAlarmServices(this);
         Fabric.with(this, new Crashlytics());
         mySelf = this;
         Eula.show(mySelf);
@@ -66,7 +67,6 @@ public class LoginActivity extends Activity {
             progress.setVisibility(View.VISIBLE); // Muestra el progress bar mientras se obtine el acceso...
             parseLogin.authenticate();
         }
-
     }
 
 }

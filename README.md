@@ -63,6 +63,10 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Pantalla modal con advertencia para medidas de seguridad
 - Gráfico MPAndroidChart
 - Logs Remotos vía API
+- Compartir una imagen captura de sección de un activity (panel)
+- Ejecución de tareas periódicas
+- Notificaciones tipo cortina superior deslizante (Crouton)
+- Splay screen/About
 
 ## Parse
 
