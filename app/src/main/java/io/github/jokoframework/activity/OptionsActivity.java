@@ -1,6 +1,9 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -9,7 +12,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +26,9 @@ import com.parse.SaveCallback;
 
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Date;
+
+import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.utilitys.ParseUtils;
 import io.github.jokoframework.utilitys.SecurityUtils;
@@ -158,4 +166,5 @@ public class OptionsActivity extends Activity {
         currentPasswodEdit.setBackgroundColor(getResources().getColor(R.color.warningColor));
         currentPasswodEdit.requestFocus();
     }
+
 }

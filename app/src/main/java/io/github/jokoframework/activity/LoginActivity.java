@@ -49,10 +49,10 @@ public class LoginActivity extends Activity {
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField,passTextField);
         credentialsTextView.userTextListener();
 
-        enterButton.setOnClickListener(new Clickenter());
+        enterButton.setOnClickListener(new clickEnter());
     }
 
-    private class Clickenter implements View.OnClickListener{
+    private class clickEnter implements View.OnClickListener{
         @Override
         public void onClick(View view) {
             final String username = userTextField.getText().toString(); // Enlace a la cadena de texto del valor del Usuario...

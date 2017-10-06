@@ -1,9 +1,11 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
@@ -18,32 +20,28 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.ShareActionProvider;
 
 import com.example.simplerel.R;
 import com.parse.ParseUser;
 
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.pojo.Event;
+import io.github.jokoframework.service.TestServiceNotification;
 
 
 public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
-    private static final int PICK_IMAGE_REQUEST = 1;
-
-    private ShareActionProvider mShareActionProvider;
-
     private NavigationDrawerFragment mNavigationDrawerFragment;
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
-        WebView webView = (WebView) this.findViewById(R.id.webview);
+        WebView webView = this.findViewById(R.id.webview);
         webView.setWebViewClient(new MyWebViewClient(this));
         displayWebView(webView); //display de webUrl after set some settings of the WebView...
+        startAlarmServices(this);
     }
 
     private class MyWebViewClient extends WebViewClient {
@@ -104,13 +102,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.activity_home_menu_bar, menu);
-
-        // Locate MenuItem with ShareActionProvider
-//        MenuItem item = menu.findItem(R.id.menu_item_share);
-        // Fetch and store ShareActionProvider
-//        mShareActionProvider = (ShareActionProvider) item.getActionProvider();
-//        setShareIntent(pickImage());
-
         return true;
     }
 
@@ -124,32 +115,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         }
         return super.onMenuItemSelected(featureId, item);
     }
-
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        /**
-//         * Se obtiene el id del item del action bar seleccionado
-//         * y se realiza la acción de acuerdo a éste
-//         */
-//        if (item.getItemId() == R.id.menu_item_share) {
-//            Intent share = new Intent(HomeActivity.this, ShareActivity.class);
-//            startActivity(share);
-//            finish();
-//        }
-//        return super.onOptionsItemSelected(item);
-//    }
-
-//    private Intent pickImage() {
-//        Intent share = new Intent(HomeActivity.this, ShareActivity.class);
-//        return share;
-//    }
-//
-//    // Call to update the share intent
-//    private void setShareIntent(Intent shareIntent) {
-//        if (mShareActionProvider != null) {
-//            mShareActionProvider.setShareIntent(shareIntent);
-//        }
-//    }
 
     @Override
     public void navigationDrawerMenuSelected(Event event) {
@@ -201,12 +166,19 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     private void displayWebView(WebView webView){
-
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setBuiltInZoomControls(true);
         webView.getSettings().setUseWideViewPort(true);
         webView.loadUrl(getString(R.string.urlWiki));
+    }
+
+    public static void startAlarmServices(Context context) {
+        if (context != null) {
+            TestServiceNotification.setAlarm(context);
+        } else {
+            Log.e(LOG_TAG, "Intentando inciar los servicios de timeTable con un context null");
+        }
     }
 
 }

@@ -1,9 +1,13 @@
 package io.github.jokoframework.aplicationconstants;
 
+import android.app.AlarmManager;
 import android.graphics.Color;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by joaquin on 10/08/17.
@@ -27,6 +31,9 @@ public class Constants {
      * Por default todos los índices de las cápsulas empiezan en 0
      * hay siete tipos de cápsulas
      */
+
+    public static final String DEFAULT_CHARACTER_TIME_SPLIT = ":";
+
 
     public static final int DAYS_TO_SHOW_IN_GRAPH_HISTORY = 14;
 
@@ -58,17 +65,16 @@ public class Constants {
     //Defaults
     public static final int DEFAULT_WARNING_POINTS_SIZE = 32;
 
+    public static final long ALARM_INTERVAL = ONE_DAY * 12 ;
+
+
+    public static final String FROM_BACKGROUND_SERVICE = "FROM_BACKGROUND_SERVICE";
+
 
     public static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
     public static final String USER_PREFS_USER = "U";
     public static final String USER_PREFS_PW = "P";
-
-    //Extras
-    public static final String EXTRA_DRUG_DESCRIPTION = "drugDescription";
-
-    public static final String EXTRA_TIME_TABLE_DESCRIPTION = "timeTableDescription";
-
 
     //Referentes al parse
     public static final String PARSE_PARAMETER = "Parameter";
@@ -76,6 +82,8 @@ public class Constants {
     public static final String PARSE_PARAMETER_VALUE = "value";
 
     public static final String PARSE_CLASS_REMOTE_LOG = "RemoteLog";
+    public static final String EXTRA_VIBRATE = "vibrate";
+    public static final String EXTRA_SNOOZED_ALARM = "snoozedAlarm";
 
     public static final String PARSE_ATTRIBUTE_LEVEL = "level";
     public static final String IMAGE_PNG = "image/png";
@@ -90,19 +98,14 @@ public class Constants {
     public static final String PARSE_ATTRIBUTE_APP_VERSION = "appVersion";
     public static final String PARSE_ATTRIBUTE_USERNAME = "username";
 
-
-
-    private static final List<String> WEB_VIEW_URLS_WITHOUT_PROGRESS_BAR = Arrays.asList("track.php",
-            "secure.gravatar.com", "googlesyndication.com", "skimresources.com",
-            "scorecardresearch.com", "www.google.com/ads", "doubleckick.net",
-            "afyn11.net", "googleadservices.com", "googletagservices.com",
-            "adroll.com", "advertising", "mookiel.com", "maps.googleapis.com",
-            "developers.google.com");
     public static final int MIN_PASSWORD_LENGTH = 8;
+    public static final String PARSE_ATTRIBUTE_IS_REMINDER_ACTIVE = "isReminderActive";
+
 
     public static final String HTML_SCALED_FONT_SIZE = "3";
     public static final String EXTENDED_FILE = "extended";
     public static final String SHARED_MBOEHAO_PREF = "MboehaoPref";
+    public static final int NOTIFICATION_ID = 13;
 
 
     private Constants() {

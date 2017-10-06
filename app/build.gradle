@@ -29,6 +29,10 @@ dependencies {
     compile 'com.parse:parse-android:1.15.8'
     compile 'com.google.code.gson:gson:2.4'
     compile 'com.androidplot:androidplot-core:0.6.1'
+    compile('de.keyboardsurfer.android.widget:crouton:1.8.5@aar') {
+        // exclusion is not necessary, but generally a good idea.
+        exclude group: 'com.google.android', module: 'support-v4'
+    }
     compile 'org.apache.commons:commons-lang3:3.4'
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

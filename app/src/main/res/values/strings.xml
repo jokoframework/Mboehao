@@ -60,5 +60,11 @@
     <string name="security_dialog_title">Data Proteccion</string>
     <string name="chart_description">Joko</string>
     <string name="subfolder">"MPAndroidChart-Library Save"</string>
+    <string name="notification_message">Just to tell you we are here.</string>
+    <string name="notification_title">Hello, this is Mboehao !!</string>
+    <string name="easter_egg_msg">This is our Easter-egg on the app!!!</string>
+    <string name="aboutDescription">About</string>
+    <string name="version_number">v1.0</string>
+    <string name="version_name">v1.0.7</string>
 
 </resources>

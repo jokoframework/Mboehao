@@ -74,4 +74,15 @@ public class ParseUtils {
         }
         return DEFAULT_ACL;
     }
+
+    public static ParseUser getCurrentUser() {
+        ParseUser user;
+        try {
+            user = ParseUser.getCurrentUser();
+        } catch (NullPointerException nullException) {
+            Log.e(LOG_TAG, "Parse no inicializado");
+            user = null;
+        }
+        return user;
+    }
 }

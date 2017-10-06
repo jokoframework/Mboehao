@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.example.simplerel.R;
@@ -22,6 +23,7 @@ import com.example.simplerel.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.jokoframework.activity.AboutActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.OptionsActivity;
 import io.github.jokoframework.activity.BarChartActivity;
@@ -46,6 +48,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE3 = 3L;
     private static final long MENU_ID_LOGOUT = 4L;
     private static final long MENU_ID_OPTIONS = 5L;
+    private static final long MENU_ID_HELP = 6L;
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -63,6 +66,10 @@ public class NavigationDrawerFragment extends Fragment {
 
     private View mFragmentContainerView;
 
+    private ImageView imageHeader;
+
+    public View header;
+
     boolean mFromSavedInstanceState;
 
     private boolean mUserLearnedDrawer;
@@ -70,7 +77,6 @@ public class NavigationDrawerFragment extends Fragment {
     private List<Event> mEvents;
 
     private List<EventParent> mEventParents;
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -99,7 +105,7 @@ public class NavigationDrawerFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         mDrawerListView = (ListView) inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
-        View header = getSideMenuHeader(inflater, container);
+        header = getSideMenuHeader(inflater, container);
         mDrawerListView.addHeaderView(header);
         initializeEvents();
         addDrawerItems();
@@ -149,19 +155,20 @@ public class NavigationDrawerFragment extends Fragment {
 
 /*
     *   Menu...*/
+
     /**
-     *  > Graficos...
-     *  ---> LineChart
-     *  ---> BarChart
-     *  ---> HorizontalBarChart
-     *  > Change Password
-     *  > Salir
+     * > Charts...
+     * ---> LineChart
+     * ---> BarChart
+     * ---> HorizontalBarChart
+     * > Change Password
+     * > Help
+     * > Salir
      */
 
     public void initializeEvents() {
 
         if (mEvents == null || !mEvents.isEmpty()) {
-
             //Constructor de los Grupos o Elementos Padres
             //1.Images...
             buildChartsGroup();
@@ -173,7 +180,14 @@ public class NavigationDrawerFragment extends Fragment {
             optionsEvent.setIconMenu(R.drawable.picture);
             mEventParents.add(new EventParent(optionsEvent));
 
-            // 2. Salir
+            // 3. Help
+            Event helpEvent = new Event(MENU_ID_HELP);
+            helpEvent.setDescription(getString(R.string.aboutDescription));
+            helpEvent.setActivity(AboutActivity.class);
+            helpEvent.setIconMenu(R.drawable.picture);
+            mEventParents.add(new EventParent(helpEvent));
+
+            // 4. LogOUT
             Event exitEvent = new Event(MENU_ID_LOGOUT);
             exitEvent.setDescription(getString(R.string.action_logout));
             exitEvent.setActivity(LoginActivity.class);
@@ -230,7 +244,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = new SimpleActionBarDrawerToggle(getActivity(),mDrawerLayout, R.drawable.ic_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerToggle = new SimpleActionBarDrawerToggle(getActivity(), mDrawerLayout, R.drawable.ic_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
@@ -271,7 +285,7 @@ public class NavigationDrawerFragment extends Fragment {
                 Event menuEvent = (Event) eObject;
                 mCallbacks.navigationDrawerMenuSelected(menuEvent);
             } else {
-                Log.e("ERROR","El item seleccionado no es un MenuEvent");
+                Log.e("ERROR", "El item seleccionado no es un MenuEvent");
             }
         }
     }
@@ -324,7 +338,6 @@ public class NavigationDrawerFragment extends Fragment {
         return getActivity().getActionBar();
     }
 
-
     /**
      * Callbacks interface that all activities using this fragment must implement.
      */
@@ -376,5 +389,5 @@ public class NavigationDrawerFragment extends Fragment {
             getActivity().invalidateOptionsMenu(); // calls onPrepareOptionsMenu()
         }
     }
-
 }
+

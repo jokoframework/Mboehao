@@ -8,12 +8,15 @@ import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.widget.Toast;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.File;
-import java.io.IOException;
+import de.keyboardsurfer.android.widget.crouton.Configuration;
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Random;
@@ -45,6 +48,27 @@ public class Utils {
             Log.e(LOG_TAG, "Se intentó guardar una preferencia con el context null. getPrefs)");
             return "";
         }
+    }
+
+    public static void showMessageLongDuration(Activity activity, String message, Style style) {
+        showMessage(activity, message, style, Configuration.DURATION_LONG, Boolean.FALSE);
+    }
+
+    public static void showMessage(Activity activity, String message, Style style, Integer duration, Boolean sticky) {
+        final Configuration configuration = new Configuration.Builder()
+                .setDuration(duration)
+                .build();
+        final Crouton crouton = Crouton.makeText(activity, message, style)
+                .setConfiguration(configuration);
+        if (sticky) {
+            crouton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Crouton.hide(crouton);
+                }
+            });
+        }
+        crouton.show();
     }
 
     //BEGIN-IGNORE-SONARQUBE
@@ -139,7 +163,49 @@ public class Utils {
         return isNetworkAvailable;
     }
 
+    public static boolean isParseSessionActive() {
+        return ParseUtils.getCurrentUser() != null && ParseUtils.getCurrentUser().isAuthenticated();
+    }
+
     public static File getShareImagesFolder() {
         return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Mboehao/");
     }
+
+
+    public static boolean isValidTime(String exactTime) {
+
+        //TODO: utilizar un DateFormat http://javatechniques.com/blog/dateformat-and-simpledateformat-examples/
+        if (StringUtils.isBlank(exactTime)) {
+            return false;
+        } else {
+            try {
+                return valideTimeAsString(exactTime);
+            } catch (NumberFormatException e) {
+                Log.e(LOG_TAG, e.getMessage(), e);
+                return false;
+            } catch (ArrayIndexOutOfBoundsException arrayEx) {
+                Log.e(LOG_TAG, arrayEx.getMessage(), arrayEx);
+                return false;
+            }
+        }
+    }
+
+    protected static boolean valideTimeAsString(String exactTime) {
+        String[] parts = exactTime.split(":");
+        int hora = Integer.parseInt(parts[0]);
+        int minuto = Integer.parseInt(parts[1]);
+        if (isValidHour(hora) && isValidMinute(minuto)) {
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean isValidMinute(int minuto) {
+        return minuto >= 0 && minuto <= 59;
+    }
+
+    private static boolean isValidHour(int hora) {
+        return hora >= 0 && hora <= 23;
+    }
+
 }
