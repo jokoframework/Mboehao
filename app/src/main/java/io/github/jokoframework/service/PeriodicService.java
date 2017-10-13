@@ -38,8 +38,6 @@ public class PeriodicService extends Service {
     }
 
     protected static void setAlarm(Context context, int hour, int minutes,int seconds,long interval, Class<? extends PeriodicService> clazz) {
-        AlarmManager alarmMgr;
-
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, hour);
         calendar.add(Calendar.MINUTE, minutes);
@@ -48,7 +46,7 @@ public class PeriodicService extends Service {
 
         // RTC_WAKEUP...
         int type = AlarmManager.RTC_WAKEUP;
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         // Alarm time in System.currentTimeMillis() (wall clock time in UTC), which will wake up the device when it goes off.
         long triggerAt = calendar.getTimeInMillis();
@@ -58,13 +56,11 @@ public class PeriodicService extends Service {
         if (Build.VERSION.SDK_INT >= 19) {
             alarmMgr.setExact(type, triggerAt, getPendingIntent(context, clazz));
         } else {
-            alarmMgr.setRepeating(type, triggerAt,interval, getPendingIntent(context, clazz));
+            alarmMgr.setRepeating(type, triggerAt, interval, getPendingIntent(context, clazz));
         }
     }
 
     protected static void setAlarm(Context context,int hour,int minutes,long interval,Class<? extends PeriodicService> clazz) {
-        AlarmManager alarmMgr;
-
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minutes);
@@ -73,17 +69,13 @@ public class PeriodicService extends Service {
 
         // RTC_WAKEUP...
         int type = AlarmManager.RTC_WAKEUP;
-        alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+        AlarmManager alarmMgr = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 
         long triggerAt = calendar.getTimeInMillis();
 
         Log.d(LOG_TAG, String.format("Alarma %s hora: %s", clazz.getSimpleName(), calendar.getTime()));
 
-        if (Build.VERSION.SDK_INT >= 19) {
-            alarmMgr.setExact(type, triggerAt, getPendingIntent(context, clazz));
-        } else {
-            alarmMgr.setRepeating(type, triggerAt,interval, getPendingIntent(context, clazz));
-        }
+        alarmMgr.setInexactRepeating(type, triggerAt,interval, getPendingIntent(context, clazz));
     }
 
     protected static void cancelAlarm(Context context, Class<? extends PeriodicService> clazz) {

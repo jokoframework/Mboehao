@@ -66,5 +66,6 @@
     <string name="aboutDescription">About</string>
     <string name="version_number">v1.0</string>
     <string name="version_name">v1.0.7</string>
+    <string name="msg_token_fmt">FCM Token</string>
 
 </resources>

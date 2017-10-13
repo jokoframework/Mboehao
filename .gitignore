@@ -13,3 +13,5 @@ gradle.properties
 *.crt
 *.zip
 bipolarlib/app
+firebase.json
+firebase/*

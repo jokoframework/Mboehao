@@ -1,9 +1,12 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.os.Bundle;
 
 import android.support.annotation.Nullable;
@@ -20,10 +23,16 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.example.simplerel.R;
+import com.google.firebase.iid.FirebaseInstanceId;
+import com.google.firebase.iid.FirebaseInstanceIdService;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.google.firebase.messaging.RemoteMessage;
 import com.parse.ParseUser;
 
+import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.pojo.Event;
 import io.github.jokoframework.service.TestServiceNotification;
@@ -32,6 +41,7 @@ import io.github.jokoframework.service.TestServiceNotification;
 public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+    private static final String TAG = FirebaseInstanceIdService.class.getSimpleName();
     private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
@@ -42,6 +52,24 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         webView.setWebViewClient(new MyWebViewClient(this));
         displayWebView(webView); //display de webUrl after set some settings of the WebView...
         startAlarmServices(this);
+        sendToken();
+    }
+
+    private void sendToken(){
+        // Get token
+        String token = FirebaseInstanceId.getInstance().getToken();
+        // Log,Send and toast the Token...
+        String msg = String.format("%s - %s",R.string.msg_token_fmt, token);
+        sendMessage(token);
+        Log.d(TAG, msg);
+    }
+
+    public void sendMessage(String msg){
+        FirebaseMessaging fm = FirebaseMessaging.getInstance();
+        fm.send(new RemoteMessage.Builder(String.format("%s@gcm.googleapis.com",Constants.SENDER_ID))
+                .setMessageId(String.format("%d",(Constants.msgId + 1)))
+                .addData("token", msg)
+                .build());
     }
 
     private class MyWebViewClient extends WebViewClient {

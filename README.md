@@ -56,6 +56,7 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Almacenamiento en MBAAS
 - Menu "hamburguer" lateral 
 - Progress bar:
+    - Carga de contenido en activity
 	- Carga de contenido en activity login
 - Fabric/Crashlytics
 - Cambio de contraseña modal con medida de fuerza de la contraseña
@@ -67,6 +68,7 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Ejecución de tareas periódicas
 - Notificaciones tipo cortina superior deslizante (Crouton)
 - Splay screen/About
+- Integración con Notification Server
 
 ## Parse
 

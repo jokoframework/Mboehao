@@ -8,8 +8,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 
-import com.example.simplerel.R;
-
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.login.Authenticable;
 import io.github.jokoframework.login.CredentialsTextView;
@@ -19,6 +17,8 @@ import io.github.jokoframework.utilitys.Utils;
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.eula.Eula;
+
+import com.example.simplerel.R;
 
 public class LoginActivity extends Activity {
 

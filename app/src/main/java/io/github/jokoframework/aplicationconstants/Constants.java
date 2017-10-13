@@ -6,6 +6,7 @@ import android.graphics.Color;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -67,6 +68,11 @@ public class Constants {
 
     public static final long ALARM_INTERVAL = ONE_DAY * 12 ;
 
+    //Firebase Configuration...
+
+    public static final String SENDER_ID = "1037867417276";
+    public static Integer msgId = 0;
+
 
     public static final String FROM_BACKGROUND_SERVICE = "FROM_BACKGROUND_SERVICE";
 
@@ -115,5 +121,6 @@ public class Constants {
 
     public static final String GRAPH_DATA_LAST_MODIFIED = "graphLastModified";
     public static final String GRAPH_DATE_CREATED = "graphDateCreated";
+    public static final String PARSE_ATTRIBUTE_USER_AS_USERNAME = "user";
 
 }

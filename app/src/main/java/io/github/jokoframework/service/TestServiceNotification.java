@@ -77,7 +77,7 @@ public class TestServiceNotification extends PeriodicService {
             ParseUser user = ParseUser.getCurrentUser();
             if (user != null) {
                 setServiceClass(TestServiceNotification.class);
-                PeriodicService.setAlarm(context, 0, 2, 0,Constants.ONE_DAY,getServiceClass());
+                PeriodicService.setAlarm(context,14,0,Constants.ONE_DAY,getServiceClass());
             }
         }
     }

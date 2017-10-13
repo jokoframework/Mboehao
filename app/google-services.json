@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1037867417276",
+    "firebase_url": "https://mboehao-c9f72.firebaseio.com",
+    "project_id": "mboehao-c9f72",
+    "storage_bucket": "mboehao-c9f72.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1037867417276:android:cf341fd7ce78eba5",
+        "android_client_info": {
+          "package_name": "io.github.jokoframework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1037867417276-iq6pklk0c1pse52943nh8g8pij8htok1.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "io.github.jokoframework",
+            "certificate_hash": "077852a5b4b6b1c81365eeadc58d151f21a58f08"
+          }
+        },
+        {
+          "client_id": "1037867417276-gdg59puj21t1rn93ma67manmd0u0a4eb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAt1oKPAJIRY5u7FsaYFI9m5uo0qAykL0E"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1037867417276-gdg59puj21t1rn93ma67manmd0u0a4eb.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

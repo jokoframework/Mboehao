@@ -11,13 +11,16 @@ import android.widget.Toast;
 
 import com.parse.LogInCallback;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import java.util.Map;
 
 import io.github.jokoframework.activity.HomeActivity;
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.logger.RemoteLogger;
+import io.github.jokoframework.utilitys.ParseUtils;
 import io.github.jokoframework.utilitys.SecurityUtils;
 import io.github.jokoframework.utilitys.Utils;
 
@@ -86,6 +89,18 @@ public class ParseLogin implements Authenticable {
         ParseUser.logInInBackground(getUser(), getPassword(), new LogInCallback() {
             public void done(ParseUser user, ParseException e) {
                 if (e == null && user != null) {
+                    ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+                    installation.put(Constants.PARSE_ATTRIBUTE_USER_AS_USERNAME, user);
+                    installation.setACL(ParseUtils.getDefaultAcl(ParseUtils.getCurrentUser()));
+
+                    installation.saveInBackground(new SaveCallback() {
+                        @Override
+                        public void done(ParseException e) {
+                            if (e != null) {
+                                Log.e(LOG_TAG, "Error guardando preferencias de aplicación", e);
+                            }
+                        }
+                    });
                     loginSuccessful();
                 } else if (user == null) {
                     usernameOrPasswordIsInvalid(e);
