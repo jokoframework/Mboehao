@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="red">#eb5757</color> <!-- Envio -->
+    <color name="colorPrimary">#293a53</color>
+    <color name="colorPrimaryDark">#223346</color>
+    <color name="colorAccent">#4bd4a8</color>
+    <color name="colorButtomFont">#ffffff</color>
+    <color name="colorButtom">#51D2A8</color>
+    <color name="colorLink">#01B0D1</color>
+    <color name="celeste">#00C7E2</color>
+    <color name="lightgray">#fafafa</color>
+    <color name="lightgray5">#efefef</color>
+    <color name="lightgray10">#ececec</color>
+    <color name="lightgray15">#E9E9E9</color>
+    <color name="lightgray20">#e0e0e0</color>
+    <color name="lightgray30">#33293a53</color>
+    <color name="lightgray40">#c2c2c2</color>
+    <color name="gray">#eeeeee</color>
+    <color name="gray5">#f2f2f2</color>
+    <color name="gray10">#cccccc</color> <!-- Titulo y Fecha, loading -->
+    <color name="gray20">#a9b0ba</color> <!-- Saldo disponible -->
+    <color name="gray25">#a6a6a6</color>
+    <color name="gray30">#999999</color> <!-- Detalle ticket -->
+    <color name="gray35">#BDBDBD</color>
+    <color name="gray40">#828282</color> <!-- Fecha -->
+    <color name="gray50">#585858</color> <!-- Detalle -->
+    <color name="gray60">#4f4f4f</color> <!-- titulo ticket -->
+    <color name="gray70">#404040</color>
+    <color name="gray80">#7D000000</color>
+    <color name="gray90">#6E000000</color>
+    <color name="darkblue10">#a5b4cc</color> <!-- FabAction cancel -->
+    <color name="darkblue20">#697587</color> <!-- Meses en barra -->
+    <color name="darkGray">#50000000</color>
+    <color name="darkGray5">#525252</color>
+    <color name="darkGray10">#EB746D6D</color>
+    <color name="notToDarkGray">#9E9E9E</color>
+    <color name="lightblue10">#00C7E2</color> <!-- Signo + y barra de balance -->
+    <color name="lightblue10alpha">#4400C7E2</color> <!-- Signo + y barra de balance -->
+    <color name="lightblue20">#00b3cc</color> <!-- Recibir dinero -->
+    <color name="lightred">#87EB5757</color>
+    <color name="green">#4CAF50</color>
+    <color name="lightgreen">#874bd4a8</color>
+    <color name="yellow">#40f2c94c</color>
+    <color name="orange">#FF8D40</color> <!-- Alerta -->
+    <color name="orange5">#F6BC8A</color>
+    <color name="orange10">#F2994A</color>
+    <color name="purple10">#409b51e0</color> <!-- Promociones -->
+    <color name="purple20">#79549a</color> <!-- Pagos -->
+    <color name="black_overlay">#70000000</color>
+    <color name="black">#000000</color>
+    <color name="black_30">#30000000</color>
+
+    <color name="brown">#6a5e5e</color>
+
+    <color name="white">#ffffff</color>
+    <color name="caution">#FCAF3E</color>
+    <color name="credit">#7298a0</color>
+    <color name="debit">#D3D7CF</color>
+    <color name="contextualHeadline">#9b51e0</color>
+    <color name="contextualMainColor">#efefef</color>
+    <color name="messageHeadline">#F2C94C</color>
+    <color name="balanceText">#00c7e2</color>
+    <color name="progress3">#2d9cdb</color>
+
+    <color name="progressIncomeDark">#3caa87</color>
+    <color name="progressExpenseDark">#bd4646</color>
+    <color name="progressIncomeLight">#664bd4a8</color>
+    <color name="progressOutcomeLight">#66eb5757</color>
+
+    <color name="alert">#FF8D40</color>
+    <color name="info">#2d9cdb</color>
+    <color name="note">#4bd4a8</color>
+    <color name="promo">#9b51e0</color>
+
+    <color name="alert_light">#ffeee2</color>
+    <color name="info_light">#dff0fa</color>
+    <color name="note_light">#f4ecd4</color>
+    <color name="promo_light">#f0e5fa</color>
+
+    <color name="expenses_chart_2">#91C2ED</color>
+    <color name="expenses_chart_3">#8AE5E0</color>
+    <color name="expenses_chart_4">#D8EB8F</color>
+    <color name="expenses_chart_5">#F7D859</color>
+    <color name="expenses_chart_1">#70A1CC</color>
+    <color name="expenses_chart_6">#3F6966</color>
+
+    <color name="login_text">#61000000</color>
+    <color name="login_hint">#32000000</color>
+    <color name="login_line">#1F000000 </color>
+    <color name="login_version_text">#2b000000</color>
+
+    <color name="tag_label_color">#2d9cdb</color>
+
+</resources>

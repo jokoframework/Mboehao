@@ -7,8 +7,7 @@ import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 
-import io.github.jokoframework.aplicationconstants.Constants;
-
+import io.github.jokoframework.mboehaolib.constants.Constants;
 /**
  * Created by joaquin on 10/10/17.
  */

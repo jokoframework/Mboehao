@@ -17,22 +17,30 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 
-import com.example.simplerel.R;
+import com.facebook.Profile;
+import com.facebook.ProfileTracker;
+import com.parse.ParseUser;
+
+import org.w3c.dom.Text;
+
+import io.github.jokoframework.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jokoframework.activity.AboutActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
-import io.github.jokoframework.activity.OptionsActivity;
+import io.github.jokoframework.activity.ChangePasswordActivity;
 import io.github.jokoframework.activity.BarChartActivity;
-import io.github.jokoframework.aplicationconstants.Constants;
-import io.github.jokoframework.pojo.Event;
-import io.github.jokoframework.pojo.EventParent;
+import io.github.jokoframework.activity.LogOutActivity;
+import io.github.jokoframework.mboehaolib.constants.Constants;import io.github.jokoframework.mboehaolib.pojo.Event;
+import io.github.jokoframework.mboehaolib.pojo.EventParent;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.activity.LoginActivity;
 import io.github.jokoframework.activity.LineChartActivity;
+import io.github.jokoframework.mboehaolib.util.Utils;
 
 /**
  * Created by joaquin on 23/08/17.
@@ -49,6 +57,9 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_LOGOUT = 4L;
     private static final long MENU_ID_OPTIONS = 5L;
     private static final long MENU_ID_HELP = 6L;
+    private static final long MENU_ID_PREFERENCES = 7L;
+    private static final long MENU_ID_CHANGEPASS = 8L;
+
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -148,8 +159,21 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private View getSideMenuHeader(LayoutInflater inflater, ViewGroup container) {
-        //Implementa la cabecera del menu...
+        ParseUser currentUserParse = ParseUser.getCurrentUser();
+
         View header = inflater.inflate(R.layout.side_menu_header, container, false);
+        //Implementa la cabecera del menu...
+        TextView welcomeString = (TextView) header.findViewById(R.id.personalize_welcome);
+
+        if(Utils.getPrefs(getActivity(),Constants.FACEBOOK_PROFILE_DATA) == null){
+            if(currentUserParse != null){
+                welcomeString.setText(String.format("Bienvenido %s", currentUserParse.getUsername()));
+            }else{
+                welcomeString.setText(String.format("Bienvenido a Mboehao"));
+            }
+        }else{
+            welcomeString.setText(String.format("Bienvenido %s", Utils.getPrefs(getActivity(),Constants.FACEBOOK_PROFILE_DATA)));
+        }
         return header;
     }
 
@@ -161,7 +185,7 @@ public class NavigationDrawerFragment extends Fragment {
      * ---> LineChart
      * ---> BarChart
      * ---> HorizontalBarChart
-     * > Change Password
+     * > Options
      * > Help
      * > Salir
      */
@@ -173,12 +197,12 @@ public class NavigationDrawerFragment extends Fragment {
             //1.Images...
             buildChartsGroup();
 
-            // 2.Change Password...
-            Event optionsEvent = new Event(MENU_ID_OPTIONS);
-            optionsEvent.setDescription(getString(R.string.optionsDescription));
-            optionsEvent.setActivity(OptionsActivity.class);
-            optionsEvent.setIconMenu(R.drawable.picture);
-            mEventParents.add(new EventParent(optionsEvent));
+            // 2.Options...
+            Event passwordChangeEvent = new Event(MENU_ID_CHANGEPASS);
+            passwordChangeEvent.setDescription(getString(R.string.changePasswordDescription));
+            passwordChangeEvent.setActivity(ChangePasswordActivity.class);
+            passwordChangeEvent.setIconMenu(R.drawable.picture);
+            mEventParents.add(new EventParent(passwordChangeEvent));
 
             // 3. Help
             Event helpEvent = new Event(MENU_ID_HELP);
@@ -190,7 +214,7 @@ public class NavigationDrawerFragment extends Fragment {
             // 4. LogOUT
             Event exitEvent = new Event(MENU_ID_LOGOUT);
             exitEvent.setDescription(getString(R.string.action_logout));
-            exitEvent.setActivity(LoginActivity.class);
+            exitEvent.setActivity(LogOutActivity.class);
             exitEvent.setIconMenu(R.drawable.picture);
             mEventParents.add(new EventParent(exitEvent));
         }

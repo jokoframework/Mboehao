@@ -10,7 +10,7 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 
 import java.util.Date;
 

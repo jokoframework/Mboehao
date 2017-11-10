@@ -9,10 +9,9 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.CheckBox;
 
-import io.github.jokoframework.aplicationconstants.Constants;
-import io.github.jokoframework.dialog.SecurityDialog;
-import io.github.jokoframework.utilitys.ImageUtils;
-import com.example.simplerel.R;
+import io.github.jokoframework.mboehaolib.constants.Constants;import io.github.jokoframework.dialog.SecurityDialog;
+import io.github.jokoframework.mboehaolib.util.ImageUtils;
+import io.github.jokoframework.R;
 
 /**
  * Created by joaquin on 04/09/17.

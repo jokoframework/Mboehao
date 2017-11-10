@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.View;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 
 public class SecurityDialog {
 

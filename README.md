@@ -28,12 +28,12 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Ejecución de tareas periódicas
 - Uso de bases de datos SQLite con pattern tipo Service de Spring
 	- Copia mediante easter-egg del archivo de la base de datos
-- Uso de librería propia (bipolarlib) compartida como módulo Gradle y publicación a artifactory
+- Uso de librería propia (mboehaolib) compartida como módulo Gradle y publicación a artifactory
 - Gamification (puntos y medallas)
 - Notificaciones tipo cortina superior deslizante (Crouton)
 - Manejo de notificaciones dentro de la propia APP
 - Integración con Notification Server
-- Splay screen/About
+- Display screen/About
 - Modal con información de ayuda
 - Noticias periódicas vía API (Parse server, pero generalizable)
 - Recycler / Card view
@@ -45,7 +45,6 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Manejo de pestañas o tabs
 - Listado con agrupación por proyecto de formularios y documentos
 - Manejo de atributos en el header para ser multitenant
-- Cardview
 - Custom Share a redes sociales con conteo de estadísticas
 - Buzón de entrada de tareas asignadas
 
@@ -53,22 +52,29 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 
 Se listan a continuación las funcionalidades básicas que ya pueden ser vistas en el repositorio:
 - Login vía API Rest
+- Login con FaceBook
+- Login con JWT
 - Almacenamiento en MBAAS
-- Menu "hamburguer" lateral 
+- Logs Remotos vía API
+- Menu "hamburguer" lateral
 - Progress bar:
-    - Carga de contenido en activity
-	- Carga de contenido en activity login
+	- Carga de contenido en activity
+	- Carga de una página web dentro de un webview
 - Fabric/Crashlytics
 - Cambio de contraseña modal con medida de fuerza de la contraseña
 - Pantalla EULA (aceptar licencia)
 - Pantalla modal con advertencia para medidas de seguridad
 - Gráfico MPAndroidChart
-- Logs Remotos vía API
 - Compartir una imagen captura de sección de un activity (panel)
 - Ejecución de tareas periódicas
+- Uso de librería propia (mboehaolib) compartida como módulo Gradle
 - Notificaciones tipo cortina superior deslizante (Crouton)
-- Splay screen/About
-- Integración con Notification Server
+- Manejo de notificaciones dentro de la propia APP
+- Integración con Notification Server(Firebase)
+- Display screen/About
+- Noticias periódicas vía API (Parse server, pero generalizable)
+- Google Analytics(Firebase)
+- Uso del PreferencesActvity para configuraciones minimas de la APP.
 
 ## Parse
 
@@ -95,4 +101,3 @@ El proyecto siguee las convenciones del [Android Code Style Guidelines](http://s
 
 Este proyecto tiene una documentacion via Wiki, donde se va detallando con mayor precision las funcionalidades e implementaciones, y algunas referencias más
 que se pueden observar al llevar a cabo el proyecto. [Wiki Project](https://joko.miraheze.org/wiki/Mbo%60ehao).
-

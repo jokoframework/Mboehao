@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.simplerel">
+    package="io.github.jokoframework">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -22,12 +22,21 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name="io.github.jokoframework.activity.LoginActivity"
+            android:name="io.github.jokoframework.activity.SplashActivity"
             android:theme="@android:style/Theme.Holo.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="io.github.jokoframework.activity.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:windowSoftInputMode="stateHidden">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="io.github.jokoframework.activity.SplashActivity" />
         </activity>
         <activity
             android:name="io.github.jokoframework.activity.HomeActivity"
@@ -37,6 +46,20 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.jokoframework.activity.LoginActivity" />
+        </activity>
+        <activity android:name="com.facebook.FacebookActivity"
+            android:configChanges=
+                "keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name" />
+        <activity
+            android:name="com.facebook.CustomTabActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data android:scheme="@string/fb_login_protocol_scheme" />
+            </intent-filter>
         </activity>
         <activity
             android:name="io.github.jokoframework.activity.LineChartActivity"
@@ -49,12 +72,20 @@
             android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" />
         <activity
+            android:name="io.github.jokoframework.activity.LogOutActivity"
+            android:label="@string/app_name" />
+        <activity
             android:name="io.github.jokoframework.activity.HorizontalBarChartActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.OptionsActivity"
+            android:name="io.github.jokoframework.activity.SettingsActivity"
+            android:label="@string/app_name"
+            android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="io.github.jokoframework.activity.ChangePasswordActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo"
             android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
@@ -75,7 +106,9 @@
             android:enabled="true" />
         <service
             android:name="io.github.jokoframework.service.TestServiceNotification"
-            android:exported="false"
+            android:enabled="true"/>
+        <service
+            android:name="io.github.jokoframework.mboehaolib.service.CronService"
             android:enabled="true"/>
         <service
             android:name="io.github.jokoframework.service.FirebaseInstanceService">
@@ -90,6 +123,8 @@
             </intent-filter>
         </service>
 
+        <meta-data android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id"/>
         <meta-data
             android:name="com.parse.push.gcm_sender_id"
             android:value="id:1037867417276" />
@@ -106,7 +141,8 @@
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="default_channel_id"/>
-
+        <meta-data android:name="com.facebook.accountkit.FacebookAppEventsEnabled"
+            android:value="false"/>
         <meta-data
             android:name="com.parse.SERVER_URL"
             android:value="@string/parse_server_url" />
@@ -116,6 +152,8 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="f66595d9e071f4871fbeda4d6d8f0957c9a85bae" />
+
+
     </application>
 
 </manifest>

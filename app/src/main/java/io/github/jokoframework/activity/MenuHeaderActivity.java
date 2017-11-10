@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 
 /**
  * Created by joaquin on 23/08/17.

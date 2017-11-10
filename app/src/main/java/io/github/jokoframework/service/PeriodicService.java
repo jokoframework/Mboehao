@@ -7,11 +7,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.preference.Preference;
 import android.util.Log;
 
 import java.util.Calendar;
-
-import io.github.jokoframework.aplicationconstants.Constants;
 
 /**
  * Created by joaquin on 28/09/17.
@@ -50,13 +49,14 @@ public class PeriodicService extends Service {
 
         // Alarm time in System.currentTimeMillis() (wall clock time in UTC), which will wake up the device when it goes off.
         long triggerAt = calendar.getTimeInMillis();
+        long triggerRepeat = triggerAt * 60 * 6;
 
         Log.d(LOG_TAG, String.format("Alarma %s hora: %s", clazz.getSimpleName(), calendar.getTime()));
 
         if (Build.VERSION.SDK_INT >= 19) {
             alarmMgr.setExact(type, triggerAt, getPendingIntent(context, clazz));
         } else {
-            alarmMgr.setRepeating(type, triggerAt, interval, getPendingIntent(context, clazz));
+            alarmMgr.setRepeating(type, triggerRepeat, interval, getPendingIntent(context, clazz));
         }
     }
 
@@ -75,7 +75,8 @@ public class PeriodicService extends Service {
 
         Log.d(LOG_TAG, String.format("Alarma %s hora: %s", clazz.getSimpleName(), calendar.getTime()));
 
-        alarmMgr.setInexactRepeating(type, triggerAt,interval, getPendingIntent(context, clazz));
+        alarmMgr.setExact(type, triggerAt, getPendingIntent(context, clazz));
+
     }
 
     protected static void cancelAlarm(Context context, Class<? extends PeriodicService> clazz) {

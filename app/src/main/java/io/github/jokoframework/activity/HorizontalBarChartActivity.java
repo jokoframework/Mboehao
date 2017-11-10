@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.github.mikephil.charting.charts.HorizontalBarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
-import io.github.jokoframework.mark.MyDialogMarkView;
+import io.github.jokoframework.mboehaolib.mark.MyDialogMarkView;
 
 /**
  * Created by joaquin on 12/09/17.
@@ -58,7 +58,7 @@ public class HorizontalBarChartActivity extends Activity {
         desc.setTextColor(R.color.white);
         horizontalBarChart.setDescription(desc);
         horizontalBarChart.setBackgroundColor(getResources().getColor(R.color.white));
-        horizontalBarChart.setMarker(new MyDialogMarkView(this,R.layout.marker_dialog)); // se puede hacer varias clases de Marks, segun graficos o topicos...
+        horizontalBarChart.setMarker(new MyDialogMarkView(this)); // se puede hacer varias clases de Marks, segun graficos o topicos...
         horizontalBarChart.setScaleEnabled(true);
         horizontalBarChart.animateXY(2000,2000);
 

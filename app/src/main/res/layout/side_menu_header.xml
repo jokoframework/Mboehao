@@ -19,4 +19,12 @@
         android:layout_gravity="center"
         android:contentDescription="@string/about_image" />
 
+    <TextView
+        android:id="@+id/personalize_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_gravity="center"
+        />
+
 </LinearLayout>

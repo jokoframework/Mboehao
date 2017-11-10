@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">mboehaoLib</string>
+    <string name="error_activity_filter">io.github.jokoframework.miscutils</string>
+    <string name="show_error_activity_filter">pio.github.jokoframework.miscutils.showerror</string>
+</resources>

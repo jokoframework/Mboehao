@@ -9,11 +9,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
-
-import io.github.jokoframework.mark.MyMarkView;
+import io.github.jokoframework.mboehaolib.mark.MyMarkView;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.github.mikephil.charting.charts.LineChart;
 
 import com.github.mikephil.charting.components.Description;
@@ -58,7 +57,7 @@ public class LineChartActivity extends Activity {
         Description desc = new Description();
         desc.setText(getString(R.string.chart_description));
         desc.setTextColor(R.color.white);
-        lineChart.setMarker(new MyMarkView(this, R.layout.marker_tryout));
+        lineChart.setMarker(new MyMarkView(this));
         lineChart.setDrawMarkers(true);
         lineChart.setDescription(desc);
         lineChart.setBackgroundColor(getResources().getColor(R.color.white));

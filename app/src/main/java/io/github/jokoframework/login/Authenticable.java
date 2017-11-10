@@ -18,6 +18,11 @@ public interface Authenticable {
     Map<String,String> getCustom();
     boolean authenticate();
 
+    void setUserField(EditText userField);
+
+    void setPassField(EditText passField);
+
+
     void setPassword(String pPassword);
     void setUser(String pUser);
     void setCustom(Map<String, String> pCustom);

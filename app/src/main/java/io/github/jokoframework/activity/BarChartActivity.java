@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.MenuItem;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
@@ -23,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import io.github.jokoframework.datacharts.FloatDataPair;
-import io.github.jokoframework.mark.MyMarkView;
+import io.github.jokoframework.mboehaolib.mark.MyMarkView;
 
 
 public class BarChartActivity extends Activity {
@@ -55,7 +55,7 @@ public class BarChartActivity extends Activity {
         barChart.setDescription(desc);
         barChart.setBackgroundColor(getResources().getColor(R.color.white));
         barChart.setDrawGridBackground(false);
-        barChart.setMarker(new MyMarkView(this,R.layout.marker_tryout));
+        barChart.setMarker(new MyMarkView(this));
         barChart.setScaleEnabled(true);
         barChart.animateXY(2000,2000);
 

@@ -12,7 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
 
@@ -26,11 +26,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.github.jokoframework.aplicationconstants.Constants;
-import io.github.jokoframework.datacharts.FloatDataPair;
-import io.github.jokoframework.mark.MyMarkView;
-import io.github.jokoframework.utilitys.Utils;
+import io.github.jokoframework.mboehaolib.constants.Constants;import io.github.jokoframework.datacharts.FloatDataPair;
+import io.github.jokoframework.mboehaolib.util.Utils;
 
+import io.github.jokoframework.mboehaolib.mark.MyMarkView;
 
 /**
  * Created by joaquin on 14/09/17.
@@ -60,7 +59,6 @@ public class ShareActivity extends FragmentActivity {
         setUpChart(getLineChart());
         if (isExternalStorageWritable()) {
             if (wasImageGeneratedSave()) {
-                Toast.makeText(this, String.format("The Image is correctly save in !!"), Toast.LENGTH_LONG).show();
                 final View share = findViewById(R.id.imageShareCustomPlot);
                 share.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -70,14 +68,15 @@ public class ShareActivity extends FragmentActivity {
                 });
             }else {
                 //still do not do anything...
-                Toast.makeText(this, String.format("The Image was NOT correctly save in !!"), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, String.format("Something went WRONG!"), Toast.LENGTH_LONG).show();
+                Log.e(LOG_TAG,"Imagen del Share Activity sin guardar correctamente!");
             }
         }
     }
 
     private Intent getShareIntent() {
         File datapath = this.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-        File file = new File(datapath,String.format("mboehao-%s.png", Utils.getFormattedDate(new Date())));
+        File file = new File(datapath,String.format("MboehaoApplication-%s.png", Utils.getFormattedDate(new Date())));
         Intent intent = new Intent();
         Uri uri = Uri.fromFile(file);
         intent.setAction(Intent.ACTION_SEND);
@@ -100,7 +99,7 @@ public class ShareActivity extends FragmentActivity {
         Description desc = new Description();
         desc.setText(getString(R.string.chart_description));
         desc.setTextColor(getResources().getColor(R.color.black));
-        lineChart.setMarker(new MyMarkView(this, R.layout.marker_tryout));
+        lineChart.setMarker(new MyMarkView(this));
         lineChart.setDrawMarkers(true);
         lineChart.setDescription(desc);
         lineChart.setBackgroundColor(getResources().getColor(R.color.white));
@@ -168,7 +167,7 @@ public class ShareActivity extends FragmentActivity {
         OutputStream os = null;
         try {
             File rootDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
-            File imageFileName = new File(rootDirectory, String.format("mboehao-%s.png", Utils.getFormattedDate(new Date())));
+            File imageFileName = new File(rootDirectory, String.format("MboehaoApplication-%s.png", Utils.getFormattedDate(new Date())));
             if(imageFileName.exists()){
                 imageFileName.delete();
             }

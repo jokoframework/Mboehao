@@ -33,6 +33,18 @@
                 android:text="Enter"
                 android:textColor="#FFFFFF" />
 
+
+            <com.facebook.login.widget.LoginButton
+                android:id="@+id/login_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp"
+                android:layout_below="@+id/buttonEnter"
+                />
+
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
@@ -70,6 +82,7 @@
                 android:padding="10dp" />
 
         </RelativeLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -85,6 +98,16 @@
             style="?android:attr/progressBarStyleLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+
+        <ImageView
+            android:id="@+id/imageLogin"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="30dp"
+            android:animateLayoutChanges="false"
+            android:scaleType="fitCenter"
+            app:srcCompat="@drawable/mboehao_ic" />
 
     </LinearLayout>
 

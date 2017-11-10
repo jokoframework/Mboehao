@@ -9,9 +9,12 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import io.github.jokoframework.mboehaolib.pojo.EventParent;
+import io.github.jokoframework.mboehaolib.pojo.Event;
+
+import io.github.jokoframework.R;
+
 import java.util.List;
-import io.github.jokoframework.pojo.*;
-import com.example.simplerel.R;
 
 /**
  * Created by joaquin on 23/08/17.

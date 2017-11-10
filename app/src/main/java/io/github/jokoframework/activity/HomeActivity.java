@@ -1,15 +1,13 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
@@ -23,18 +21,23 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.Toast;
 
-import com.example.simplerel.R;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
 import com.parse.ParseUser;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import org.apache.commons.lang3.StringUtils;
+
+import java.util.Date;
+
+import de.keyboardsurfer.android.widget.crouton.Style;
+import io.github.jokoframework.R;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
-import io.github.jokoframework.pojo.Event;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.mboehaolib.pojo.Event;
+import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.service.TestServiceNotification;
 
 
@@ -43,6 +46,12 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     private static final String TAG = FirebaseInstanceIdService.class.getSimpleName();
     private NavigationDrawerFragment mNavigationDrawerFragment;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        showAppNews();
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,9 +97,12 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             progressBarView.setActivated(true);
         }
 
+        @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
-            view.loadUrl(String.valueOf(request.getUrl()));
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                view.loadUrl(String.valueOf(request.getUrl()));
+            }
             return super.shouldOverrideUrlLoading(view, request);
         }
 
@@ -139,6 +151,11 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         if (item.getItemId() == R.id.menu_item_share) {
             Intent share = new Intent(HomeActivity.this, ShareActivity.class);
             startActivity(share);
+            finish();
+        }
+        if (item.getItemId() == R.id.menu_item_preferences) {
+            Intent pref = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(pref);
             finish();
         }
         return super.onMenuItemSelected(featureId, item);
@@ -202,7 +219,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         webView.loadUrl(getString(R.string.urlWiki));
     }
 
-    public static void startAlarmServices(Context context) {
+    public void startAlarmServices(Context context) {
         if (context != null) {
             TestServiceNotification.setAlarm(context);
         } else {
@@ -218,8 +235,24 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
+    protected void showAppNews() {
+        long appNewsShowedTime = Utils.getLongPrefs(this, Constants.USER_PREFERENCE_APP_NEWS_SHOWED_TIME);
+//        String appNews = Utils.getPrefs(this, Constants.USER_PREFERENCE_APP_NEWS);
+        String appNews = getString(R.string.appnews);
+        if (StringUtils.isNotBlank(appNews)
+                && (appNewsShowedTime <= 0L || !showedInLastHour(appNewsShowedTime))
+                ) {
+            //Mostramos la primera vez, o cada 1 hora como máximo
+            Utils.showStickyMessage(this, appNews, Style.INFO);
+            //msgInfo.setConfiguration(new Configuration.Builder().setDuration(Configuration.DURATION_LONG));
+            Utils.addPrefs(this, Constants.USER_PREFERENCE_APP_NEWS_SHOWED_TIME, new Date().getTime());
+        }
+    }
+
+    protected boolean showedInLastHour(long appNewsShowed) {
+        long elapsed = new Date().getTime() - appNewsShowed;
+        Log.d(LOG_TAG, String.format("se registraron %s segundos de la última muestra de noticias.",
+                elapsed / 1000));
+        return elapsed < Constants.ONE_HOUR;
     }
 }

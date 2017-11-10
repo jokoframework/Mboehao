@@ -17,8 +17,10 @@
     <string name="bar_chart">BarChart</string>
     <string name="horizontal_bar_chart">HorizontalBarChart</string>
     <string name="share_label">Compartir</string>
+    <string name="bad_credentials">Usuario y/o clave son incorrectas</string>
     <string name="trophy_gallery">Palmarés</string>
     <string name="parent_charts">Charts</string>
+    <string name="parent_options">Options</string>
     <string name="navigation_drawer_open">Abrir barra de navegación</string>
     <string name="navigation_drawer_close">Cerrar barra de navegación</string>
     <string name="refresh_label">Refresh</string>
@@ -27,7 +29,7 @@
     <string name="loading_web_page">Cargando desde la web...</string>
     <string name="urlWiki">https://joko.miraheze.org/wiki/Mbo%60ehao</string>
     <string name="errorLoadingPage">Error cargando la página</string>
-    <string name="optionsDescription">Change Password</string>
+    <string name="changePasswordDescription">Change Password</string>
     <string name="button_save">Save</string>
     <string name="button_back">Back</string>
     <string name="settings_password2">Rewrite Password</string>
@@ -67,5 +69,84 @@
     <string name="version_number">v1.0</string>
     <string name="version_name">v1.0.7</string>
     <string name="msg_token_fmt">FCM Token</string>
+    <string name="preferences">Preferences</string>
+    <string name="pref_title_new_message_notifications">Allow Notifications</string>
+    <string name="pref_title_vibrate">Vibrate</string>
+    <string name="pref_title_ringtone">Ringtone</string>
+    <string name="choose_time">Choose Time Notificacion</string>
+    <string name="pref_title_time">Time Selector</string>
+    <string name="pref_description_social_recommendations">Recommendations for people to contact         based on your message history</string>
+    <string name="pref_title_social_recommendations">Enable social recommendations</string>
+    <string name="pref_title_display_name">Display name</string>
+    <string name="pref_default_display_name">John Snow</string>
+    <string-array name="pref_example_list_titles">
+        <item>Always</item>
+        <item>When possible</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_example_list_values">
+        <item>1</item>
+        <item>0</item>
+        <item>-1</item>
+    </string-array>
+
+    <!-- Strings related to Settings -->
+
+    <!-- Example General settings -->
+    <string name="pref_header_general">General</string>
+
+    <string name="pref_title_add_friends_to_messages">Add friends to messages</string>
+
+    <!-- Example settings for Data & Sync -->
+    <string name="pref_header_data_sync">Data &amp; sync</string>
+
+    <string name="pref_title_sync_frequency">Sync frequency</string>
+    <string-array name="pref_sync_frequency_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>6 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_sync_frequency_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>360</item>
+        <item>-1</item>
+    </string-array>
+
+    <string-array name="list_preference_entries">
+        <item>Entry 1</item>
+        <item>Entry 2</item>
+        <item>Entry 3</item>
+    </string-array>
+
+    <string-array name="list_preference_entry_values">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+    </string-array>
+
+    <string-array name="multi_select_list_preference_default_value" />
+
+    <string name="pref_title_system_sync_settings">System sync settings</string>
+
+    <!-- Example settings for Notifications -->
+    <string name="pref_header_notifications">Notifications</string>
+    <string name="pref_ringtone_silent">Silent</string>
+    <string name="dummyHostname">http://localhost\\</string>
+    <string name="defaultSwitchMessage">Sin entrada</string>
+    <string name="mistakeToSignIn">Usuario y/o clave son incorrectas</string>
+    <string name="error_field_required">Campo Obligatorio</string>
+    <string name="error_invalid_password">La contraseña debe tener como minimo 4 dígitos</string>
+    <string name="error_incorrect_credentials">Credenciales incorrectas</string>
+    <string name="no_network_connection">Sin conexión a Internet. Mboehao necesita una conexión a internet.</string>
+    <string name="facebook_app_id">1991419877802660</string>
+    <string name="fb_login_protocol_scheme">fb1991419877802660</string>
+    <string name="appnews">No se olvide de dejar sus comentarios!</string>
+
 
 </resources>

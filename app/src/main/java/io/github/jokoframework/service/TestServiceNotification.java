@@ -4,14 +4,16 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+
 import android.support.v4.app.NotificationCompat;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.parse.ParseUser;
 
 import io.github.jokoframework.activity.HomeActivity;
 import io.github.jokoframework.activity.LoginActivity;
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.mboehaolib.util.Utils;
 
 /**
  * Created by joaquin on 03/10/17.
@@ -19,6 +21,16 @@ import io.github.jokoframework.aplicationconstants.Constants;
 
 public class TestServiceNotification extends PeriodicService {
     public static final String LOG_TAG = TestServiceNotification.class.getSimpleName();
+
+    private static boolean alarmForSet;
+
+    public static boolean isAlarmForSet() {
+        return alarmForSet;
+    }
+
+    public static void setAlarmForSet(boolean alarmSet) {
+        alarmForSet = alarmSet;
+    }
 
     private Integer notificationIconId;
 
@@ -33,7 +45,6 @@ public class TestServiceNotification extends PeriodicService {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
         notificationBuilder();
-        TestServiceNotification.setAlarm(this);
         return START_NOT_STICKY;
     }
 
@@ -63,7 +74,6 @@ public class TestServiceNotification extends PeriodicService {
                 .setContentText(message)
                 .setSmallIcon(getNotificationIconId())
                 .setAutoCancel(true);
-
         builder.setVibrate(pattern);
 
         builder.setContentIntent(notifyPendingIntent);
@@ -73,11 +83,16 @@ public class TestServiceNotification extends PeriodicService {
     }
 
     public static void setAlarm(Context context) {
+        setAlarmForSet(Utils.getBooleanPrefs(context,Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED));
         if (context != null) {
             ParseUser user = ParseUser.getCurrentUser();
             if (user != null) {
                 setServiceClass(TestServiceNotification.class);
-                PeriodicService.setAlarm(context,14,0,Constants.ONE_DAY,getServiceClass());
+                if(isAlarmForSet()){
+                    PeriodicService.setAlarm(context,0,1,0,Constants.ONE_DAY,getServiceClass());
+                }else{
+                    cancelAlarm(context);
+                }
             }
         }
     }
@@ -85,5 +100,4 @@ public class TestServiceNotification extends PeriodicService {
     public static void cancelAlarm(Context context){
         PeriodicService.cancelAlarm(context,TestServiceNotification.class);
     }
-
 }

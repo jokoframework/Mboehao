@@ -1,11 +1,14 @@
 package io.github.jokoframework.login;
 
+
 import android.app.Activity;
 import android.content.Intent;
+
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -18,16 +21,17 @@ import com.parse.SaveCallback;
 import java.util.Map;
 
 import io.github.jokoframework.activity.HomeActivity;
-import io.github.jokoframework.aplicationconstants.Constants;
-import io.github.jokoframework.logger.RemoteLogger;
-import io.github.jokoframework.utilitys.ParseUtils;
-import io.github.jokoframework.utilitys.SecurityUtils;
-import io.github.jokoframework.utilitys.Utils;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.mboehaolib.logger.RemoteLogger;
+import io.github.jokoframework.mboehaolib.util.ParseUtils;
+import io.github.jokoframework.mboehaolib.util.SecurityUtils;
+import io.github.jokoframework.mboehaolib.util.Utils;
 
 
 public class ParseLogin implements Authenticable {
 
     private String user,password;
+    private EditText userTextField,passTextField;
 
     private Map<String,String> custom;
 
@@ -67,7 +71,6 @@ public class ParseLogin implements Authenticable {
     public void setProgressBar(ProgressBar progressBar) {
         this.progressBar = progressBar;
     }
-
 
     @Override
     public String getPassword() {
@@ -120,6 +123,16 @@ public class ParseLogin implements Authenticable {
     }
 
     @Override
+    public void setUserField(EditText userField) {
+        this.userTextField = userField;
+    }
+
+    @Override
+    public void setPassField(EditText passField) {
+        this.passTextField = passField;
+    }
+
+    @Override
     public void setPassword(String pPassword) {
         this.password = pPassword;
     }
@@ -161,7 +174,6 @@ public class ParseLogin implements Authenticable {
         toast.show();
 
         RemoteLogger.e(LOG_TAG,e.getMessage());
-
     }
 
     private void somethingWentWrong(){
