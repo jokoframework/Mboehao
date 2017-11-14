@@ -1,30 +1,22 @@
 package io.github.jokoframework.activity;
 
-import android.annotation.SuppressLint;
+
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import io.github.jokoframework.login.Authenticable;
 import io.github.jokoframework.login.ParseLogin;
 import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.logger.RemoteLogger;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
 
@@ -64,8 +56,6 @@ import rx.schedulers.Schedulers;
 
 
 import java.io.IOException;
-import java.util.Arrays;
-
 
 public class LoginActivity extends Activity implements ProcessError {
 
@@ -140,73 +130,58 @@ public class LoginActivity extends Activity implements ProcessError {
         Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_PW));
-        facebookLogin();
         enterButton = (Button) findViewById(R.id.buttonEnter);
+        LoginButton loginButton = findViewById(R.id.login_button);
         userTextField = (EditText) findViewById(R.id.user);
         passTextField = (EditText) findViewById(R.id.pass);
         saveCredentials = (CheckBox) findViewById(R.id.checkBox);
         userTextField.setText(decryptedUser);
         passTextField.setText(decryptedPassword);
         //Si el usuario es diferente se tiene que vaciar el password...
-        CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField,passTextField);
+        CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
         enterButton.setOnClickListener(new clickEnter());
+        loginButton.registerCallback(callbackManager, new facebookCallbackLogin());
     }
 
-    public void facebookLogin(){
-        Profile user = Profile.getCurrentProfile();
-        if(user != null){
+    private class facebookCallbackLogin implements FacebookCallback<LoginResult>{
+        @Override
+        public void onSuccess(LoginResult loginResult) {
+            mProfileTracker = new ProfileTracker() {
+                @Override
+                protected void onCurrentProfileChanged(
+                        Profile oldProfile,
+                        Profile currentProfile) {
+                    currentUser = currentProfile;
+                    // App code
+                }
+            };
+            accessTokenTracker = new AccessTokenTracker() {
+                @Override
+                protected void onCurrentAccessTokenChanged(
+                        AccessToken oldAccessToken,
+                        AccessToken currentAccessToken) {
+                    // Set the access token using
+                    // currentAccessToken when it's loaded or set.
+                    accessToken = currentAccessToken;
+                }
+            };
+            if(currentUser != null)
+                Utils.addPrefs(thisActivity(),Constants.FACEBOOK_PROFILE_DATA,currentUser.getName());
             loginSuccessful();
-        } else{
-            LoginButton loginButton = findViewById(R.id.login_button);
-            loginButton.setReadPermissions("public_profile");
-            // Callback registration
-            if(Utils.isNetworkAvailable(mySelf)) {
-                currentUser = Profile.getCurrentProfile();
-                accessToken = AccessToken.getCurrentAccessToken();
+        }
 
-                loginButton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
-                    @Override
-                    public void onSuccess(LoginResult loginResult) {
-                        mProfileTracker = new ProfileTracker() {
-                            @Override
-                            protected void onCurrentProfileChanged(
-                                    Profile oldProfile,
-                                    Profile currentProfile) {
-                                currentUser = currentProfile;
-                                // App code
-                            }
-                        };
+        @Override
+        public void onCancel() {
+            //App code
+        }
 
-                        accessTokenTracker = new AccessTokenTracker() {
-                            @Override
-                            protected void onCurrentAccessTokenChanged(
-                                    AccessToken oldAccessToken,
-                                    AccessToken currentAccessToken) {
-                                // Set the access token using
-                                // currentAccessToken when it's loaded or set.
-                                accessToken = currentAccessToken;
-                            }
-                        };
-                        if(currentUser != null)
-                            Utils.addPrefs(thisActivity(),Constants.FACEBOOK_PROFILE_DATA,currentUser.getName());
-                        loginSuccessful();
-                    }
-                    @Override
-                    public void onCancel() {
-                        // App code
-                    }
-                    @Override
-                    public void onError(FacebookException exception) {
-                        // App code
-                    }
-                });
-            }else{
-                Toast.makeText(thisActivity,"No tiene conexion a internet!!", Toast.LENGTH_LONG).show();
-            }
-
+        @Override
+        public void onError(FacebookException error) {
+            //App code
         }
     }
+
 
     private class clickEnter implements View.OnClickListener{
         @Override
