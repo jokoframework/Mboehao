@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.parse.SaveCallback;
 
 import org.apache.commons.lang3.StringUtils;

@@ -11,7 +11,7 @@ import android.view.WindowManager;
 import java.util.HashMap;
 import java.util.Map;
 import io.github.jokoframework.aplicationconstants.Constants;
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.androidplot.xy.XYPlot;
 
 /**

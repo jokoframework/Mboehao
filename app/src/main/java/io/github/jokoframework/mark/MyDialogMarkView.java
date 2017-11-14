@@ -4,7 +4,7 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.simplerel.R;
+import io.github.jokoframework.R;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
