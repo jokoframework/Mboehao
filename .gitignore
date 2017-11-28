@@ -5,6 +5,7 @@ local.properties
 lint.xml
 .DS_Store
 *.iml
+**/*.iml
 app/*.apk
 captures
 projectFilesBackup/
