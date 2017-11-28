@@ -12,18 +12,8 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
-
-import io.github.jokoframework.login.Authenticable;
-import io.github.jokoframework.login.ParseLogin;
-import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.util.SecurityUtils;
-import io.github.jokoframework.mboehaolib.util.Utils;
 
 import com.crashlytics.android.Crashlytics;
-
-import io.fabric.sdk.android.Fabric;
-
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
@@ -36,26 +26,28 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import java.io.IOException;
+
+import io.fabric.sdk.android.Fabric;
+import io.github.jokoframework.BuildConfig;
+import io.github.jokoframework.R;
 import io.github.jokoframework.eula.Eula;
+import io.github.jokoframework.login.CredentialsTextView;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.mboehaolib.util.SecurityUtils;
+import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.misc.Utilitys;
-import io.github.jokoframework.login.CredentialsTextView;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
 import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.singleton.MboehaoApp;
-
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
-
-import io.github.jokoframework.R;
 import rx.schedulers.Schedulers;
-
-
-import java.io.IOException;
 
 public class LoginActivity extends Activity implements ProcessError {
 
@@ -78,9 +70,9 @@ public class LoginActivity extends Activity implements ProcessError {
     private Profile currentUser;
 
 
-    private EditText userTextField,passTextField;
+    private EditText userTextField, passTextField;
 
-    private String LOG_TAG =  LoginActivity.class.getSimpleName();
+    private String LOG_TAG = LoginActivity.class.getSimpleName();
     private View progressView;
     private ImageView imageLogin;
     private CheckBox saveCredentials;
@@ -91,9 +83,9 @@ public class LoginActivity extends Activity implements ProcessError {
         return thisActivity;
     }
 
-    CallbackManager callbackManager = CallbackManager.Factory.create();
+    private CallbackManager callbackManager = CallbackManager.Factory.create();
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         callbackManager.onActivityResult(requestCode, resultCode, data);
     }
@@ -102,7 +94,7 @@ public class LoginActivity extends Activity implements ProcessError {
         this.thisActivity = activity;
     }
 
-    public void saveCredentials(String user, String pass){
+    public void saveCredentials(String user, String pass) {
         if (saveCredentials.isChecked()) {
             String usernameEncrypted = SecurityUtils.encrypt(user);
             String passwordEncrypted = SecurityUtils.encrypt(pass);
@@ -122,10 +114,16 @@ public class LoginActivity extends Activity implements ProcessError {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeUI();
+    }
+
+    private void initializeUI() {
         setContentView(R.layout.activity_login);
         HomeActivity.cancelAlarmServices(this);
         setActivity(this);
-        Fabric.with(this, new Crashlytics());
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         mySelf = this;
         Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
@@ -140,11 +138,11 @@ public class LoginActivity extends Activity implements ProcessError {
         //Si el usuario es diferente se tiene que vaciar el password...
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
-        enterButton.setOnClickListener(new clickEnter());
-        loginButton.registerCallback(callbackManager, new facebookCallbackLogin());
+        enterButton.setOnClickListener(new ClickEnterHandler());
+        loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
     }
 
-    private class facebookCallbackLogin implements FacebookCallback<LoginResult>{
+    private class FacebookCallbackLogin implements FacebookCallback<LoginResult> {
         @Override
         public void onSuccess(LoginResult loginResult) {
             mProfileTracker = new ProfileTracker() {
@@ -166,8 +164,8 @@ public class LoginActivity extends Activity implements ProcessError {
                     accessToken = currentAccessToken;
                 }
             };
-            if(currentUser != null)
-                Utils.addPrefs(thisActivity(),Constants.FACEBOOK_PROFILE_DATA,currentUser.getName());
+            if (currentUser != null)
+                Utils.addPrefs(thisActivity(), Constants.FACEBOOK_PROFILE_DATA, currentUser.getName());
             loginSuccessful();
         }
 
@@ -183,7 +181,7 @@ public class LoginActivity extends Activity implements ProcessError {
     }
 
 
-    private class clickEnter implements View.OnClickListener{
+    private class ClickEnterHandler implements View.OnClickListener {
         @Override
         public void onClick(View view) {
             final String username = userTextField.getText().toString();
@@ -195,19 +193,19 @@ public class LoginActivity extends Activity implements ProcessError {
             progressView.setVisibility(View.VISIBLE); // Muestra el progress bar mientras se obtine el acceso...
 
 //            -----LOGIN WITH PARSE--------------------------
-            Authenticable parseLogin = new ParseLogin(enterButton,progressView, mySelf,saveCredentials);
+            /*Authenticable parseLogin = new ParseLogin(enterButton,progressView, mySelf,saveCredentials);
             parseLogin.setPassword(password);
             parseLogin.setUser(username);
             parseLogin.saveCredentials();
-            parseLogin.authenticate();
+            parseLogin.authenticate();*/
 
 ////            ------JWT LOGIN---------------------------------
-//            saveCredentials(username,password);
-//            attemptLogin();
+            saveCredentials(username, password);
+            attemptLogin();
         }
     }
 
-    private void sendErrorLoginMessage(String message){
+    private void sendErrorLoginMessage(String message) {
         Utils.showStickyMessage(this, message);
     }
 
@@ -231,11 +229,11 @@ public class LoginActivity extends Activity implements ProcessError {
         View focusView = null;
         // Check for a valid password, if the user entered one.
         if (TextUtils.isEmpty(password)) {
-            passTextField.setError(String.format("%s",R.string.error_field_required));
+            passTextField.setError(String.format("%s", R.string.error_field_required));
             focusView = passTextField;
             cancel = true;
         } else if (!TextUtils.isEmpty(password) && !isPasswordValid(password)) {
-            passTextField.setError(String.format("%s",R.string.error_invalid_password));
+            passTextField.setError(String.format("%s", R.string.error_invalid_password));
             focusView = passTextField;
             cancel = true;
         }
@@ -246,7 +244,7 @@ public class LoginActivity extends Activity implements ProcessError {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            userLogin(username,password);
+            userLogin(username, password);
         }
     }
 
@@ -275,10 +273,12 @@ public class LoginActivity extends Activity implements ProcessError {
                     public void onCompleted() {
                         //no se usa
                     }
+
                     @Override
                     public void onError(Throwable e) {
                         sendErrorLoginMessage(e.getMessage());
                     }
+
                     @Override
                     public void onNext(String token) {
                         makeLoginRequest(username, password, authApi);
@@ -339,14 +339,14 @@ public class LoginActivity extends Activity implements ProcessError {
         userTextField.requestFocus();
     }
 
-    private void loginJWT(){
+    private void loginJWT() {
         Intent i = new Intent(thisActivity, HomeActivity.class);
         thisActivity().startActivity(i);
         thisActivity().finish();
         progressView.setVisibility(View.INVISIBLE);
     }
 
-    private void loginSuccessful(){
+    private void loginSuccessful() {
         Intent i = new Intent(thisActivity, HomeActivity.class);
         thisActivity.startActivity(i);
         thisActivity.finish();

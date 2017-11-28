@@ -6,9 +6,6 @@ import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
 import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * Created by joaquin on 10/08/17.
@@ -62,12 +59,12 @@ public class Constants {
     //Miscelaneos
     public static final String DATE_TIME_FORMAT_ISO_8601 = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'";
 
-    public static final String API_URL = "/security/api";
+    public static final String API_URL = "/joko/api";
 
-    // Para pruebas en servidores de Testing (sólo sobre HTTP)
-    public static final String SERVER_NAME = "10.1.1.180";
-    public static final String SERVER_PORT = "8080";
-    public static final String BASE_URL = "http://" + SERVER_NAME + ":" + SERVER_PORT;
+    // Para pruebas en servidores de Testing
+    public static final String SERVER_NAME = "testing.sodep.com.py";
+    public static final String SERVER_PORT = "443";
+    public static final String BASE_URL = "https://" + SERVER_NAME + ":" + SERVER_PORT;
 
     //Defaults
     public static final int DEFAULT_WARNING_POINTS_SIZE = 32;
