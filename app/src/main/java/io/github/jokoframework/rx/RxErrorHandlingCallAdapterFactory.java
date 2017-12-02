@@ -3,6 +3,8 @@ package io.github.jokoframework.rx;
 import android.content.Context;
 import android.util.Log;
 
+import com.facebook.login.LoginManager;
+
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
@@ -12,9 +14,9 @@ import java.net.UnknownHostException;
 
 import io.github.jokoframework.exception.NoFinhealthServerConnection;
 import io.github.jokoframework.mboehaolib.rx.RetrofitException;
-import io.github.jokoframework.misc.Utilitys;
-
+import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.singleton.MboehaoApp;
+import io.github.jokoframework.utilities.AppUtils;
 import retrofit2.Call;
 import retrofit2.CallAdapter;
 import retrofit2.Response;
@@ -75,41 +77,44 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                 @Override
                 public Observable call(final Throwable throwable) {
                     if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException
-                            || throwable instanceof  retrofit2.adapter.rxjava.HttpException
+                            || throwable instanceof retrofit2.adapter.rxjava.HttpException
                             || throwable instanceof ConnectException) {
                         Observable observableWithError = Observable.create(new Observable.OnSubscribe<Object>() {
                             @Override
                             public void call(Subscriber<? super Object> subscriber) {
                                 final String msg = String.format("Exception en el Observable: %s", throwable);
                                 Log.d(LOG_TAG, msg);
-                                try {
-                                    if(throwable instanceof HttpException) {
-                                        int code = ((HttpException) throwable).code();
-                                        if (code == 401){
-                                            // Una excepción con código 401 nos indica que no hay autorización
-                                            // para realizar la petición. Si llegó a este punto significa
-                                            // que no se pudo renovar el access token (lo más probable es que
-                                            // haya iniciado sesión en otro dispositivo lo que hizo que se
-                                            // revocara el refresh token que tenía anteriormente), por lo tanto hay
-                                            // que volver a autenticar al usuario.
-                                            Log.d(LOG_TAG, "Se detectó una petición no autorizada. Se solicita de vuelta el login.");
-                                            Utilitys.showLogin(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
-                                        } else if (code >= 500 && code <= 599){
-                                                Log.e(LOG_TAG,
-                                                    String.format("No se puede contactar con el servidor en estos momentos: %s",
-                                                            throwable.getMessage()),
-                                                    throwable);
-                                        } else if(throwable instanceof  SocketTimeoutException) {
-                                            Utilitys.showTimeOutError(MboehaoApp.getSingletonApplicationContext(), (SocketTimeoutException) throwable);
-                                        } else {
-                                            Utilitys.showHttpError(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
-                                        }
+                                if (throwable instanceof HttpException) {
+                                    int code = ((HttpException) throwable).code();
+                                    if (code == 401) {
+                                        // Una excepción con código 401 nos indica que no hay autorización
+                                        // para realizar la petición. Si llegó a este punto significa
+                                        // que no se pudo renovar el access token (lo más probable es que
+                                        // haya iniciado sesión en otro dispositivo lo que hizo que se
+                                        // revocara el refresh token que tenía anteriormente), por lo tanto hay
+                                        // que volver a autenticar al usuario.
+                                        Log.d(LOG_TAG, "Se detectó una petición no autorizada. Se solicita de vuelta el login.");
+                                        Utils.showStickyMessage(MboehaoApp.getActivity(), "Por favor ingrese de nuevo");
+                                        AppUtils.showLogin(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
+                                        LoginManager.getInstance().logOut();
+                                    } else if (code >= 500 && code <= 599) {
+                                        final String message = String.format("No se puede contactar con el servidor en estos momentos: %s",
+                                                throwable.getMessage());
+                                        Log.e(LOG_TAG, message, throwable);
+                                        MboehaoApp.setProgressMessage(message);
+                                        Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+                                        LoginManager.getInstance().logOut();
+                                    } else if (throwable instanceof SocketTimeoutException) {
+                                        String message = "La conexión con el servidor es inestable, intente de vuelta en unos momentos";
+                                        Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+                                        AppUtils.showTimeOutError(MboehaoApp.getSingletonApplicationContext(), (SocketTimeoutException) throwable);
                                     } else {
-                                        Utilitys.showNoConnectionError(MboehaoApp.getSingletonApplicationContext());
+                                        showGenericError(throwable);
                                     }
-                                } catch (IOException e) {
-                                    Log.d(LOG_TAG, String.format("Exception mostrando error de Sin Conexion: %s", e));
+                                } else {
+                                    showGenericError(throwable);
                                 }
+
                             }
                         });
                         return observableWithError;
@@ -126,13 +131,21 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             return observable;
         }
 
+        private void showGenericError(Throwable throwable) {
+            final String message = String.format("No se puede contactar con el servidor en estos momentos: %s",
+                    throwable.getMessage());
+            Log.e(LOG_TAG, message, throwable);
+            MboehaoApp.setProgressMessage(message);
+            Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+        }
+
         private RetrofitException asRetrofitException(Throwable throwable) {
             // We had non-200 http error
             if (throwable instanceof HttpException) {
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
                 return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
-            } else if (throwable instanceof NoFinhealthServerConnection && Utilitys.NO_CONEXION_VISIBLE) {
+            } else if (throwable instanceof NoFinhealthServerConnection && AppUtils.NO_CONEXION_VISIBLE) {
                 //No hacemos nada, ya se esta mostrando el error de No Conexion
                 RetrofitException.networkError((IOException) throwable);
             } else {// A network error happened

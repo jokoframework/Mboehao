@@ -16,7 +16,7 @@ import java.util.Map;
 
 import io.github.jokoframework.aplicationconstants.Constants;
 import io.github.jokoframework.pojo.RemoteLogPojo;
-import io.github.jokoframework.utilitys.ParseUtils;
+import io.github.jokoframework.utilities.ParseUtils;
 
 
 public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long> {

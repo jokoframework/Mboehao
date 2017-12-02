@@ -2,22 +2,16 @@ package io.github.jokoframework.auth;
 
 import android.content.Context;
 
-import io.github.jokoframework.R;
-
 import java.io.IOException;
 
-import io.github.jokoframework.misc.Utilitys;
+import io.github.jokoframework.R;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.singleton.MboehaoApp;
+import io.github.jokoframework.utilities.AppUtils;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
-
-import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.model.UserData;
-
-/**
- * @author nahuel
- */
 
 public class AuthInterceptor implements Interceptor {
     private MboehaoApp application;
@@ -30,17 +24,17 @@ public class AuthInterceptor implements Interceptor {
     public Response intercept(Chain chain) throws IOException {
 
         //final String server = application.getString(R.string.server_hostname);
-        if (!Utilitys.isDnsWorking(Constants.SERVER_NAME)) {
+        if (!AppUtils.isDnsWorking(Constants.SERVER_NAME)) {
             //Workaround - afeltes
             //Sin conexion, explotaba el APP por un UnknownHostException
             final Context applicationContext = application.getApplicationContext();
-            Utilitys.showNoConnectionError(applicationContext);
+            AppUtils.showNoConnectionError(applicationContext);
             Request dummyRequest = new Request.Builder()
                     .url(applicationContext.getString(R.string.dummyHostname))
                     .build();
             return chain.proceed(dummyRequest);
         } else {
-            Utilitys.NO_CONEXION_VISIBLE = false;
+            AppUtils.NO_CONEXION_VISIBLE = false;
             Request request = chain.request();
             //Build new request
             Request.Builder builder = request.newBuilder();

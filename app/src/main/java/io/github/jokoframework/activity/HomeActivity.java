@@ -237,7 +237,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
     protected void showAppNews() {
         long appNewsShowedTime = Utils.getLongPrefs(this, Constants.USER_PREFERENCE_APP_NEWS_SHOWED_TIME);
-//        String appNews = Utils.getPrefs(this, Constants.USER_PREFERENCE_APP_NEWS);
+//        String appNews = AppUtils.getPrefs(this, Constants.USER_PREFERENCE_APP_NEWS);
         String appNews = getString(R.string.appnews);
         if (StringUtils.isNotBlank(appNews)
                 && (appNewsShowedTime <= 0L || !showedInLastHour(appNewsShowedTime))

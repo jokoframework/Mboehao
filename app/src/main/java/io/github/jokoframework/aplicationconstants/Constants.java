@@ -1,15 +1,5 @@
 package io.github.jokoframework.aplicationconstants;
 
-import android.app.AlarmManager;
-import android.graphics.Color;
-
-import java.util.Arrays;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
-
 /**
  * Created by joaquin on 10/08/17.
  */
@@ -122,5 +112,8 @@ public class Constants {
     public static final String GRAPH_DATA_LAST_MODIFIED = "graphLastModified";
     public static final String GRAPH_DATE_CREATED = "graphDateCreated";
     public static final String PARSE_ATTRIBUTE_USER_AS_USERNAME = "user";
+
+    public static final long DEFAULT_DELAY_TO_CLOSE_INACTIVE_ACTIVITY = 5l;
+
 
 }

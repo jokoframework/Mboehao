@@ -1,4 +1,4 @@
-package io.github.jokoframework.utilitys;
+package io.github.jokoframework.utilities;
 
 
 import android.content.Context;
@@ -10,7 +10,6 @@ import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
-import java.util.Date;
 import java.util.List;
 import io.github.jokoframework.aplicationconstants.Constants;
 
@@ -30,7 +29,7 @@ public class ParseUtils {
 
     public static String getParameterValue(Context context, String parameterName) {
         String value = null;
-        if (Utils.isNetworkAvailable(context)) {
+        if (AppUtils.isNetworkAvailable(context)) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.PARSE_PARAMETER);
             query.whereEqualTo(Constants.PARSE_PARAMETER_DESCRIPTION, parameterName);
             try {
@@ -50,7 +49,7 @@ public class ParseUtils {
 
     public static ParseObject getObjectById(Context pContext, String pClassName, String pObjectId) {
         ParseObject objectById = null;
-        if (Utils.isNetworkAvailable(pContext)) {
+        if (AppUtils.isNetworkAvailable(pContext)) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(pClassName);
             query.whereEqualTo(Constants.PARSE_ATTRIBUTE_OBJECT_ID, pObjectId);
             try {

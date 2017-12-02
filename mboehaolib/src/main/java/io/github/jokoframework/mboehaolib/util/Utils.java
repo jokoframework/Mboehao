@@ -6,7 +6,8 @@ import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-import android.support.annotation.NonNull;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
@@ -66,29 +67,37 @@ public class Utils {
         crouton.show();
     }
 
-    public static void showInfoMessage(Activity activity, String message, Integer duration, Boolean sticky) {
-        final Configuration configuration = new Configuration.Builder()
-                .setDuration(duration)
-                .build();
-        // Define custom styles for crouton
-        Style style = new Style.Builder()
-                .setBackgroundColorValue(R.color.red)
-                .setGravity(Gravity.CENTER_HORIZONTAL)
-                .setConfiguration(configuration)
-                .setHeight(150)
-                .setTextColorValue(R.color.colorPrimary).build();
-        // Display notice with custom style and configuration
-        final Crouton crouton = Crouton.makeText(activity, message, style)
-                .setConfiguration(configuration);
-        if (sticky) {
-            crouton.setOnClickListener(new View.OnClickListener() {
+    public static void showInfoMessage(final Activity activity, final String message,
+                                       final Integer duration, final Boolean sticky) {
+        if (activity != null) {
+            activity.runOnUiThread(new Runnable() {
                 @Override
-                public void onClick(View v) {
-                    Crouton.hide(crouton);
+                public void run() {
+                    final Configuration configuration = new Configuration.Builder()
+                            .setDuration(duration)
+                            .build();
+                    // Define custom styles for crouton
+                    Style style = new Style.Builder()
+                            .setBackgroundColorValue(R.color.red)
+                            .setGravity(Gravity.CENTER_HORIZONTAL)
+                            .setConfiguration(configuration)
+                            .setHeight(150)
+                            .setTextColorValue(R.color.balanceText).build();
+                    // Display notice with custom style and configuration
+                    final Crouton crouton = Crouton.makeText(activity, message, style)
+                            .setConfiguration(configuration);
+                    if (sticky) {
+                        crouton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Crouton.hide(crouton);
+                            }
+                        });
+                    }
+                    crouton.show();
                 }
             });
         }
-        crouton.show();
     }
 
     public static boolean isValidPassword(String password) {
@@ -256,7 +265,6 @@ public class Utils {
     }
 
 
-
     private static boolean isValidMinute(int minuto) {
         return minuto >= 0 && minuto <= 59;
     }
@@ -265,4 +273,23 @@ public class Utils {
         return hora >= 0 && hora <= 23;
     }
 
+    public static void showToast(final Context context, final String message) {
+        if (context != null) {
+            Handler handler = new Handler(Looper.getMainLooper());
+            handler.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    public static void sleep(long time) {
+        try {
+            Thread.sleep(time);
+        } catch (InterruptedException e) {
+            Log.e(LOG_TAG, "Error durmiendo thread", e);
+        }
+    }
 }

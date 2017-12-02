@@ -69,7 +69,7 @@ public class Constants {
     //Defaults
     public static final int DEFAULT_WARNING_POINTS_SIZE = 32;
 
-    public static final long ALARM_INTERVAL = ONE_DAY * 12 ;
+    public static final long ALARM_INTERVAL = ONE_DAY * 12;
 
     //Firebase Configuration...
 
@@ -151,7 +151,6 @@ public class Constants {
     public static final int NOTIFICATION_ID = 13;
 
 
-
     public static final String FINTECH_LOCALE = "es_PY";
     public static final String FINTECH_TIMEZONE = "America/Asuncion";
 
@@ -161,7 +160,6 @@ public class Constants {
 
     public static final String SIMBOLO_GUARANI = "Gs. ";
     public static final String SIMBOLO_PESO_URUGUAYO = "$U. ";
-
 
 
     public static final String CURRENCY_SYMBOL = Constants.SIMBOLO_GUARANI;
@@ -174,11 +172,16 @@ public class Constants {
     public static final String PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED = "preference_attribute_notification_checked";
     public static final String PREFERENCE_ATTRIBUTE_NOTIFICATION_VIBRATION = "preference_attribute_notification_vibration";
     public static final String GENERAL_SOCIAL = "general_social";
+    public static final String LOGIN_PROVIDER_FACEBOOK = "FACEBOOK";
+    public static final String LOGIN_PROVIDER = "loginProvider";
+    public static final String ACCESS_TOKEN = "accessToken";
+    public static final String PREFERENCES_ATTRIBUTES = "prefereces_attributes";
+    public static final String DEVICE_TYPE = "ANDROID";
+
 
     private Constants() {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }
-    public static final String PREFERENCES_ATTRIBUTES = "prefereces_attributes";
 
 }

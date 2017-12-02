@@ -7,20 +7,20 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import io.github.jokoframework.R;
 import com.parse.ParseUser;
 
 import java.net.SocketTimeoutException;
 
-import io.github.jokoframework.mboehaolib.util.ParseUtils;
-import io.github.jokoframework.misc.Utilitys;
-import io.github.jokoframework.model.UserAccessResponse;
-import io.github.jokoframework.model.UserData;
+import io.github.jokoframework.R;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys;
+import io.github.jokoframework.mboehaolib.util.ParseUtils;
+import io.github.jokoframework.model.UserAccessResponse;
+import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
 import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.singleton.MboehaoApp;
+import io.github.jokoframework.utilities.AppUtils;
 import retrofit2.Response;
 
 
@@ -52,12 +52,12 @@ public class SplashActivity extends Activity {
     }
 
     public void checkConnection() {
-        if (!Utilitys.networkConnectivity(getApplicationContext())) {
-            startActivity(Utilitys.createIntentNoConnection(this));
+        if (!AppUtils.networkConnectivity(getApplicationContext())) {
+            startActivity(AppUtils.createIntentNoConnection(this));
             finish();
         } else {
             initApp();
-            Utilitys.NO_CONEXION_VISIBLE =false;
+            AppUtils.NO_CONEXION_VISIBLE =false;
         }
     }
 
@@ -98,7 +98,7 @@ public class SplashActivity extends Activity {
             Response<UserAccessResponse> httpResponse = api.refreshUserAccess(refreshToken).execute();
             Log.i(LOG_TAG, "Response raw: " + httpResponse.raw());
             if (httpResponse.isSuccessful()) {
-                Utilitys.NO_CONEXION_VISIBLE =false;
+                AppUtils.NO_CONEXION_VISIBLE =false;
                 response = httpResponse.body();
                 if (response.getSuccess()) {
                     Log.i(LOG_TAG, "Refresh AccessToken success");
@@ -127,7 +127,7 @@ public class SplashActivity extends Activity {
             Log.i(LOG_TAG, "Refresh token:" + userData.getRefreshToken());
             long expiration = userData.getExpiration();
 
-            long secondsToReachExpiration = Utilitys.secondsToReachExpiration(expiration);
+            long secondsToReachExpiration = AppUtils.secondsToReachExpiration(expiration);
 
             if (secondsToReachExpiration < Constants.SECONDS_TO_RESET) {
                 result = StartUpKeys.EXPIRED;
@@ -156,7 +156,7 @@ public class SplashActivity extends Activity {
             Log.i(LOG_TAG, "Response raw: " + httpResponse.raw());
             response = httpResponse.body();
             if (response.getSuccess()) {
-                Utilitys.NO_CONEXION_VISIBLE =false;
+                AppUtils.NO_CONEXION_VISIBLE =false;
                 Log.i(LOG_TAG, "Refresh RefreshToken success");
                 Log.i(LOG_TAG, "New refresh token: " + response.getSecret());
                 userData.setRefreshToken(response.getSecret());

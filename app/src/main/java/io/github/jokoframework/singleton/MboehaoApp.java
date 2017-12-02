@@ -1,7 +1,9 @@
 package io.github.jokoframework.singleton;
 
 
+import android.app.Activity;
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -10,24 +12,23 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
-
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 import com.parse.BuildConfig;
 import com.parse.Parse;
 
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.concurrent.TimeUnit;
 
 import io.fabric.sdk.android.Fabric;
-
+import io.github.jokoframework.R;
 import io.github.jokoframework.auth.AppAuthenticator;
 import io.github.jokoframework.auth.AuthInterceptor;
 import io.github.jokoframework.mboehaolib.service.CronService;
 import io.github.jokoframework.model.UserData;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-
-import io.github.jokoframework.R;
 
 
 //This class just initialize the Parse Server with the URL and appID... configuration in the Android Manifest
@@ -43,6 +44,17 @@ public class MboehaoApp extends Application {
     private OkHttpClient.Builder httpClient;
     private Tracker mTracker;
     private GoogleAnalytics analytics;
+    private static ProgressDialog progressDialog;
+    private static Activity activity;
+
+    public static void setActivity(Activity activity) {
+        MboehaoApp.activity = activity;
+    }
+
+    public static Activity getActivity() {
+        return activity;
+    }
+
 
     @Override
     public void onCreate() {
@@ -50,7 +62,7 @@ public class MboehaoApp extends Application {
 
         Parse.initialize(this);
         initializeInternetServices(this);
-        if (!BuildConfig.DEBUG){
+        if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
         }
 
@@ -65,9 +77,7 @@ public class MboehaoApp extends Application {
             logger.setLevel(HttpLoggingInterceptor.Level.BODY);
             httpClient.addInterceptor(logger);
         }
-
         MboehaoApp.setSingletonApplicationContext(this.getApplicationContext());
-
     }
 
     public OkHttpClient.Builder getHttpClient() {
@@ -105,6 +115,7 @@ public class MboehaoApp extends Application {
 
     /**
      * Gets the default {@link Tracker} for this {@link Application}.
+     *
      * @return tracker
      */
 
@@ -125,4 +136,37 @@ public class MboehaoApp extends Application {
         super.attachBaseContext(base);
     }
 
+    public static void initializeProgress(Activity activity) {
+        setActivity(activity);
+        progressDialog = new ProgressDialog(activity);
+    }
+
+    public static void showProgress(boolean show, String message) {
+        if (progressDialog != null) {
+            if (show) {
+                progressDialog.setMessage(message);
+                progressDialog.show();
+            } else {
+                progressDialog.hide();
+            }
+        }
+    }
+
+    public static void showProgress(boolean b) {
+        showProgress(false, null);
+    }
+
+    public static void setProgressMessage(String message) {
+        if (progressDialog != null && getActivity() != null) {
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (StringUtils.isNotBlank(message) && !progressDialog.isShowing()) {
+                        progressDialog.show();
+                    }
+                    progressDialog.setMessage(message);
+                }
+            });
+        }
+    }
 }

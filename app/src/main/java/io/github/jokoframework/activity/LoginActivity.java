@@ -3,6 +3,7 @@ package io.github.jokoframework.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
@@ -37,13 +38,13 @@ import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.misc.ProcessError;
-import io.github.jokoframework.misc.Utilitys;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
 import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.singleton.MboehaoApp;
+import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -73,7 +74,6 @@ public class LoginActivity extends Activity implements ProcessError {
     private EditText userTextField, passTextField;
 
     private String LOG_TAG = LoginActivity.class.getSimpleName();
-    private View progressView;
     private ImageView imageLogin;
     private CheckBox saveCredentials;
     private Activity thisActivity;
@@ -99,13 +99,13 @@ public class LoginActivity extends Activity implements ProcessError {
             String usernameEncrypted = SecurityUtils.encrypt(user);
             String passwordEncrypted = SecurityUtils.encrypt(pass);
 
-            Utils.addPrefs(thisActivity(), Constants.USER_PREFS_USER, usernameEncrypted);
-            Utils.addPrefs(thisActivity(), Constants.USER_PREFS_PW, passwordEncrypted);
+            AppUtils.addPrefs(thisActivity(), Constants.USER_PREFS_USER, usernameEncrypted);
+            AppUtils.addPrefs(thisActivity(), Constants.USER_PREFS_PW, passwordEncrypted);
         }
     }
 
     private boolean isPasswordValid(String password) {
-        return Utils.isValidPassword(password);
+        return AppUtils.isValidPassword(password);
     }
 
     private Button enterButton;
@@ -126,9 +126,10 @@ public class LoginActivity extends Activity implements ProcessError {
         }
         mySelf = this;
         Eula.show(mySelf);
-        final String decryptedUser = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_USER));
-        final String decryptedPassword = SecurityUtils.decrypt(Utils.getPrefs(this, Constants.USER_PREFS_PW));
+        final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
+        final String decryptedPassword = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_PW));
         enterButton = (Button) findViewById(R.id.buttonEnter);
+        imageLogin = findViewById(R.id.imageLogin);
         LoginButton loginButton = findViewById(R.id.login_button);
         userTextField = (EditText) findViewById(R.id.user);
         passTextField = (EditText) findViewById(R.id.pass);
@@ -138,20 +139,62 @@ public class LoginActivity extends Activity implements ProcessError {
         //Si el usuario es diferente se tiene que vaciar el password...
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
+        MboehaoApp.initializeProgress(this);
         enterButton.setOnClickListener(new ClickEnterHandler());
         loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d(LOG_TAG, "A mostrar process desde fb:onClick");
+                if (accessToken == null) {
+                    showProgress(true, "Login con Facebook...");
+                } else {
+                    showProgress(false);
+                }
+            }
+        });
+    }
+
+    public void showProgress(boolean show) {
+        showProgress(show, null);
+    }
+
+    private void showProgress(boolean show, String message) {
+        if (show) {
+            MboehaoApp.showProgress(show, message);
+        } else {
+            MboehaoApp.showProgress(false);
+        }
     }
 
     private class FacebookCallbackLogin implements FacebookCallback<LoginResult> {
         @Override
         public void onSuccess(LoginResult loginResult) {
+            //Mostramos el progress, hasta que vaya a la pantalla de transacciones
+            Log.d(LOG_TAG, "A mostrar process desde fb:onSuccess");
+            showProgress(true, "Login con Facebook...");
+            Utils.showToast(getBaseContext(),
+                    "Login Facebook Success");
+            final AccessToken fbAccessToken = loginResult.getAccessToken();
+            Log.i(LOG_TAG, String.format("Access token %s, UserId: %s",
+                    fbAccessToken.getToken(),
+                    fbAccessToken.getUserId()));
+            LoginRequest loginRequest = LoginRequest.builder(fbAccessToken);
+            loginRequest.getCustom().put("deviceIdentifier", getGcmDeviceIdentifier());
+            userLogin(loginRequest);
             mProfileTracker = new ProfileTracker() {
                 @Override
                 protected void onCurrentProfileChanged(
                         Profile oldProfile,
                         Profile currentProfile) {
                     currentUser = currentProfile;
-                    // App code
+
+                    if (currentUser != null) {
+                        Utils.showToast(getBaseContext(),
+                                String.format("Hola %s.", currentUser.getFirstName()));
+                    }
+                    Log.d(LOG_TAG, "A ocultar process desde fb:onCurrentProfileChanged");
+                    showProgress(false);
                 }
             };
             accessTokenTracker = new AccessTokenTracker() {
@@ -161,22 +204,30 @@ public class LoginActivity extends Activity implements ProcessError {
                         AccessToken currentAccessToken) {
                     // Set the access token using
                     // currentAccessToken when it's loaded or set.
-                    accessToken = currentAccessToken;
+                    LoginActivity.this.accessToken = currentAccessToken;
+                    if (currentAccessToken == null) {
+                        Log.d(LOG_TAG, "A ocultar process desde fb:onCurrentAccessTokenChanged");
+                        showProgress(false);
+                    }
                 }
             };
-            if (currentUser != null)
-                Utils.addPrefs(thisActivity(), Constants.FACEBOOK_PROFILE_DATA, currentUser.getName());
-            loginSuccessful();
+            accessTokenTracker.startTracking();
         }
 
         @Override
         public void onCancel() {
-            //App code
+            Utils.showToast(getBaseContext(),
+                    "Login Facebook cancelado");
+            Log.d(LOG_TAG, "A ocultar process desde fb:onCancel");
+            showProgress(false);
         }
 
         @Override
         public void onError(FacebookException error) {
-            //App code
+            Utils.showToast(getBaseContext(),
+                    String.format("Login Facebook erróneo: %s", error));
+            Log.d(LOG_TAG, "A ocultar process desde fb:onError");
+            showProgress(false);
         }
     }
 
@@ -187,10 +238,8 @@ public class LoginActivity extends Activity implements ProcessError {
             final String username = userTextField.getText().toString();
             final String password = passTextField.getText().toString();
 
-            progressView = findViewById(R.id.progressMainWindow); // progress bar...
-            imageLogin = findViewById(R.id.imageLogin);
             // HomeActivity progress
-            progressView.setVisibility(View.VISIBLE); // Muestra el progress bar mientras se obtine el acceso...
+            showProgress(true, "Ingresando..."); // Muestra el progress bar mientras se obtine el acceso...
 
 //            -----LOGIN WITH PARSE--------------------------
             /*Authenticable parseLogin = new ParseLogin(enterButton,progressView, mySelf,saveCredentials);
@@ -244,7 +293,7 @@ public class LoginActivity extends Activity implements ProcessError {
         } else {
             // Show a progress spinner, and kick off a background task to
             // perform the user login attempt.
-            userLogin(username, password);
+            userLogin(new LoginRequest(username, password));
         }
     }
 
@@ -261,7 +310,7 @@ public class LoginActivity extends Activity implements ProcessError {
         }
     }
 
-    private void userLogin(String username, String password) {
+    private void userLogin(LoginRequest loginRequest) {
         LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
         Observable.defer(() -> {
             String token = getGcmDeviceIdentifier();
@@ -280,35 +329,35 @@ public class LoginActivity extends Activity implements ProcessError {
                     }
 
                     @Override
-                    public void onNext(String token) {
-                        makeLoginRequest(username, password, authApi);
+                    public void onNext(String deviceIdentifier) {
+                        loginRequest.getCustom().put("deviceIdentifier", deviceIdentifier);
+                        makeLoginRequest(loginRequest, authApi);
                     }
                 });
     }
 
-    private void makeLoginRequest(String username, String password, LoginRepository authApi) {
-        LoginRequest loginRequest;
-        loginRequest = LoginRequest.builder()
-                .username(username)
-                .password(password)
-                .build();
-        loginProcess(loginRequest, authApi, username);
+
+    private void makeLoginRequest(LoginRequest loginRequest, LoginRepository authApi) {
+        loginRequest.getCustom().put("deviceType", Constants.DEVICE_TYPE);
+        loginRequest.getCustom().put("deviceName", Build.MODEL);
+        doLogin(loginRequest, authApi);
     }
 
-    private void loginProcess(LoginRequest loginRequest, LoginRepository authApi, String username) {
+
+    private void doLogin(LoginRequest loginRequest, LoginRepository authApi) {
         long startTime = System.currentTimeMillis();
         long endTime = 15 * 1000; // after 15 second, it ends and return and Error!...
 
         UserData userData = getUserData();
         authApi.login(loginRequest, Constants.CURRENT_MBOEHAO_VERSION)
                 .observeOn(AndroidSchedulers.mainThread())
-                .doOnError(Utilitys.errorHandler(LoginActivity.this))
+                .doOnError(AppUtils.errorHandler(LoginActivity.this))
                 .flatMap(userAccessResponse -> {
                     try {
                         userData.setExpiration(userAccessResponse.getExpiration());
                         getUserData().setRefreshToken(userAccessResponse.getSecret());
                         getUserData().setExpiration(userAccessResponse.getExpiration());
-                        getUserData().setUsername(username);
+                        getUserData().setUsername(loginRequest.getUsername());
                         getUserData().persistUser();
                         return authApi.userAccess(userAccessResponse.getSecret());
                     } catch (Exception t) {
@@ -319,6 +368,7 @@ public class LoginActivity extends Activity implements ProcessError {
                 .subscribe(userAccessResponse -> {
                     if (userAccessResponse.getSuccess()) {
                         userData.setUserAccessToken(userAccessResponse.getSecret());
+                        showProgress(true, "Login exitoso.");
                         // Se accede al home... todavia los token no son necesarios...
                         // ...para acceder a ningun servicio, ya que no hay todavia ninguno disponible...
                         loginJWT();
@@ -327,23 +377,26 @@ public class LoginActivity extends Activity implements ProcessError {
                         sendErrorLoginMessage("Login: False Success");
                         invalidLogin();
                     }
-                }, Utilitys.errorHandler(LoginActivity.this));
-        progressView.setVisibility(View.INVISIBLE); // Muestra el progress bar mientras se obtine el acceso...
+                }, AppUtils.errorHandler(LoginActivity.this));
     }
 
     private void invalidLogin() {
-        UserData userData = getUserData();
-        userData.logout();
+        logout();
         userTextField.setError(String.format("%s", R.string.error_incorrect_credentials));
         passTextField.setError(String.format("%s", R.string.error_incorrect_credentials));
         userTextField.requestFocus();
+    }
+
+    private void logout() {
+        UserData userData = getUserData();
+        userData.logout();
     }
 
     private void loginJWT() {
         Intent i = new Intent(thisActivity, HomeActivity.class);
         thisActivity().startActivity(i);
         thisActivity().finish();
-        progressView.setVisibility(View.INVISIBLE);
+        showProgress(false);
     }
 
     private void loginSuccessful() {
@@ -354,18 +407,33 @@ public class LoginActivity extends Activity implements ProcessError {
 
     @Override
     public void afterProcessErrorNoConnection() {
-        startActivity(Utilitys.createIntentNoConnection(this));
+        startActivity(AppUtils.createIntentNoConnection(this));
     }
 
     @Override
     public void afterProcessError(UserAccessResponse response) {
-        Utilitys.showError(response, imageLogin, null);
+        AppUtils.showError(response, imageLogin, null);
     }
 
     @Override
     public void afterProcessError(String message) {
-        Utilitys.showError(message, imageLogin, null);
+        AppUtils.showError(message, imageLogin, null);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        final UserData userData = getUserData();
+        if (userData != null && userData.isValid()) {
+            showProgress(true, "Recuperando información de usuario...");
+            loginSuccessful();
+        } else if(userData == null){
+            invalidLogin();
+        } else {
+            logout();
+        }
+        Log.d(LOG_TAG, "A ocultar process desde onResume");
+        showProgress(false);
+    }
 }
 

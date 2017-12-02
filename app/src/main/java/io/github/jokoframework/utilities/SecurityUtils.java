@@ -1,4 +1,4 @@
-package io.github.jokoframework.utilitys;
+package io.github.jokoframework.utilities;
 
 import android.util.Base64;
 import android.util.Log;

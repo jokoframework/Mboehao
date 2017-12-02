@@ -15,17 +15,15 @@ import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
-
-import io.github.jokoframework.R;
 import com.parse.SaveCallback;
 
 import org.apache.commons.lang3.StringUtils;
 
-
+import io.github.jokoframework.R;
 import io.github.jokoframework.aplicationconstants.Constants;
-import io.github.jokoframework.utilitys.ParseUtils;
-import io.github.jokoframework.utilitys.SecurityUtils;
-import io.github.jokoframework.utilitys.Utils;
+import io.github.jokoframework.utilities.AppUtils;
+import io.github.jokoframework.utilities.ParseUtils;
+import io.github.jokoframework.utilities.SecurityUtils;
 
 /**
  * Created by joaquin on 01/09/17.
@@ -86,7 +84,7 @@ public class OptionsActivity extends Activity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentStoredPassword = SecurityUtils.decrypt(Utils.getPrefs(self, Constants.USER_PREFS_PW));
+                String currentStoredPassword = SecurityUtils.decrypt(AppUtils.getPrefs(self, Constants.USER_PREFS_PW));
                 Log.d(LOG_TAG, "Guardando contraseña");
                 if (currentPasswordEdit.getText() != null) {
                     String currentPassword = currentPasswordEdit.getText().toString();
@@ -148,7 +146,7 @@ public class OptionsActivity extends Activity {
                     Toast.makeText(self,
                             getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
                     String passwordEncrypted = SecurityUtils.encrypt(strPassword2);
-                    Utils.addPrefs(self, Constants.USER_PREFS_PW, passwordEncrypted);
+                    AppUtils.addPrefs(self, Constants.USER_PREFS_PW, passwordEncrypted);
                 }
             }
         });
