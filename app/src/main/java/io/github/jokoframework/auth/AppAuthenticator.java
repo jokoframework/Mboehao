@@ -15,10 +15,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.Route;
 
-/**
- * @author nahuel
- */
-
 public class AppAuthenticator implements Authenticator {
     private static final String LOG_TAG = AppAuthenticator.class.getSimpleName();
     private MboehaoApp application;
@@ -37,7 +33,7 @@ public class AppAuthenticator implements Authenticator {
 
         String credential = getNewToken();
         if (credential == null) {
-            return  null;
+            return null;
         }
 
         return response.request().newBuilder()

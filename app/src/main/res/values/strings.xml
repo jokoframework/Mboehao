@@ -135,11 +135,12 @@
     <string name="error_field_required">Campo Obligatorio</string>
     <string name="error_invalid_password">La contraseña debe tener como minimo 4 dígitos</string>
     <string name="error_incorrect_credentials">Credenciales incorrectas</string>
-    <string name="no_network_connection">No hay conexión a Internet. Mboehao necesita una conexión a internet.</string>
+    <string name="no_network_connection">Mboehao necesita una conexión a Internet. Verifique su conexión y vuelva a intentarlo.</string>
     <string name="facebook_app_id">407090959375458</string>
     <string name="fb_login_protocol_scheme">fb407090959375458</string>
 
     <string name="appnews">No se olvide de dejar sus comentarios!</string>
+    <string name="splash_text">Logo Mboehao</string>
 
 
 </resources>

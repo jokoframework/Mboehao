@@ -1,9 +1,7 @@
 package io.github.jokoframework.singleton;
 
 
-import android.app.Activity;
 import android.app.Application;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
@@ -17,12 +15,11 @@ import com.google.android.gms.analytics.Tracker;
 import com.parse.BuildConfig;
 import com.parse.Parse;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.concurrent.TimeUnit;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.R;
+import io.github.jokoframework.activity.BaseActivity;
 import io.github.jokoframework.auth.AppAuthenticator;
 import io.github.jokoframework.auth.AuthInterceptor;
 import io.github.jokoframework.mboehaolib.service.CronService;
@@ -37,6 +34,7 @@ public class MboehaoApp extends Application {
     private static final String LOG_TAG = MboehaoApp.class.getName();
 
     private static Context singletonApplicationContext;
+    private static MboehaoApp mySelf;
     /**
      * Instance variables
      */
@@ -44,22 +42,25 @@ public class MboehaoApp extends Application {
     private OkHttpClient.Builder httpClient;
     private Tracker mTracker;
     private GoogleAnalytics analytics;
-    private static ProgressDialog progressDialog;
-    private static Activity activity;
+    private BaseActivity baseActivity;
 
-    public static void setActivity(Activity activity) {
-        MboehaoApp.activity = activity;
+    public static MboehaoApp getApp() {
+        return MboehaoApp.mySelf;
     }
 
-    public static Activity getActivity() {
-        return activity;
+    public void setBaseActivity(BaseActivity baseActivity) {
+        this.baseActivity = baseActivity;
+    }
+
+    public BaseActivity getBaseActivity() {
+        return baseActivity;
     }
 
 
     @Override
     public void onCreate() {
         super.onCreate();
-
+        mySelf = this;
         Parse.initialize(this);
         initializeInternetServices(this);
         if (!BuildConfig.DEBUG) {
@@ -136,37 +137,4 @@ public class MboehaoApp extends Application {
         super.attachBaseContext(base);
     }
 
-    public static void initializeProgress(Activity activity) {
-        setActivity(activity);
-        progressDialog = new ProgressDialog(activity);
-    }
-
-    public static void showProgress(boolean show, String message) {
-        if (progressDialog != null) {
-            if (show) {
-                progressDialog.setMessage(message);
-                progressDialog.show();
-            } else {
-                progressDialog.hide();
-            }
-        }
-    }
-
-    public static void showProgress(boolean b) {
-        showProgress(false, null);
-    }
-
-    public static void setProgressMessage(String message) {
-        if (progressDialog != null && getActivity() != null) {
-            getActivity().runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (StringUtils.isNotBlank(message) && !progressDialog.isShowing()) {
-                        progressDialog.show();
-                    }
-                    progressDialog.setMessage(message);
-                }
-            });
-        }
-    }
 }

@@ -11,7 +11,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 
 /**
  * Created by joaquin on 11/08/17.
@@ -44,7 +44,7 @@ public class ParseLogger implements RemoteLogCapable {
         Iterator<Map<String, Object>> iteratorLogs = logsToParse.iterator();
         while (iteratorLogs.hasNext()) {
             Map<String, Object> currentLog = iteratorLogs.next();
-            ParseObject currentParseObject = new ParseObject(Constants.PARSE_CLASS_REMOTE_LOG);
+            ParseObject currentParseObject = new ParseObject(AppConstants.PARSE_CLASS_REMOTE_LOG);
             Iterator<String> keyIterator = currentLog.keySet().iterator(); // iterador del Map...
             while (keyIterator.hasNext()) {
                 String currentKey = keyIterator.next();

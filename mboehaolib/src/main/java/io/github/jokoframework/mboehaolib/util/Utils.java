@@ -23,7 +23,6 @@ import java.util.Random;
 import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
-import io.github.jokoframework.mboehaolib.R;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 
 public class Utils {
@@ -77,12 +76,7 @@ public class Utils {
                             .setDuration(duration)
                             .build();
                     // Define custom styles for crouton
-                    Style style = new Style.Builder()
-                            .setBackgroundColorValue(R.color.red)
-                            .setGravity(Gravity.CENTER_HORIZONTAL)
-                            .setConfiguration(configuration)
-                            .setHeight(150)
-                            .setTextColorValue(R.color.balanceText).build();
+                    Style style = new Style.Builder().build();
                     // Display notice with custom style and configuration
                     final Crouton crouton = Crouton.makeText(activity, message, style)
                             .setConfiguration(configuration);

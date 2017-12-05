@@ -41,13 +41,15 @@ import de.keyboardsurfer.android.widget.crouton.Configuration;
 import de.keyboardsurfer.android.widget.crouton.Crouton;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.R;
+import io.github.jokoframework.activity.BaseActivity;
 import io.github.jokoframework.activity.LoginActivity;
-import io.github.jokoframework.activity.SplashActivity;
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.mboehaolib.rx.RetrofitException;
+import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.JokoLoginResponse;
 import io.github.jokoframework.model.UserAccessResponse;
+import io.github.jokoframework.singleton.MboehaoApp;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import okhttp3.ResponseBody;
@@ -123,7 +125,7 @@ public class AppUtils {
     private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
         // afeltes - 2017-01-23
         //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
-        return context.getSharedPreferences(Constants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
+        return context.getSharedPreferences(AppConstants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
     }
     //BEGIN-IGNORE-SONARQUBE
 
@@ -250,7 +252,6 @@ public class AppUtils {
         return hora >= 0 && hora <= 23;
     }
 
-    public static boolean NO_CONEXION_VISIBLE = false;
     public static final float EPSILON = 0.0000001f;
     public static final String DOTS = "...";
 
@@ -270,12 +271,6 @@ public class AppUtils {
                 child.setVisibility(flag);
             }
         }
-    }
-
-    public static Intent createIntentNoConnection(Activity activity) {
-        Intent intent;
-        intent = new Intent(activity, SplashActivity.class);
-        return intent;
     }
 
     public static String getTimeFromDate(Date date) {
@@ -587,16 +582,16 @@ public class AppUtils {
 
     public static void showNoConnectionError(Context applicationContext) throws IOException {
         if (applicationContext != null) {
-            if (!NO_CONEXION_VISIBLE) {
-                NO_CONEXION_VISIBLE = true;
-                String intentFilter = applicationContext.getString(R.string.error_activity_filter);
-                showActivityWithMessage(applicationContext, intentFilter);
+            if (MboehaoApp.getApp().getBaseActivity() != null) {
+                BaseActivity activity = MboehaoApp.getApp().getBaseActivity();
+                Utils.showStickyMessage(activity, activity.getString(R.string.no_network_connection));
             } else {
                 Log.e(LOG_TAG, "El Activity de error de conexion ya se encuentra visible.");
             }
         } else {
             Log.e(LOG_TAG, "ApplicationContext null");
         }
+
     }
 
     /**

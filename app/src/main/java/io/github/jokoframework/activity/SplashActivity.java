@@ -19,25 +19,15 @@ import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
 import io.github.jokoframework.repository.RepoBuilder;
-import io.github.jokoframework.singleton.MboehaoApp;
 import io.github.jokoframework.utilities.AppUtils;
 import retrofit2.Response;
 
 
-public class SplashActivity extends Activity {
+public class SplashActivity extends BaseActivity {
 
     public static final String LOG_TAG = SplashActivity.class.getSimpleName();
     private UserData userData;
     private LoginRepository api;
-
-    private static MboehaoApp application;
-
-    public final synchronized MboehaoApp getApp() {
-        if (application == null) {
-            application = (MboehaoApp) getApplicationContext();
-        }
-        return application;
-    }
 
     public final UserData getUserData() {
         return getApp().getUserData();
@@ -45,19 +35,21 @@ public class SplashActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_splash);
         super.onCreate(savedInstanceState);
-        api = RepoBuilder.getSyncApi(LoginRepository.class);
-        userData = getUserData();
-        initializeFirstActivity();
+        showProgress(true, "Inicializando la aplicación...");
+        if (isWithInternetConnection()) {
+            api = RepoBuilder.getSyncApi(LoginRepository.class);
+            userData = getUserData();
+            initializeFirstActivity();
+        }
     }
 
     public void checkConnection() {
         if (!AppUtils.networkConnectivity(getApplicationContext())) {
-            startActivity(AppUtils.createIntentNoConnection(this));
-            finish();
+            showNoConnectionAndQuit();
         } else {
             initApp();
-            AppUtils.NO_CONEXION_VISIBLE =false;
         }
     }
 
@@ -71,7 +63,6 @@ public class SplashActivity extends Activity {
         int splashTimeOut = 3000;
         ParseUser currentUser = ParseUtils.getCurrentUser();
         Intent i;
-
         if (currentUser == null) {
             i = new Intent(SplashActivity.this, LoginActivity.class);
         } else {
@@ -98,7 +89,7 @@ public class SplashActivity extends Activity {
             Response<UserAccessResponse> httpResponse = api.refreshUserAccess(refreshToken).execute();
             Log.i(LOG_TAG, "Response raw: " + httpResponse.raw());
             if (httpResponse.isSuccessful()) {
-                AppUtils.NO_CONEXION_VISIBLE =false;
+                setWithInternetConnection(true);
                 response = httpResponse.body();
                 if (response.getSuccess()) {
                     Log.i(LOG_TAG, "Refresh AccessToken success");
@@ -113,7 +104,7 @@ public class SplashActivity extends Activity {
                 userData.logout();
             }
         } catch (SocketTimeoutException e) {
-            Log.e(LOG_TAG,"---------------Error al pedir Access Token SSL handshake timed out \n" + e.getMessage(), e);
+            Log.e(LOG_TAG, "---------------Error al pedir Access Token SSL handshake timed out \n" + e.getMessage(), e);
             finish();
         } catch (Exception e) {
             Log.e(LOG_TAG, "---------------Error al pedir Access Token \n" + e.getMessage(), e);
@@ -156,7 +147,7 @@ public class SplashActivity extends Activity {
             Log.i(LOG_TAG, "Response raw: " + httpResponse.raw());
             response = httpResponse.body();
             if (response.getSuccess()) {
-                AppUtils.NO_CONEXION_VISIBLE =false;
+                setWithInternetConnection(true);
                 Log.i(LOG_TAG, "Refresh RefreshToken success");
                 Log.i(LOG_TAG, "New refresh token: " + response.getSecret());
                 userData.setRefreshToken(response.getSecret());

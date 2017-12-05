@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.pojo.RemoteLogPojo;
 
 public class RemoteLogger {
@@ -41,7 +41,7 @@ public class RemoteLogger {
             RemoteLogPojo logPojo = new RemoteLogPojo(level, tag, msg, getStackTraceString(throwable));
             logPojos.add(logPojo);
             //Flusheamos al parse cada x líneas o cada 1 minuto
-            if (logPojos.size() >= MAX_LOG_COUNT_TO_FLUSH || (System.currentTimeMillis() - latestUpdate.getTime() > Constants.ONE_MINUTE)) {
+            if (logPojos.size() >= MAX_LOG_COUNT_TO_FLUSH || (System.currentTimeMillis() - latestUpdate.getTime() > AppConstants.ONE_MINUTE)) {
                 Log.d(LOG_TAG, "Flushing logs to parse");
                 new AsyncRemoteLogToParse().execute(logPojos.toArray(new RemoteLogPojo[logPojos.size()]));
                 logPojos = new ArrayList<>();

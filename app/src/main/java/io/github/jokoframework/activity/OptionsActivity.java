@@ -20,7 +20,7 @@ import com.parse.SaveCallback;
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.jokoframework.R;
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.utilities.AppUtils;
 import io.github.jokoframework.utilities.ParseUtils;
 import io.github.jokoframework.utilities.SecurityUtils;
@@ -84,7 +84,7 @@ public class OptionsActivity extends Activity {
         acceptButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String currentStoredPassword = SecurityUtils.decrypt(AppUtils.getPrefs(self, Constants.USER_PREFS_PW));
+                String currentStoredPassword = SecurityUtils.decrypt(AppUtils.getPrefs(self, AppConstants.USER_PREFS_PW));
                 Log.d(LOG_TAG, "Guardando contraseña");
                 if (currentPasswordEdit.getText() != null) {
                     String currentPassword = currentPasswordEdit.getText().toString();
@@ -117,10 +117,10 @@ public class OptionsActivity extends Activity {
         String strPass1 = password1.getText().toString();
         String strPass2 = password2.getText().toString();
         if (strPass1.equals(strPass2)
-                && strPass1.trim().length() >= Constants.MIN_PASSWORD_LENGTH) {
+                && strPass1.trim().length() >= AppConstants.MIN_PASSWORD_LENGTH) {
             error.setText(R.string.settings_pwd_equal);
         } else {
-            if (strPass1.trim().length() >= Constants.MIN_PASSWORD_LENGTH) {
+            if (strPass1.trim().length() >= AppConstants.MIN_PASSWORD_LENGTH) {
                 error.setText(R.string.settings_pwd_not_equal);
             } else {
                 error.setText(R.string.settings_pwd_too_short);
@@ -146,7 +146,7 @@ public class OptionsActivity extends Activity {
                     Toast.makeText(self,
                             getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
                     String passwordEncrypted = SecurityUtils.encrypt(strPassword2);
-                    AppUtils.addPrefs(self, Constants.USER_PREFS_PW, passwordEncrypted);
+                    AppUtils.addPrefs(self, AppConstants.USER_PREFS_PW, passwordEncrypted);
                 }
             }
         });

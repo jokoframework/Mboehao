@@ -1,10 +1,12 @@
-package io.github.jokoframework.aplicationconstants;
+package io.github.jokoframework.constants;
 
 /**
  * Created by joaquin on 10/08/17.
+ * @author joaquin
+ * @author afeltes
  */
 
-public class Constants {
+public class AppConstants {
 
     public static final double DATABASE_VERSION = 1.0;
     public static final String DATABASE_NAME = String.format("mboehao-v%s.db", DATABASE_VERSION);
@@ -30,7 +32,7 @@ public class Constants {
 
     public static final int MIN_DAILY_TEST_IMAGE_MIN_HEIGHT = 95;
     public static final int MIN_WARNING_POINTS_SIZE = 16;
-    public static final long LOCAL_DATA_MAX_AGE_IN_MILLIS = Constants.DAYS_TO_SHOW_IN_GRAPH_HISTORY * Constants.ONE_DAY;
+    public static final long LOCAL_DATA_MAX_AGE_IN_MILLIS = AppConstants.DAYS_TO_SHOW_IN_GRAPH_HISTORY * AppConstants.ONE_DAY;
 
 
     /**
@@ -61,8 +63,11 @@ public class Constants {
     //Firebase Configuration...
 
     public static final String SENDER_ID = "1037867417276";
+    public static final String DEVICE_TYPE = "deviceType";
+    public static final String DEVICE_NAME = "deviceName";
+    //Default code para la app de ejemplo de Joko Security
+    public static final String DEFAULT_DEMO_ACCCESS_CODE = "123456";
     public static Integer msgId = 0;
-
 
     public static final String FROM_BACKGROUND_SERVICE = "FROM_BACKGROUND_SERVICE";
 
@@ -104,7 +109,7 @@ public class Constants {
     public static final int NOTIFICATION_ID = 13;
 
 
-    private Constants() {
+    private AppConstants() {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }

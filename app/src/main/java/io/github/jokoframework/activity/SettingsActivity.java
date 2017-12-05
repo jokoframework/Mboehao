@@ -63,10 +63,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
 //            SwitchPreference switchPreference = (SwitchPreference) preference;
 //            if(switchPreference.isChecked() && o==){
 //                switchPreference.setChecked(true);
-//                AppUtils.addPrefs(getMySelf(),Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,true);
+//                AppUtils.addPrefs(getMySelf(),AppConstants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,true);
 //                return true;
 //            }else{
-//                AppUtils.addPrefs(getMySelf(),Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,false);
+//                AppUtils.addPrefs(getMySelf(),AppConstants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,false);
 //                return false;
 //            }
 //        }

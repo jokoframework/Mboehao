@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.pojo.RemoteLogPojo;
 import io.github.jokoframework.utilities.ParseUtils;
 
@@ -37,26 +37,26 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long>
             convertoParseObject(log).setACL(defaultAcl); //log no es un ParseObject...
 
             if (remoteLogPojo.getMessage() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_MESSAGE, remoteLogPojo.getMessage());
+                log.put(AppConstants.PARSE_ATTRIBUTE_MESSAGE, remoteLogPojo.getMessage());
             }
             if (remoteLogPojo.getStackTrace() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_STACKTRACE, remoteLogPojo.getStackTrace());
+                log.put(AppConstants.PARSE_ATTRIBUTE_STACKTRACE, remoteLogPojo.getStackTrace());
             }
             if (remoteLogPojo.getLogTag() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_LOG_TAG, remoteLogPojo.getLogTag());
+                log.put(AppConstants.PARSE_ATTRIBUTE_LOG_TAG, remoteLogPojo.getLogTag());
             }
             if (remoteLogPojo.getLevel() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_LEVEL, remoteLogPojo.getLevel());
+                log.put(AppConstants.PARSE_ATTRIBUTE_LEVEL, remoteLogPojo.getLevel());
             }
             if (ParseUser.getCurrentUser() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_USERNAME, ParseUser.getCurrentUser().getUsername());
+                log.put(AppConstants.PARSE_ATTRIBUTE_USERNAME, ParseUser.getCurrentUser().getUsername());
             }
             if (remoteLogPojo.getSavedAt() != null) {
-                log.put(Constants.PARSE_ATTRIBUTE_SAVED_AT, String.valueOf(remoteLogPojo.getSavedAt()));
+                log.put(AppConstants.PARSE_ATTRIBUTE_SAVED_AT, String.valueOf(remoteLogPojo.getSavedAt()));
             }
 
             if (StringUtils.isBlank(remoteLogPojo.getAppVersion())) {
-                log.put(Constants.PARSE_ATTRIBUTE_APP_VERSION,
+                log.put(AppConstants.PARSE_ATTRIBUTE_APP_VERSION,
                         String.format("version: %s", RemoteLogPojo.BUILD_VERSION));
             }
             //END-IGNORE-SONARQUBE
@@ -69,7 +69,7 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo,Integer,Long>
     }
 
     private ParseObject convertoParseObject(Map<String,Object> log){
-        ParseObject currentParseObject = new ParseObject(Constants.PARSE_CLASS_REMOTE_LOG);
+        ParseObject currentParseObject = new ParseObject(AppConstants.PARSE_CLASS_REMOTE_LOG);
         Iterator<String> keyIterator = log.keySet().iterator(); // iterador del Map...
         while (keyIterator.hasNext()) {
             String currentKey = keyIterator.next();

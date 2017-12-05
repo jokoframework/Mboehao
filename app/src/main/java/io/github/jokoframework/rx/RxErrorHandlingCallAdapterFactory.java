@@ -12,7 +12,8 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 
-import io.github.jokoframework.exception.NoFinhealthServerConnection;
+import io.github.jokoframework.activity.BaseActivity;
+import io.github.jokoframework.activity.LoginActivity;
 import io.github.jokoframework.mboehaolib.rx.RetrofitException;
 import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.singleton.MboehaoApp;
@@ -94,19 +95,21 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                                         // revocara el refresh token que tenía anteriormente), por lo tanto hay
                                         // que volver a autenticar al usuario.
                                         Log.d(LOG_TAG, "Se detectó una petición no autorizada. Se solicita de vuelta el login.");
-                                        Utils.showStickyMessage(MboehaoApp.getActivity(), "Por favor ingrese de nuevo");
-                                        AppUtils.showLogin(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
+                                        if (!(MboehaoApp.getApp().getBaseActivity() instanceof LoginActivity)) {
+                                            //Sólo mostramos de nuevo el login, sino proviene del LoginActivity
+                                            AppUtils.showLogin(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
+                                        }
                                         LoginManager.getInstance().logOut();
+                                        showErrorMessage("Credenciales incorrectas");
                                     } else if (code >= 500 && code <= 599) {
                                         final String message = String.format("No se puede contactar con el servidor en estos momentos: %s",
                                                 throwable.getMessage());
                                         Log.e(LOG_TAG, message, throwable);
-                                        MboehaoApp.setProgressMessage(message);
-                                        Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+                                        showErrorMessage(message);
                                         LoginManager.getInstance().logOut();
                                     } else if (throwable instanceof SocketTimeoutException) {
                                         String message = "La conexión con el servidor es inestable, intente de vuelta en unos momentos";
-                                        Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+                                        showErrorMessage(message);
                                         AppUtils.showTimeOutError(MboehaoApp.getSingletonApplicationContext(), (SocketTimeoutException) throwable);
                                     } else {
                                         showGenericError(throwable);
@@ -135,8 +138,21 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
             final String message = String.format("No se puede contactar con el servidor en estos momentos: %s",
                     throwable.getMessage());
             Log.e(LOG_TAG, message, throwable);
-            MboehaoApp.setProgressMessage(message);
-            Utils.showStickyMessage(MboehaoApp.getActivity(), message);
+            showErrorMessage(message);
+        }
+
+        private void showErrorMessage(String message, boolean isBackgroundOperation) {
+            final BaseActivity baseActivity = MboehaoApp.getApp().getBaseActivity();
+            if (isBackgroundOperation) {
+                baseActivity.setProgressMessage(message);
+            } else {
+                baseActivity.showProgress(false);
+            }
+            Utils.showStickyMessage(baseActivity, message);
+        }
+
+        private void showErrorMessage(String message) {
+            showErrorMessage(message, false);
         }
 
         private RetrofitException asRetrofitException(Throwable throwable) {
@@ -145,9 +161,6 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                 HttpException httpException = (HttpException) throwable;
                 Response response = httpException.response();
                 return RetrofitException.httpError(response.raw().request().url().toString(), response, retrofit);
-            } else if (throwable instanceof NoFinhealthServerConnection && AppUtils.NO_CONEXION_VISIBLE) {
-                //No hacemos nada, ya se esta mostrando el error de No Conexion
-                RetrofitException.networkError((IOException) throwable);
             } else {// A network error happened
                 if (throwable instanceof IOException) {
                     //PP: Nadie hace catch de esto y hace explotar la APP

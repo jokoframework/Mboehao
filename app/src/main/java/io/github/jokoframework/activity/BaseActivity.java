@@ -2,15 +2,20 @@ package io.github.jokoframework.activity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PersistableBundle;
+import android.support.annotation.Nullable;
 import android.util.Log;
 import android.widget.Toast;
 
+import org.apache.commons.lang3.StringUtils;
+
 import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.R;
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.singleton.MboehaoApp;
 
@@ -21,12 +26,15 @@ import io.github.jokoframework.singleton.MboehaoApp;
 public class BaseActivity extends Activity {
 
     private static final String LOG_TAG = BaseActivity.class.getName();
+    public static final int DEFAULT_WAIT_ON_NO_CONNECTION = 10;
 
     private static MboehaoApp application;
     private String appVersionName;
     protected boolean dismisableWhenNoConnection = true;
+    private ProgressDialog progressDialog;
+
     /**
-     * La primera actividad default de la apliacación. Por lo general: HomeActivity.class
+     * La primera actividad default de la aplicación.
      */
     private Class<? extends Activity> firstActivity;
     private boolean withInternetConnection;
@@ -43,6 +51,8 @@ public class BaseActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initializeProgress();
+        getApp().setBaseActivity(this);
         if (Utils.isNetworkAvailable(this)) {
             setWithInternetConnection(true);
             //Pone la flecha de regresar atras en el action bar
@@ -50,15 +60,20 @@ public class BaseActivity extends Activity {
             if (actionBar != null) {
                 actionBar.setDisplayHomeAsUpEnabled(true);
             }
-            startFristActivity(this);
+            startFirstActivity(this);
         } else {
             setWithInternetConnection(false);
             Utils.showStickyMessage(this, getString(R.string.no_network_connection), Style.INFO);
-            finishActivityDelayed(Constants.DEFAULT_DELAY_TO_CLOSE_INACTIVE_ACTIVITY);
+            finishActivityDelayed(BaseActivity.DEFAULT_WAIT_ON_NO_CONNECTION);
         }
     }
 
-    protected void startFristActivity(Activity activity) {
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState, @Nullable PersistableBundle persistentState) {
+        super.onCreate(savedInstanceState, persistentState);
+    }
+
+    protected void startFirstActivity(Activity activity) {
         Log.d(LOG_TAG, "Dummy");
     }
 
@@ -98,9 +113,9 @@ public class BaseActivity extends Activity {
         @Override
         protected Long doInBackground(Long... params) {
             if (params != null && params.length > 0) {
-                Utils.sleep(Constants.ONE_SECOND * params[0]);
+                Utils.sleep(AppConstants.ONE_SECOND * params[0]);
             } else {
-                Utils.sleep(Constants.ONE_SECOND * 7);
+                Utils.sleep(AppConstants.ONE_SECOND * DEFAULT_WAIT_ON_NO_CONNECTION);
             }
             finish();
             return null;
@@ -118,10 +133,11 @@ public class BaseActivity extends Activity {
         }
     }
 
-    protected void showNoConnectionAndQuit() {
+    public void showNoConnectionAndQuit() {
         final String msg = getString(R.string.no_network_connection);
         Utils.showStickyMessage(this, msg, Style.INFO);
         Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        setProgressMessage(msg);
         Log.d(LOG_TAG, msg);
         if (isDismisableWhenNoConnection()) {
             new QuitterNoConnection().execute(msg);
@@ -131,7 +147,7 @@ public class BaseActivity extends Activity {
     private class QuitterNoConnection extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
-            Utils.sleep(Constants.ONE_SECOND * 7);
+            Utils.sleep(AppConstants.ONE_SECOND * DEFAULT_WAIT_ON_NO_CONNECTION);
             System.exit(0);
             return null;
         }
@@ -143,5 +159,64 @@ public class BaseActivity extends Activity {
 
     public void setDismisableWhenNoConnection(boolean dismisableWhenNoConnection) {
         this.dismisableWhenNoConnection = dismisableWhenNoConnection;
+    }
+
+    public void initializeProgress() {
+        setProgressDialog(new ProgressDialog(this));
+    }
+
+    public void showProgress(final boolean show, final String message) {
+        if (progressDialog != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (show) {
+                        progressDialog.setMessage(message);
+                        progressDialog.show();
+                    } else {
+                        progressDialog.hide();
+                    }
+                }
+            });
+        }
+    }
+
+    public void showProgress(boolean b) {
+        showProgress(false, null);
+    }
+
+    public void setProgressMessage(String message) {
+        if (progressDialog != null) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    if (StringUtils.isNotBlank(message) && !progressDialog.isShowing()) {
+                        progressDialog.show();
+                    }
+                    progressDialog.setMessage(message);
+                }
+            });
+        }
+    }
+
+
+    public static void setApplication(MboehaoApp application) {
+        BaseActivity.application = application;
+    }
+
+    public ProgressDialog getProgressDialog() {
+        return progressDialog;
+    }
+
+    public void setProgressDialog(ProgressDialog progressDialog) {
+        this.progressDialog = progressDialog;
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        if (getProgressDialog() != null) {
+            getProgressDialog().dismiss();
+        }
     }
 }

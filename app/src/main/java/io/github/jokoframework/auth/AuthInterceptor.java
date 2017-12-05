@@ -5,6 +5,7 @@ import android.content.Context;
 import java.io.IOException;
 
 import io.github.jokoframework.R;
+import io.github.jokoframework.activity.BaseActivity;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.singleton.MboehaoApp;
@@ -34,7 +35,10 @@ public class AuthInterceptor implements Interceptor {
                     .build();
             return chain.proceed(dummyRequest);
         } else {
-            AppUtils.NO_CONEXION_VISIBLE = false;
+            BaseActivity activity = application.getBaseActivity();
+            if (activity != null) {
+                activity.setWithInternetConnection(true);
+            }
             Request request = chain.request();
             //Build new request
             Request.Builder builder = request.newBuilder();

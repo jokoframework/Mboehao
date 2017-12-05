@@ -43,23 +43,13 @@ import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
 import io.github.jokoframework.repository.RepoBuilder;
-import io.github.jokoframework.singleton.MboehaoApp;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
-public class LoginActivity extends Activity implements ProcessError {
-
-    private static MboehaoApp application;
-
-    public final synchronized MboehaoApp getApp() {
-        if (application == null) {
-            application = (MboehaoApp) getApplicationContext();
-        }
-        return application;
-    }
+public class LoginActivity extends BaseActivity implements ProcessError {
 
     public final UserData getUserData() {
         return getApp().getUserData();
@@ -139,7 +129,6 @@ public class LoginActivity extends Activity implements ProcessError {
         //Si el usuario es diferente se tiene que vaciar el password...
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
-        MboehaoApp.initializeProgress(this);
         enterButton.setOnClickListener(new ClickEnterHandler());
         loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -147,24 +136,22 @@ public class LoginActivity extends Activity implements ProcessError {
             public void onClick(View v) {
                 Log.d(LOG_TAG, "A mostrar process desde fb:onClick");
                 if (accessToken == null) {
-                    showProgress(true, "Login con Facebook...");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showProgress(true, "Login con Facebook...");
+                        }
+                    });
                 } else {
-                    showProgress(false);
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            showProgress(false);
+                        }
+                    });
                 }
             }
         });
-    }
-
-    public void showProgress(boolean show) {
-        showProgress(show, null);
-    }
-
-    private void showProgress(boolean show, String message) {
-        if (show) {
-            MboehaoApp.showProgress(show, message);
-        } else {
-            MboehaoApp.showProgress(false);
-        }
     }
 
     private class FacebookCallbackLogin implements FacebookCallback<LoginResult> {
@@ -407,7 +394,7 @@ public class LoginActivity extends Activity implements ProcessError {
 
     @Override
     public void afterProcessErrorNoConnection() {
-        startActivity(AppUtils.createIntentNoConnection(this));
+        showNoConnectionAndQuit();
     }
 
     @Override
@@ -427,7 +414,7 @@ public class LoginActivity extends Activity implements ProcessError {
         if (userData != null && userData.isValid()) {
             showProgress(true, "Recuperando información de usuario...");
             loginSuccessful();
-        } else if(userData == null){
+        } else if (userData == null) {
             invalidLogin();
         } else {
             logout();

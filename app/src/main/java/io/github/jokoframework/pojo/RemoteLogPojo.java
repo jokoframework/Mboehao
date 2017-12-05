@@ -4,7 +4,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 
 import java.util.Date;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 
 public class RemoteLogPojo extends BasePojo {
     private String logTag;
@@ -13,7 +13,7 @@ public class RemoteLogPojo extends BasePojo {
     private String username;
     private String level;
     private Date savedAt;
-    public static final int BUILD_VERSION = Constants.VERSION_CODE;
+    public static final int BUILD_VERSION = AppConstants.VERSION_CODE;
     private String appVersion;
 
     public RemoteLogPojo(String level, String tag, String msg, String stackTraceString) {

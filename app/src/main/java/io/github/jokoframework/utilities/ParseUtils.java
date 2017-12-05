@@ -11,7 +11,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseUser;
 
 import java.util.List;
-import io.github.jokoframework.aplicationconstants.Constants;
+
+import io.github.jokoframework.constants.AppConstants;
 
 
 public class ParseUtils {
@@ -30,15 +31,15 @@ public class ParseUtils {
     public static String getParameterValue(Context context, String parameterName) {
         String value = null;
         if (AppUtils.isNetworkAvailable(context)) {
-            ParseQuery<ParseObject> query = ParseQuery.getQuery(Constants.PARSE_PARAMETER);
-            query.whereEqualTo(Constants.PARSE_PARAMETER_DESCRIPTION, parameterName);
+            ParseQuery<ParseObject> query = ParseQuery.getQuery(AppConstants.PARSE_PARAMETER);
+            query.whereEqualTo(AppConstants.PARSE_PARAMETER_DESCRIPTION, parameterName);
             try {
                 List<ParseObject> results = query.find();
                 if (results != null && !results.isEmpty()) {
                     //El 0 significa traer el primero, que es el único que nos interesa en caso de
                     //que haya varias coincidencias
                     ParseObject urlFromParse = results.get(0);
-                    value = urlFromParse.getString(Constants.PARSE_PARAMETER_VALUE);
+                    value = urlFromParse.getString(AppConstants.PARSE_PARAMETER_VALUE);
                 }
             } catch (ParseException e) {
                 Log.e(LOG_TAG, "No se pudo consultar el valor del parámetro: " + parameterName);
@@ -51,7 +52,7 @@ public class ParseUtils {
         ParseObject objectById = null;
         if (AppUtils.isNetworkAvailable(pContext)) {
             ParseQuery<ParseObject> query = ParseQuery.getQuery(pClassName);
-            query.whereEqualTo(Constants.PARSE_ATTRIBUTE_OBJECT_ID, pObjectId);
+            query.whereEqualTo(AppConstants.PARSE_ATTRIBUTE_OBJECT_ID, pObjectId);
             try {
                 List<ParseObject> results = query.find();
                 if (results != null && !results.isEmpty()) {

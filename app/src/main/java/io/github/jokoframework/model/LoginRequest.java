@@ -11,6 +11,7 @@ import org.apache.commons.lang3.builder.ToStringBuilder;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 
 
@@ -101,8 +102,9 @@ public class LoginRequest {
         if (fbAccessToken != null) {
             final Map<String, Object> custom = loginRequest.getCustom();
             loginRequest.setUsername(fbAccessToken.getUserId());
-            custom.put("deviceType", Constants.DEVICE_TYPE);
-            custom.put("deviceName", Build.MODEL);
+            loginRequest.setPassword(AppConstants.DEFAULT_DEMO_ACCCESS_CODE);
+            custom.put(AppConstants.DEVICE_TYPE, Constants.DEVICE_TYPE);
+            custom.put(AppConstants.DEVICE_NAME, Build.MODEL);
             custom.put(Constants.LOGIN_PROVIDER, Constants.LOGIN_PROVIDER_FACEBOOK);
             custom.put(Constants.ACCESS_TOKEN, fbAccessToken.getToken());
         }

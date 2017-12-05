@@ -10,7 +10,8 @@ import android.view.WindowManager;
 
 import java.util.HashMap;
 import java.util.Map;
-import io.github.jokoframework.aplicationconstants.Constants;
+
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.R;
 import com.androidplot.xy.XYPlot;
 
@@ -26,12 +27,12 @@ public class ImageUtils {
     private static Map<Integer, Integer> warningPoints = new HashMap<>();
 
     static {
-        warningPoints.put(Constants.RISK, R.drawable.joko);
-        warningPoints.put(Constants.LIFE_EVENT, R.drawable.joko);
-        warningPoints.put(Constants.MEDICATION, R.drawable.joko);
-        warningPoints.put(Constants.PRODROM_SYMTOMS, R.drawable.joko);
-        warningPoints.put(Constants.MIXED_SYMPTOMS, R.drawable.joko);
-        warningPoints.put(Constants.SUBSTANCE, R.drawable.joko);
+        warningPoints.put(AppConstants.RISK, R.drawable.joko);
+        warningPoints.put(AppConstants.LIFE_EVENT, R.drawable.joko);
+        warningPoints.put(AppConstants.MEDICATION, R.drawable.joko);
+        warningPoints.put(AppConstants.PRODROM_SYMTOMS, R.drawable.joko);
+        warningPoints.put(AppConstants.MIXED_SYMPTOMS, R.drawable.joko);
+        warningPoints.put(AppConstants.SUBSTANCE, R.drawable.joko);
     }
 
     private ImageUtils() {
@@ -45,7 +46,7 @@ public class ImageUtils {
 
         int flagWidth;
         int flagHeight;
-        int minFlagSize = Constants.MIN_WARNING_POINTS_SIZE;
+        int minFlagSize = AppConstants.MIN_WARNING_POINTS_SIZE;
         int minWidth = (int) plotWidth / 6;
         int minHeight = (int) plotHeight / 5;
         int minFlagDimension = minHeight < minWidth ? minHeight : minWidth;
@@ -57,7 +58,7 @@ public class ImageUtils {
             flagWidth = minFlagSize;
             flagHeight = flagWidth;
         } else {
-            flagWidth = Constants.DEFAULT_WARNING_POINTS_SIZE;
+            flagWidth = AppConstants.DEFAULT_WARNING_POINTS_SIZE;
             flagHeight = flagWidth;
         }
 
@@ -89,17 +90,17 @@ public class ImageUtils {
         float aspectRatio = bitmap.getWidth() /
                 (float) bitmap.getHeight();
 
-        if (canvasHeight > Constants.HD_VERTICAL_RESOLUTION) {
+        if (canvasHeight > AppConstants.HD_VERTICAL_RESOLUTION) {
             imageHeight = minSize;
             imageWidth = Math.round(imageHeight * aspectRatio);
-        } else if (canvasHeight <= Constants.HD_VERTICAL_RESOLUTION && canvasHeight > Constants.HVGA_VERTICAL_RESOLUTION) {
+        } else if (canvasHeight <= AppConstants.HD_VERTICAL_RESOLUTION && canvasHeight > AppConstants.HVGA_VERTICAL_RESOLUTION) {
             imageHeight = (int) (canvasHeight * 0.2);
-            if (Constants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT > imageHeight) {
-                imageHeight = Constants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT;
+            if (AppConstants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT > imageHeight) {
+                imageHeight = AppConstants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT;
             }
             imageWidth = Math.round(imageHeight * aspectRatio);
         } else {
-            imageHeight = Constants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT;
+            imageHeight = AppConstants.MIN_DAILY_TEST_IMAGE_MIN_HEIGHT;
             imageWidth = Math.round(imageHeight * aspectRatio);
         }
 
@@ -111,9 +112,9 @@ public class ImageUtils {
         String fontSize = DEFAULT_FONT_SIZE;
         Point screenSize = getScreenSizeInPixels(context);
         if (screenSize != null) {
-            if (Constants.TABLET_VERTICAL_RESOLUTION >= screenSize.y) {
+            if (AppConstants.TABLET_VERTICAL_RESOLUTION >= screenSize.y) {
                 fontSize = TABLET_FONT_SIZE;
-            } else if (Constants.HD_VERTICAL_RESOLUTION >= screenSize.y) {
+            } else if (AppConstants.HD_VERTICAL_RESOLUTION >= screenSize.y) {
                 fontSize = HD_FONT_SIZE;
             }
         }

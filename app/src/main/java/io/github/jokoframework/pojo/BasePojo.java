@@ -13,7 +13,7 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
-import io.github.jokoframework.aplicationconstants.Constants;
+import io.github.jokoframework.constants.AppConstants;
 
 
 public class BasePojo {
@@ -30,7 +30,7 @@ public class BasePojo {
 
     @NonNull
     private static Gson getGson() {
-        return new GsonBuilder().setDateFormat(Constants.DATE_TIME_FORMAT_ISO_8601).create();
+        return new GsonBuilder().setDateFormat(AppConstants.DATE_TIME_FORMAT_ISO_8601).create();
     }
 
     public static <T extends BasePojo> T deserialize(String serializedData, Class<? extends BasePojo> clazz) {
