@@ -11,6 +11,12 @@ import retrofit2.Retrofit;
 
 public class RetrofitException extends RuntimeException {
 
+
+    private final String url;
+    private final Response response;
+    private final Kind kind;
+    private final Retrofit retrofit;
+
     public static RetrofitException httpError(String url, Response response, Retrofit retrofit) {
         String message = response.code() + " " + response.message();
         return new RetrofitException(message, url, response, Kind.HTTP, null, retrofit);
@@ -36,11 +42,6 @@ public class RetrofitException extends RuntimeException {
          */
         UNEXPECTED
     }
-
-    private final String url;
-    private final Response response;
-    private final Kind kind;
-    private final Retrofit retrofit;
 
     RetrofitException(String message, String url, Response response, Kind kind, Throwable exception, Retrofit retrofit) {
         super(message, exception);

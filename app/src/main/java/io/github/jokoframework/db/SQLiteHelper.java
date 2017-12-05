@@ -17,31 +17,29 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import io.github.jokoframework.logger.RemoteLogger;
-import io.github.jokoframework.db.Diary.DaybookEntry;
 import io.github.jokoframework.db.BaseLine.BaseLineEntry;
+import io.github.jokoframework.db.Diary.DaybookEntry;
 import io.github.jokoframework.db.UsageStat.UsageStatEntry;
+import io.github.jokoframework.logger.RemoteLogger;
 
 /**
  * Created by joaquin on 03/10/17.
+ *
+ * @author joaquin
+ * @author afeltes
  */
 
 public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final String LOG_TAG = SQLiteHelper.class.getSimpleName();
 
-
-    public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
-        super(context, name, factory, version);
-    }
-
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = String.format("simpleplus-v%s.db", DATABASE_VERSION);
+    private static final String DATABASE_NAME = String.format("mboehao-v%s.db", DATABASE_VERSION);
     protected Context context;
     private static final String SQL_DELETE_ENTRIES;
     private static SQLiteHelper _instance;
 
-    final String CREATE_TABLE_ACTIVITY = "CREATE TABLE " + DaybookEntry.TABLE_NAME + "(" +
+    public final String CREATE_TABLE_ACTIVITY = "CREATE TABLE " + DaybookEntry.TABLE_NAME + "(" +
             DaybookEntry.COLUMN_NAME_DAYBOOK_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
             DaybookEntry.COLUMN_NAME_AVERAGE_SECONDS + " type TEXT NOT NULL, \n" +
             DaybookEntry.COLUMN_NAME_FIRST_TIMESTAMP + " type TEXT NOT NULL, \n" +
@@ -51,13 +49,13 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             DaybookEntry.COLUMN_NAME_ROW_COUNT + " type TEXT NOT NULL, \n" +
             DaybookEntry.COLUMN_NAME_TOTAL_SECONDS + " type TEXT NOT NULL \n" +
             ");";
-    final String CREATE_TABLE_BASE_LINE = "CREATE TABLE " + BaseLineEntry.TABLE_NAME + "(" +
+    public final String CREATE_TABLE_BASE_LINE = "CREATE TABLE " + BaseLineEntry.TABLE_NAME + "(" +
             BaseLineEntry.COLUMN_NAME_BASE_LINE_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
             BaseLineEntry.COLUMN_NAME_FIRST_TIME_USAGE_RECORDED + " type TEXT NOT NULL, \n" +
             BaseLineEntry.COLUMN_NAME_INSERTED_AT_TIMESTAMP + " type TEXT NOT NULL, \n" +
             BaseLineEntry.COLUMN_NAME_PACKAGE_NAME + " type TEXT NOT NULL \n" +
             ");";
-    String CREATE_TABLE_USAGE_STAT = "CREATE TABLE " + UsageStatEntry.TABLE_NAME + " ( \n" +
+    public String CREATE_TABLE_USAGE_STAT = "CREATE TABLE " + UsageStatEntry.TABLE_NAME + " ( \n" +
             UsageStatEntry.COLUMN_NAME_USAGE_STAT_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
             UsageStatEntry.COLUMN_NAME_APP_PACKAGE + " type TEXT NOT NULL, \n" +
             UsageStatEntry.COLUMN_NAME_CATEGORY + " type TEXT NOT NULL, \n" +
@@ -79,38 +77,11 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         SQL_DELETE_ENTRIES = builder.toString();
     }
 
-    private SQLiteHelper(Context context) {
-        super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        this.context = context;
-    }
-
     public static SQLiteHelper getInstance(Context context) {
         if (_instance == null) {
             _instance = new SQLiteHelper(context);
         }
         return _instance;
-    }
-
-    @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        sqLiteDatabase.execSQL(CREATE_TABLE_ACTIVITY);
-        sqLiteDatabase.execSQL(CREATE_TABLE_BASE_LINE);
-        sqLiteDatabase.execSQL(CREATE_TABLE_USAGE_STAT);
-    }
-
-    @Override
-    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
-        onUpgrade(sqLiteDatabase, oldVersion, newVersion);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Log.d(LOG_TAG, String.format("About to create DB version %s", newVersion));
-        // This database is only a cache for online data, so its upgrade policy is
-        // to simply to discard the data and start over
-        Log.d(LOG_TAG, String.format(" SQL statement for deletion: %s", SQL_DELETE_ENTRIES));
-        db.execSQL(SQL_DELETE_ENTRIES);
-        onCreate(db);
     }
 
     public static String copyDatabaseToExternalStorage(Context context, String pFilename) {
@@ -123,7 +94,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             in = new FileInputStream("data/data/" + context.getPackageName() + "/databases/" + DATABASE_NAME);
 
             File externalFilesDir = context.getExternalFilesDir(null);
-            dirForDatabase = externalFilesDir.getAbsolutePath() + "/simpleplus/databases";
+            dirForDatabase = externalFilesDir.getAbsolutePath() + "/mboehao/databases";
             File dir = new File(dirForDatabase);
             if (dir.exists() || dir.mkdirs()) {
                 String fileName = pFilename + sdf.format(new Date()) + ".sqlite";
@@ -159,6 +130,38 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         } catch (IOException e) {
             Log.e(LOG_TAG, "No se pudo cerrar el Stream", e);
         }
+    }
+
+
+    private SQLiteHelper(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
+    }
+
+    public SQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+        super(context, name, factory, version);
+    }
+
+    @Override
+    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        sqLiteDatabase.execSQL(CREATE_TABLE_ACTIVITY);
+        sqLiteDatabase.execSQL(CREATE_TABLE_BASE_LINE);
+        sqLiteDatabase.execSQL(CREATE_TABLE_USAGE_STAT);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
+        onUpgrade(sqLiteDatabase, oldVersion, newVersion);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Log.d(LOG_TAG, String.format("About to create DB version %s", newVersion));
+        // This database is only a cache for online data, so its upgrade policy is
+        // to simply to discard the data and start over
+        Log.d(LOG_TAG, String.format(" SQL statement for deletion: %s", SQL_DELETE_ENTRIES));
+        db.execSQL(SQL_DELETE_ENTRIES);
+        onCreate(db);
     }
 
     public void closeDb(SQLiteDatabase db) {

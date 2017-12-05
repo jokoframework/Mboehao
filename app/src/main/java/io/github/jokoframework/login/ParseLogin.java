@@ -3,12 +3,10 @@ package io.github.jokoframework.login;
 
 import android.app.Activity;
 import android.content.Intent;
-
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
@@ -30,12 +28,11 @@ import io.github.jokoframework.mboehaolib.util.Utils;
 
 public class ParseLogin implements Authenticable {
 
-    private String user,password;
-    private EditText userTextField,passTextField;
+    private String user, password;
 
-    private Map<String,String> custom;
+    private Map<String, String> custom;
 
-    private String LOG_TAG =  ParseLogin.class.getSimpleName();
+    private String LOG_TAG = ParseLogin.class.getSimpleName();
     private Button loginButton;
     private View progressBar;
     private CheckBox saveCredentials;
@@ -123,16 +120,6 @@ public class ParseLogin implements Authenticable {
     }
 
     @Override
-    public void setUserField(EditText userField) {
-        this.userTextField = userField;
-    }
-
-    @Override
-    public void setPassField(EditText passField) {
-        this.passTextField = passField;
-    }
-
-    @Override
     public void setPassword(String pPassword) {
         this.password = pPassword;
     }
@@ -147,7 +134,7 @@ public class ParseLogin implements Authenticable {
         this.custom = pCustom;
     }
 
-    private void loginSuccessful(){
+    private void loginSuccessful() {
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -156,31 +143,32 @@ public class ParseLogin implements Authenticable {
                 getActivity().finish();
             }
         });
-        RemoteLogger.v(LOG_TAG,"Login Successfully Done!");
+        RemoteLogger.v(LOG_TAG, "Login Successfully Done!");
     }
 
-    private void usernameOrPasswordIsInvalid(ParseException e){
+    private void usernameOrPasswordIsInvalid(ParseException e) {
         Toast toast;
-        switch (e.getCode()){
+        switch (e.getCode()) {
             case ParseException.OBJECT_NOT_FOUND:
-                toast = Toast.makeText(getActivity(),"Nombre de usuario o contraseña incorrectos", Toast.LENGTH_LONG);
+                toast = Toast.makeText(getActivity(), "Nombre de usuario o contraseña incorrectos", Toast.LENGTH_LONG);
                 break;
             case ParseException.CONNECTION_FAILED:
                 toast = Toast.makeText(getActivity(), "Sin conexion a internet", Toast.LENGTH_LONG);
                 break;
             default:
                 toast = Toast.makeText(getActivity(), "No se pudo hacer login", Toast.LENGTH_LONG);
+                break;
         }
         toast.show();
 
-        RemoteLogger.e(LOG_TAG,e.getMessage());
+        RemoteLogger.e(LOG_TAG, e.getMessage());
     }
 
-    private void somethingWentWrong(){
-        RemoteLogger.e(LOG_TAG,"Error al conectarse al servidor. ParseUser es null");
+    private void somethingWentWrong() {
+        RemoteLogger.e(LOG_TAG, "Error al conectarse al servidor. ParseUser es null");
     }
 
-    public void saveCredentials(){
+    public void saveCredentials() {
         if (saveCredentials.isChecked()) {
             String usernameEncrypted = SecurityUtils.encrypt(user);
             String passwordEncrypted = SecurityUtils.encrypt(password);

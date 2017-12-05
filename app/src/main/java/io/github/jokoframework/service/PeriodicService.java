@@ -7,17 +7,20 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
-import android.preference.Preference;
 import android.util.Log;
 
 import java.util.Calendar;
 
 /**
  * Created by joaquin on 28/09/17.
+ *
+ * @author joaquin
+ * @author afeltes
  */
 
 public class PeriodicService extends Service {
     public static final String LOG_TAG = PeriodicService.class.getSimpleName();
+    protected long[] pattern = {0l, 500l, 300l, 500l, 300l, 500l};
 
     private static Class<? extends PeriodicService> serviceClass;
 
@@ -29,14 +32,12 @@ public class PeriodicService extends Service {
         PeriodicService.serviceClass = serviceClass;
     }
 
-    protected long[] pattern = {0, 500, 300, 500, 300, 500};
-
     @Override
     public IBinder onBind(Intent intent) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    protected static void setAlarm(Context context, int hour, int minutes,int seconds,long interval, Class<? extends PeriodicService> clazz) {
+    protected static void setAlarm(Context context, int hour, int minutes, int seconds, long interval, Class<? extends PeriodicService> clazz) {
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.HOUR_OF_DAY, hour);
         calendar.add(Calendar.MINUTE, minutes);
@@ -60,7 +61,7 @@ public class PeriodicService extends Service {
         }
     }
 
-    protected static void setAlarm(Context context,int hour,int minutes,long interval,Class<? extends PeriodicService> clazz) {
+    protected static void setAlarm(Context context, int hour, int minutes, long interval, Class<? extends PeriodicService> clazz) {
         Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minutes);

@@ -1,14 +1,12 @@
 package io.github.jokoframework.model;
 
-
-
 public class JokoLoginResponse {
     public static final String ERROR_CODE_BAD_CREDENTIALS = "joko.security.badcredentials";
-    Boolean success;
-    String errorCode;
-    String message;
-    String secret;
-    Long expiration;
+    private Boolean success;
+    private String errorCode;
+    private String message;
+    private String secret;
+    private Long expiration;
 
     public String getMessage() {
         return message;

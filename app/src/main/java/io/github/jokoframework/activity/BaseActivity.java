@@ -17,6 +17,7 @@ import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.R;
 import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.singleton.MboehaoApp;
 
 /**
@@ -28,7 +29,7 @@ public class BaseActivity extends Activity {
     private static final String LOG_TAG = BaseActivity.class.getName();
     public static final int DEFAULT_WAIT_ON_NO_CONNECTION = 10;
 
-    private static MboehaoApp application;
+    protected static MboehaoApp application;
     private String appVersionName;
     protected boolean dismisableWhenNoConnection = true;
     private ProgressDialog progressDialog;
@@ -219,4 +220,9 @@ public class BaseActivity extends Activity {
             getProgressDialog().dismiss();
         }
     }
+
+    public final UserData getUserData() {
+        return getApp().getUserData();
+    }
+
 }

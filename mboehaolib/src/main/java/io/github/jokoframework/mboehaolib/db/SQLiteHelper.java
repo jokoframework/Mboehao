@@ -33,7 +33,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = String.format("simpleplus-v%s.db", DATABASE_VERSION);
+    private static final String DATABASE_NAME = String.format("mboehao-v%s.db", DATABASE_VERSION);
     protected Context context;
     private static final String SQL_DELETE_ENTRIES;
     private static SQLiteHelper _instance;
@@ -120,7 +120,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             in = new FileInputStream("data/data/" + context.getPackageName() + "/databases/" + DATABASE_NAME);
 
             File externalFilesDir = context.getExternalFilesDir(null);
-            dirForDatabase = externalFilesDir.getAbsolutePath() + "/simpleplus/databases";
+            dirForDatabase = externalFilesDir.getAbsolutePath() + "/mboehao/databases";
             File dir = new File(dirForDatabase);
             if (dir.exists() || dir.mkdirs()) {
                 String fileName = pFilename + sdf.format(new Date()) + ".sqlite";

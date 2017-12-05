@@ -88,16 +88,6 @@ public class Constants {
 
     public static final String PREF_USER_LEARNED_DRAWER = "navigation_drawer_learned";
 
-    //Startup Result
-    public enum StartUpKeys {
-        LOGGED,
-        EXPIRED,
-        NOT_LOGGED,
-        LOGGED_ELSEWHERE,
-        LOGIN_ERROR,
-        LOGIN_ERROR_MSG;
-    }
-
     public static final String HEADER_AUTH = "X-JOKO-AUTH";
     public static final String HEADER_VERSION = "X-JOKO-SECURITY-VERSION";
 
@@ -178,10 +168,20 @@ public class Constants {
     public static final String PREFERENCES_ATTRIBUTES = "prefereces_attributes";
     public static final String DEVICE_TYPE = "ANDROID";
 
-
     private Constants() {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }
+
+    //Startup Result
+    public enum StartUpKeys {
+        LOGGED,
+        EXPIRED,
+        NOT_LOGGED,
+        LOGGED_ELSEWHERE,
+        LOGIN_ERROR,
+        LOGIN_ERROR_MSG;
+    }
+
 
 }

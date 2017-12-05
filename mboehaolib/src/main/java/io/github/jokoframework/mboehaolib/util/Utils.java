@@ -121,13 +121,13 @@ public class Utils {
     //BEGIN-IGNORE-SONARQUBE
     private static SharedPreferences getSharedPreferences(Context context) {
         // afeltes - 2017-01-23
-        //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
+        //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
     }
 
-    private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
+    private static SharedPreferences getSharedPreferences(Context context, String id) {
         // afeltes - 2017-01-23
-        //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
+        //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences(Constants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
     }
     //BEGIN-IGNORE-SONARQUBE
@@ -187,7 +187,7 @@ public class Utils {
 
     public static void addPrefs(Context context, String id, long value) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, false);
+            SharedPreferences prefs = getSharedPreferences(context, id);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putLong(id, value);
             edit.commit();
@@ -248,14 +248,15 @@ public class Utils {
         }
     }
 
-    protected static boolean valideTimeAsString(String exactTime) {
+    public static boolean valideTimeAsString(String exactTime) {
+        boolean valid = false;
         String[] parts = exactTime.split(":");
         int hora = Integer.parseInt(parts[0]);
         int minuto = Integer.parseInt(parts[1]);
         if (isValidHour(hora) && isValidMinute(minuto)) {
-            return true;
+            valid = true;
         }
-        return false;
+        return valid;
     }
 
 

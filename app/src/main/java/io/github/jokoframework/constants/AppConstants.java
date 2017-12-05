@@ -2,6 +2,7 @@ package io.github.jokoframework.constants;
 
 /**
  * Created by joaquin on 10/08/17.
+ *
  * @author joaquin
  * @author afeltes
  */
@@ -58,7 +59,7 @@ public class AppConstants {
     //Defaults
     public static final int DEFAULT_WARNING_POINTS_SIZE = 32;
 
-    public static final long ALARM_INTERVAL = ONE_DAY * 12 ;
+    public static final long ALARM_INTERVAL = ONE_DAY * 12;
 
     //Firebase Configuration...
 
@@ -113,12 +114,6 @@ public class AppConstants {
          /*Porque los constructores no tienen que tener instancias...
          Y menos esta clase de constantes...*/
     }
-
-    public static final String GRAPH_DATA_LAST_MODIFIED = "graphLastModified";
-    public static final String GRAPH_DATE_CREATED = "graphDateCreated";
-    public static final String PARSE_ATTRIBUTE_USER_AS_USERNAME = "user";
-
-    public static final long DEFAULT_DELAY_TO_CLOSE_INACTIVE_ACTIVITY = 5l;
 
 
 }

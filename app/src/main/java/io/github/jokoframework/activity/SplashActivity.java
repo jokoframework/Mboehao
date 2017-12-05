@@ -29,10 +29,6 @@ public class SplashActivity extends BaseActivity {
     private UserData userData;
     private LoginRepository api;
 
-    public final UserData getUserData() {
-        return getApp().getUserData();
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_splash);
@@ -172,7 +168,7 @@ public class SplashActivity extends BaseActivity {
      */
 
     public class CheckUserDataTask extends AsyncTask<Void, Void, StartUpKeys> {
-        Activity activity;
+        private Activity activity;
 
         public CheckUserDataTask(Activity activity) {
             this.activity = activity;
@@ -200,6 +196,7 @@ public class SplashActivity extends BaseActivity {
                     break;
                 default:
                     Log.w(LOG_TAG, getString(R.string.defaultSwitchMessage));
+                    break;
             }
         }
 

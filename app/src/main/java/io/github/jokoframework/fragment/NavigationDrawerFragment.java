@@ -19,31 +19,28 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
 import com.parse.ParseUser;
-
-import org.w3c.dom.Text;
-
-import io.github.jokoframework.R;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import io.github.jokoframework.R;
 import io.github.jokoframework.activity.AboutActivity;
-import io.github.jokoframework.activity.HorizontalBarChartActivity;
-import io.github.jokoframework.activity.ChangePasswordActivity;
 import io.github.jokoframework.activity.BarChartActivity;
-import io.github.jokoframework.activity.LogOutActivity;
-import io.github.jokoframework.mboehaolib.constants.Constants;import io.github.jokoframework.mboehaolib.pojo.Event;
-import io.github.jokoframework.mboehaolib.pojo.EventParent;
-import io.github.jokoframework.adapter.CustomExpandableListAdapter;
-import io.github.jokoframework.activity.LoginActivity;
+import io.github.jokoframework.activity.ChangePasswordActivity;
+import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
+import io.github.jokoframework.activity.LogOutActivity;
+import io.github.jokoframework.adapter.CustomExpandableListAdapter;
+import io.github.jokoframework.mboehaolib.constants.Constants;
+import io.github.jokoframework.mboehaolib.pojo.Event;
+import io.github.jokoframework.mboehaolib.pojo.EventParent;
 import io.github.jokoframework.mboehaolib.util.Utils;
 
 /**
  * Created by joaquin on 23/08/17.
+ * @author joaquin
+ * @author afeltes
  */
 
 public class NavigationDrawerFragment extends Fragment {
@@ -60,7 +57,6 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_PREFERENCES = 7L;
     private static final long MENU_ID_CHANGEPASS = 8L;
 
-
     /**
      * A pointer to the current callbacks instance (the Activity).
      */
@@ -70,23 +66,14 @@ public class NavigationDrawerFragment extends Fragment {
      * Helper component that ties the action bar to the navigation drawer.
      */
     private ActionBarDrawerToggle mDrawerToggle;
-
     private DrawerLayout mDrawerLayout;
-
     private ListView mDrawerListView;
-
     private View mFragmentContainerView;
-
     private ImageView imageHeader;
-
     public View header;
-
-    boolean mFromSavedInstanceState;
-
+    private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;
-
     private List<Event> mEvents;
-
     private List<EventParent> mEventParents;
 
     @Override
@@ -165,14 +152,14 @@ public class NavigationDrawerFragment extends Fragment {
         //Implementa la cabecera del menu...
         TextView welcomeString = (TextView) header.findViewById(R.id.personalize_welcome);
 
-        if(Utils.getPrefs(getActivity(),Constants.FACEBOOK_PROFILE_DATA) == null){
-            if(currentUserParse != null){
+        if (Utils.getPrefs(getActivity(), Constants.FACEBOOK_PROFILE_DATA) == null) {
+            if (currentUserParse != null) {
                 welcomeString.setText(String.format("Bienvenido %s", currentUserParse.getUsername()));
-            }else{
+            } else {
                 welcomeString.setText(String.format("Bienvenido a Mboehao"));
             }
-        }else{
-            welcomeString.setText(String.format("Bienvenido %s", Utils.getPrefs(getActivity(),Constants.FACEBOOK_PROFILE_DATA)));
+        } else {
+            welcomeString.setText(String.format("Bienvenido %s", Utils.getPrefs(getActivity(), Constants.FACEBOOK_PROFILE_DATA)));
         }
         return header;
     }

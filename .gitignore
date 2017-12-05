@@ -12,7 +12,7 @@ projectFilesBackup/
 gradle.properties
 *.crt
 *.zip
-bipolarlib/app
+mboehaolib/app
 firebase.json
 firebase/*
 functions/*

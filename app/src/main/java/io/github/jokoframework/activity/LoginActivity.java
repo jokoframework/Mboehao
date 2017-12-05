@@ -51,29 +51,23 @@ import rx.schedulers.Schedulers;
 
 public class LoginActivity extends BaseActivity implements ProcessError {
 
-    public final UserData getUserData() {
-        return getApp().getUserData();
-    }
-
+    private String LOG_TAG = LoginActivity.class.getSimpleName();
+    private CallbackManager callbackManager = CallbackManager.Factory.create();
     private ProfileTracker mProfileTracker;
     private AccessTokenTracker accessTokenTracker;
     private AccessToken accessToken;
     private Profile currentUser;
-
-
     private EditText userTextField, passTextField;
-
-    private String LOG_TAG = LoginActivity.class.getSimpleName();
     private ImageView imageLogin;
     private CheckBox saveCredentials;
     private Activity thisActivity;
+    private Button enterButton;
+    private Activity mySelf;
 
 
     public Activity thisActivity() {
         return thisActivity;
     }
-
-    private CallbackManager callbackManager = CallbackManager.Factory.create();
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -97,9 +91,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private boolean isPasswordValid(String password) {
         return AppUtils.isValidPassword(password);
     }
-
-    private Button enterButton;
-    private Activity mySelf;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

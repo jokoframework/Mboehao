@@ -4,11 +4,12 @@ import android.content.Context;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.github.jokoframework.R;
 import com.github.mikephil.charting.components.MarkerView;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.utils.MPPointF;
+
+import io.github.jokoframework.R;
 
 /**
  * Created by joaquin on 12/09/17.
@@ -25,13 +26,14 @@ public class MyDialogMarkView extends MarkerView {
 
     private TextView textContent;
     private ImageView iconDraw;
+    private MPPointF mOffset;
 
     public MyDialogMarkView(Context context, int layoutResource) {
         super(context, layoutResource);
 
         // find your layout components
         textContent = (TextView) findViewById(R.id.textmarkerContent);
-        iconDraw = (ImageView)findViewById(R.id.dialogmarkerImage);
+        iconDraw = (ImageView) findViewById(R.id.dialogmarkerImage);
     }
 
     // callbacks everytime the MarkerView is redrawn, can be used to update the
@@ -44,12 +46,10 @@ public class MyDialogMarkView extends MarkerView {
         super.refreshContent(e, highlight);
     }
 
-    private MPPointF mOffset;
-
     @Override
     public MPPointF getOffset() {
 
-        if(mOffset == null) {
+        if (mOffset == null) {
             // center the marker horizontally and vertically
             mOffset = new MPPointF(-getWidth(), -(getHeight() / 2));
         }

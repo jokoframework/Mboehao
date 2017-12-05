@@ -82,9 +82,9 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     private class MyWebViewClient extends WebViewClient {
-        final View progressBarView = findViewById(R.id.progressHomeWindow);         // progress bar Parent...
-        WebView webView = (WebView)findViewById(R.id.webview);
-        Activity activity;
+        private final View progressBarView = findViewById(R.id.progressHomeWindow);         // progress bar Parent...
+        private WebView webView = (WebView)findViewById(R.id.webview);
+        private Activity activity;
         private MyWebViewClient(Activity activity) {
             this.activity = activity;
         }

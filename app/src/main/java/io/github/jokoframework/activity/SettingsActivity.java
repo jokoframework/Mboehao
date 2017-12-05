@@ -23,7 +23,6 @@ import android.view.MenuItem;
 import java.util.List;
 
 import io.github.jokoframework.R;
-
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.Utils;
 
@@ -31,18 +30,9 @@ import io.github.jokoframework.mboehaolib.util.Utils;
  * Created by joaquin on 17/10/17.
  */
 
-public class SettingsActivity extends AppCompatPreferenceActivity{
-
-    public static Activity getMySelf() {
-        return mySelf;
-    }
-
-    public void setMySelf(Activity activity) {
-        this.mySelf = activity;
-    }
+public class SettingsActivity extends AppCompatPreferenceActivity {
 
     private static Activity mySelf;
-
 
     private static void bindSwitchPreferenceSummaryToValue(SwitchPreference preference) {
         // Set the listener to watch for value changes.
@@ -54,23 +44,6 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
                         .getDefaultSharedPreferences(preference.getContext())
                         .getBoolean(preference.getKey(), true));
     }
-
-//    private static SwitchPreference.OnPreferenceChangeListener switchPreferenceListener = new SwitchPreference.OnPreferenceChangeListener(){
-//        @Override
-//        public boolean onPreferenceChange(Preference preference, Object o) {
-//            Activity activity = new Activity();
-//            activity.getApplication();
-//            SwitchPreference switchPreference = (SwitchPreference) preference;
-//            if(switchPreference.isChecked() && o==){
-//                switchPreference.setChecked(true);
-//                AppUtils.addPrefs(getMySelf(),AppConstants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,true);
-//                return true;
-//            }else{
-//                AppUtils.addPrefs(getMySelf(),AppConstants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,false);
-//                return false;
-//            }
-//        }
-//    };
 
     /**
      * A preference value change listener that updates the preference's summary
@@ -116,7 +89,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
                         preference.setSummary(name);
                     }
                 }
-            }else{
+            } else {
                 // For all other preferences, set the summary to the value's
                 // simple string representation.
                 preference.setSummary(stringValue);
@@ -228,10 +201,10 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
             bindSwitchPreferenceSummaryToValue((SwitchPreference) findPreference("notifications_new_message"));
 
             SwitchPreference allowNotifications = (SwitchPreference) findPreference("notifications_new_message");
-            if(allowNotifications.isChecked()){
-                Utils.addPrefs(getActivity(),Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,true);
-            }else{
-                Utils.addPrefs(getActivity(),Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED,false);
+            if (allowNotifications.isChecked()) {
+                Utils.addPrefs(getActivity(), Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED, true);
+            } else {
+                Utils.addPrefs(getActivity(), Constants.PREFERENCE_ATTRIBUTE_NOTIFICATION_CHECKED, false);
             }
         }
 
@@ -245,5 +218,14 @@ public class SettingsActivity extends AppCompatPreferenceActivity{
             return super.onOptionsItemSelected(item);
         }
     }
+
+    public static Activity getMySelf() {
+        return mySelf;
+    }
+
+    public void setMySelf(Activity activity) {
+        this.mySelf = activity;
+    }
+
 
 }

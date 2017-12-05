@@ -1,7 +1,5 @@
 package io.github.jokoframework.model;
 
-import java.util.Map;
-
 public class LoginRequestBuilder {
 
     private LoginRequest data = new LoginRequest();

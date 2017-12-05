@@ -57,11 +57,14 @@ import retrofit2.Response;
 import retrofit2.adapter.rxjava.HttpException;
 import rx.functions.Action1;
 
-
 public class AppUtils {
     private static final String LOG_TAG = AppUtils.class.getName();
 
     private static Random random = new Random();
+    public static final float EPSILON = 0.0000001f;
+    private static final DateFormat monthFormatter = new SimpleDateFormat("MMMM, yyyy");
+    private static final DateFormat dayFormatter = new SimpleDateFormat("EEEE");
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     private AppUtils() {
         AppUtils.random.setSeed(System.currentTimeMillis());
@@ -118,13 +121,13 @@ public class AppUtils {
     //BEGIN-IGNORE-SONARQUBE
     private static SharedPreferences getSharedPreferences(Context context) {
         // afeltes - 2017-01-23
-        //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
+        //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
     }
 
     private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
         // afeltes - 2017-01-23
-        //Para revisar con más cuidado, no sabemos si antes del bipolarlib se usaba el "id" para algo
+        //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences(AppConstants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
     }
     //BEGIN-IGNORE-SONARQUBE
@@ -223,7 +226,7 @@ public class AppUtils {
             return false;
         } else {
             try {
-                return valideTimeAsString(exactTime);
+                return Utils.valideTimeAsString(exactTime);
             } catch (NumberFormatException e) {
                 Log.e(LOG_TAG, e.getMessage(), e);
                 return false;
@@ -234,16 +237,6 @@ public class AppUtils {
         }
     }
 
-    protected static boolean valideTimeAsString(String exactTime) {
-        String[] parts = exactTime.split(":");
-        int hora = Integer.parseInt(parts[0]);
-        int minuto = Integer.parseInt(parts[1]);
-        if (isValidHour(hora) && isValidMinute(minuto)) {
-            return true;
-        }
-        return false;
-    }
-
     private static boolean isValidMinute(int minuto) {
         return minuto >= 0 && minuto <= 59;
     }
@@ -251,15 +244,6 @@ public class AppUtils {
     private static boolean isValidHour(int hora) {
         return hora >= 0 && hora <= 23;
     }
-
-    public static final float EPSILON = 0.0000001f;
-    public static final String DOTS = "...";
-
-    private static final DateFormat monthFormatter = new SimpleDateFormat("MMMM, yyyy");
-    private static final DateFormat dayFormatter = new SimpleDateFormat("EEEE");
-
-    private static final ObjectMapper mapper = new ObjectMapper();
-
 
     public static void setVisibility(ViewGroup layout, int flag) {
         for (int i = 0; i < layout.getChildCount(); i++) {
@@ -302,9 +286,11 @@ public class AppUtils {
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
         Date date;
         try {
-            if (dateString == null) throw new NullPointerException();
-
-            date = df.parse(dateString);
+            if (dateString != null) {
+                date = df.parse(dateString);
+            } else {
+                throw new ParseException("date string is null", 1);
+            }
         } catch (NullPointerException | ParseException e) {
             date = Calendar.getInstance().getTime();
         }
@@ -492,12 +478,13 @@ public class AppUtils {
 
 
     public static boolean networkConnectivity(Context context) {
+        boolean connected = false;
         ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            return true;
+            connected = true;
         }
-        return false;
+        return connected;
     }
 
     public static void hideSoftInputFromWindow(Activity activity) {
@@ -524,11 +511,13 @@ public class AppUtils {
         return Math.abs(d1 - d2) < EPSILON;
     }
 
-    public static String formatCurrency(Number number, boolean addSimbol, int decimals) {
-
+    public static String formatCurrency(Number pNumber, boolean addSimbol, int decimals) {
+        Number number;
         String quantityOut;
-        if (number == null) {
+        if (pNumber == null) {
             number = 0;
+        } else {
+            number = pNumber;
         }
         NumberFormat numberFormatter = NumberFormat.getNumberInstance(io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
         numberFormatter.setMaximumFractionDigits(decimals);
@@ -603,32 +592,28 @@ public class AppUtils {
 
     public static void showLogin(Context context, HttpException throwable) {
         if (context != null) {
-            JokoLoginResponse loginResponse = readErrorResponse(throwable);
-
-            // Esto deberia venir del backend y no deberia hacer falta,
-            // por ahora seteamos un mismo mensaje aqui.
-            if (loginResponse.getErrorCode().equals(JokoLoginResponse.ERROR_CODE_BAD_CREDENTIALS)) {
-                loginResponse.setMessage("Usuario y/o clave son incorrectas");
+            try {
+                JokoLoginResponse loginResponse = readErrorResponse(throwable);
+                // Esto deberia venir del backend y no deberia hacer falta,
+                // por ahora seteamos un mismo mensaje aqui.
+                if (loginResponse.getErrorCode().equals(JokoLoginResponse.ERROR_CODE_BAD_CREDENTIALS)) {
+                    loginResponse.setMessage("Usuario y/o clave son incorrectas");
+                }
+                Intent i = makeLogin(context);
+                i.putExtra(io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys.LOGIN_ERROR.name(), true);
+                i.putExtra(io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys.LOGIN_ERROR_MSG.name(), loginResponse.getMessage());
+                context.startActivity(i);
+            } catch (IOException e) {
+                Log.e(LOG_TAG, "No se pudo leer la respuesta del login");
             }
-
-            Intent i = makeLogin(context);
-            i.putExtra(io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys.LOGIN_ERROR.name(), true);
-            i.putExtra(io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys.LOGIN_ERROR_MSG.name(), loginResponse.getMessage());
-            context.startActivity(i);
         }
     }
 
-    private static JokoLoginResponse readErrorResponse(HttpException throwable) {
+    private static JokoLoginResponse readErrorResponse(HttpException throwable) throws IOException {
         Response<?> response = throwable.response();
         ResponseBody errorBody = response.errorBody();
         JokoLoginResponse loginResponse = null;
-        try {
-            loginResponse = mapper.readValue(errorBody.bytes(), JokoLoginResponse.class);
-        } catch (IOException ex) {
-            Log.e(LOG_TAG, ex.getMessage());
-            throw new RuntimeException(ex);
-        }
-
+        loginResponse = mapper.readValue(errorBody.bytes(), JokoLoginResponse.class);
         return loginResponse;
     }
 

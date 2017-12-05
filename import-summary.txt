@@ -23,56 +23,56 @@ so manually move them:
 * java/py/
 * java/py/com/
 * java/py/com/sodep/
-* java/py/com/sodep/bipolarlib/
-* java/py/com/sodep/bipolarlib/BuildConfig.class
-* java/py/com/sodep/bipolarlib/activity/
-* java/py/com/sodep/bipolarlib/activity/BaseActivity.class
-* java/py/com/sodep/bipolarlib/activity/BasePlotActivity.class
-* java/py/com/sodep/bipolarlib/activity/ErrorActivity$1.class
-* java/py/com/sodep/bipolarlib/activity/ErrorActivity.class
-* java/py/com/sodep/bipolarlib/activity/ReminderActivity$1.class
-* java/py/com/sodep/bipolarlib/activity/ReminderActivity$2.class
-* java/py/com/sodep/bipolarlib/activity/ReminderActivity$3.class
-* java/py/com/sodep/bipolarlib/activity/ReminderActivity.class
-* java/py/com/sodep/bipolarlib/businessobjects/
-* java/py/com/sodep/bipolarlib/businessobjects/ParseData$1.class
-* java/py/com/sodep/bipolarlib/businessobjects/ParseData$Callback.class
-* java/py/com/sodep/bipolarlib/businessobjects/ParseData$ParseObjectFindCallback.class
-* java/py/com/sodep/bipolarlib/businessobjects/ParseData.class
-* java/py/com/sodep/bipolarlib/fragment/
-* java/py/com/sodep/bipolarlib/fragment/TimePickerDialogFragment.class
-* java/py/com/sodep/bipolarlib/pojo/
-* java/py/com/sodep/bipolarlib/pojo/BasePojo.class
-* java/py/com/sodep/bipolarlib/pojo/CheckListPojo.class
-* java/py/com/sodep/bipolarlib/pojo/CustomDrugPojo.class
-* java/py/com/sodep/bipolarlib/pojo/DrugPojo.class
-* java/py/com/sodep/bipolarlib/pojo/Event.class
-* java/py/com/sodep/bipolarlib/pojo/MedicationPojo.class
-* java/py/com/sodep/bipolarlib/pojo/ProdromicPojo.class
-* java/py/com/sodep/bipolarlib/pojo/QuestionPojo.class
-* java/py/com/sodep/bipolarlib/pojo/RemoteLogPojo.class
-* java/py/com/sodep/bipolarlib/pojo/TimeTablePojo.class
-* java/py/com/sodep/bipolarlib/pojo/TrophyPojo.class
-* java/py/com/sodep/bipolarlib/pojo/UserPojo.class
-* java/py/com/sodep/bipolarlib/pojo/WarningPointPojo.class
-* java/py/com/sodep/bipolarlib/pojo/WeekTestPojo.class
-* java/py/com/sodep/bipolarlib/singleton/
-* java/py/com/sodep/bipolarlib/singleton/ApplicationConstants.class
-* java/py/com/sodep/bipolarlib/util/
-* java/py/com/sodep/bipolarlib/util/CalificationUtils$1.class
-* java/py/com/sodep/bipolarlib/util/CalificationUtils$2.class
-* java/py/com/sodep/bipolarlib/util/CalificationUtils$3.class
-* java/py/com/sodep/bipolarlib/util/CalificationUtils$PushCalificationThread.class
-* java/py/com/sodep/bipolarlib/util/CalificationUtils.class
-* java/py/com/sodep/bipolarlib/util/ImageUtils.class
-* java/py/com/sodep/bipolarlib/util/ParseUtils.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils$1.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils$2.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils$3.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils$4.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils$5.class
-* java/py/com/sodep/bipolarlib/util/ReminderUtils.class
-* java/py/com/sodep/bipolarlib/util/Utils.class
+* java/py/com/sodep/mboehaolib/
+* java/py/com/sodep/mboehaolib/BuildConfig.class
+* java/py/com/sodep/mboehaolib/activity/
+* java/py/com/sodep/mboehaolib/activity/BaseActivity.class
+* java/py/com/sodep/mboehaolib/activity/BasePlotActivity.class
+* java/py/com/sodep/mboehaolib/activity/ErrorActivity$1.class
+* java/py/com/sodep/mboehaolib/activity/ErrorActivity.class
+* java/py/com/sodep/mboehaolib/activity/ReminderActivity$1.class
+* java/py/com/sodep/mboehaolib/activity/ReminderActivity$2.class
+* java/py/com/sodep/mboehaolib/activity/ReminderActivity$3.class
+* java/py/com/sodep/mboehaolib/activity/ReminderActivity.class
+* java/py/com/sodep/mboehaolib/businessobjects/
+* java/py/com/sodep/mboehaolib/businessobjects/ParseData$1.class
+* java/py/com/sodep/mboehaolib/businessobjects/ParseData$Callback.class
+* java/py/com/sodep/mboehaolib/businessobjects/ParseData$ParseObjectFindCallback.class
+* java/py/com/sodep/mboehaolib/businessobjects/ParseData.class
+* java/py/com/sodep/mboehaolib/fragment/
+* java/py/com/sodep/mboehaolib/fragment/TimePickerDialogFragment.class
+* java/py/com/sodep/mboehaolib/pojo/
+* java/py/com/sodep/mboehaolib/pojo/BasePojo.class
+* java/py/com/sodep/mboehaolib/pojo/CheckListPojo.class
+* java/py/com/sodep/mboehaolib/pojo/CustomDrugPojo.class
+* java/py/com/sodep/mboehaolib/pojo/DrugPojo.class
+* java/py/com/sodep/mboehaolib/pojo/Event.class
+* java/py/com/sodep/mboehaolib/pojo/MedicationPojo.class
+* java/py/com/sodep/mboehaolib/pojo/ProdromicPojo.class
+* java/py/com/sodep/mboehaolib/pojo/QuestionPojo.class
+* java/py/com/sodep/mboehaolib/pojo/RemoteLogPojo.class
+* java/py/com/sodep/mboehaolib/pojo/TimeTablePojo.class
+* java/py/com/sodep/mboehaolib/pojo/TrophyPojo.class
+* java/py/com/sodep/mboehaolib/pojo/UserPojo.class
+* java/py/com/sodep/mboehaolib/pojo/WarningPointPojo.class
+* java/py/com/sodep/mboehaolib/pojo/WeekTestPojo.class
+* java/py/com/sodep/mboehaolib/singleton/
+* java/py/com/sodep/mboehaolib/singleton/ApplicationConstants.class
+* java/py/com/sodep/mboehaolib/util/
+* java/py/com/sodep/mboehaolib/util/CalificationUtils$1.class
+* java/py/com/sodep/mboehaolib/util/CalificationUtils$2.class
+* java/py/com/sodep/mboehaolib/util/CalificationUtils$3.class
+* java/py/com/sodep/mboehaolib/util/CalificationUtils$PushCalificationThread.class
+* java/py/com/sodep/mboehaolib/util/CalificationUtils.class
+* java/py/com/sodep/mboehaolib/util/ImageUtils.class
+* java/py/com/sodep/mboehaolib/util/ParseUtils.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils$1.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils$2.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils$3.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils$4.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils$5.class
+* java/py/com/sodep/mboehaolib/util/ReminderUtils.class
+* java/py/com/sodep/mboehaolib/util/Utils.class
 * java/py/com/sodep/simple/
 * java/py/com/sodep/simple/activity/
 * java/py/com/sodep/simple/activity/CapsuleActivity$1.class
@@ -204,9 +204,9 @@ Moved Files:
 Android Gradle projects use a different directory structure than ADT
 Eclipse projects. Here's how the projects were restructured:
 
-* AndroidManifest.xml => bipolarlib-1.8/src/main/AndroidManifest.xml
-* assets/ => bipolarlib-1.8/src/main/assets
-* res/ => bipolarlib-1.8/src/main/res/
+* AndroidManifest.xml => mboehaolib-1.8/src/main/AndroidManifest.xml
+* assets/ => mboehaolib-1.8/src/main/assets
+* res/ => mboehaolib-1.8/src/main/res/
 
 Next Steps:
 -----------

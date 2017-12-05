@@ -10,21 +10,21 @@ import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import io.github.jokoframework.R;
-
 import java.util.Date;
+
+import io.github.jokoframework.R;
 
 public class AboutActivity extends Activity implements ImageView.OnClickListener {
 
     //------- Instrumentation to handle number of clicks on default medication switch --------//
     //Require X clicks in Y seconds to trigger secret action
-    final double SECONDS_FOR_CLICKS = 2;
-    final int NUM_CLICKS_REQUIRED = 6;
+    private final double SECONDS_FOR_CLICKS = 2;
+    private final int NUM_CLICKS_REQUIRED = 6;
 
     //List treated circularly to track last NUM_CLICKS_REQUIRED number of clicks
-    long[] clickTimestamps = new long[NUM_CLICKS_REQUIRED];
-    int oldestIndex = 0;
-    int nextIndex = 0;
+    private long[] clickTimestamps = new long[NUM_CLICKS_REQUIRED];
+    private int oldestIndex = 0;
+    private int nextIndex = 0;
     //-------------------------------------------------------------------------------------//
 
     @Override

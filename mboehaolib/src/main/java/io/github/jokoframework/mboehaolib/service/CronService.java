@@ -8,7 +8,9 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.preference.PreferenceManager;
 import android.util.Log;
+
 import com.parse.ParseUser;
+
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.jokoframework.mboehaolib.constants.Constants;
@@ -31,7 +33,7 @@ public class CronService extends Service {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
     }
 
-    public void handlerNewsServiceExecution(){
+    public void handlerNewsServiceExecution() {
         handler.postDelayed(runNewsService, Constants.FIRST_TIME);
     }
 
@@ -41,7 +43,7 @@ public class CronService extends Service {
         return mBinder;
     }
 
-    final Handler handler = new Handler();
+    private final Handler handler = new Handler();
     Runnable runNewsService = new Runnable() {
         @Override
         public void run() {
@@ -51,7 +53,7 @@ public class CronService extends Service {
             } else {
                 Log.d(LOG_TAG, "No hay usuario autenticado");
             }
-            handler.postDelayed(this,Constants.CRON_INTERVAL);
+            handler.postDelayed(this, Constants.CRON_INTERVAL);
         }
 
         private void checkForAppNews() {

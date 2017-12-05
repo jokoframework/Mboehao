@@ -8,12 +8,13 @@ import android.graphics.Point;
 import android.view.Display;
 import android.view.WindowManager;
 
+import com.androidplot.xy.XYPlot;
+
 import java.util.HashMap;
 import java.util.Map;
 
-import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.R;
-import com.androidplot.xy.XYPlot;
+import io.github.jokoframework.constants.AppConstants;
 
 /**
  * Created by joaquin on 23/08/17.
@@ -85,7 +86,8 @@ public class ImageUtils {
     public static Bitmap getScaledBitmapForDailyTest(Resources resources, Point canvasSize, int imageId) {
         Bitmap bitmap = BitmapFactory.decodeResource(resources, imageId);
         double canvasHeight = (double) canvasSize.y;
-        int imageWidth, imageHeight;
+        int imageWidth;
+        int imageHeight;
         int minSize = (int) (canvasHeight * 0.25);
         float aspectRatio = bitmap.getWidth() /
                 (float) bitmap.getHeight();
