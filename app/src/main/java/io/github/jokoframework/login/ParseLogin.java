@@ -50,7 +50,7 @@ public class ParseLogin implements Authenticable {
         return loginButton;
     }
 
-    public ParseLogin(Button loginButton, View progressBar, Activity activity, CheckBox saveCredentials) {
+    public ParseLogin(Button loginButton, Activity activity, CheckBox saveCredentials) {
         this.loginButton = loginButton;
         this.progressBar = progressBar;
         this.activity = activity;

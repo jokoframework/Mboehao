@@ -10,35 +10,21 @@ import android.view.WindowManager;
 
 import com.androidplot.xy.XYPlot;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import io.github.jokoframework.R;
 import io.github.jokoframework.constants.AppConstants;
 
 /**
  * Created by joaquin on 23/08/17.
+ * @author joaquin
+ * @author afeltes
  */
-
 public class ImageUtils {
 
     private static final String DEFAULT_FONT_SIZE = "2";
     private static final String HD_FONT_SIZE = "3";
     private static final String TABLET_FONT_SIZE = "4";
-    private static Map<Integer, Integer> warningPoints = new HashMap<>();
-
-    static {
-        warningPoints.put(AppConstants.RISK, R.drawable.joko);
-        warningPoints.put(AppConstants.LIFE_EVENT, R.drawable.joko);
-        warningPoints.put(AppConstants.MEDICATION, R.drawable.joko);
-        warningPoints.put(AppConstants.PRODROM_SYMTOMS, R.drawable.joko);
-        warningPoints.put(AppConstants.MIXED_SYMPTOMS, R.drawable.joko);
-        warningPoints.put(AppConstants.SUBSTANCE, R.drawable.joko);
-    }
 
     private ImageUtils() {
     }
-
 
     public static Bitmap getScaledBitmap(Resources resources, XYPlot plot, int imageId) {
         Bitmap bitmap = BitmapFactory.decodeResource(resources, imageId);
@@ -65,14 +51,6 @@ public class ImageUtils {
 
         bitmap = Bitmap.createScaledBitmap(bitmap, flagWidth, flagHeight, false);
         return bitmap;
-    }
-
-    public static Map<Integer, Integer> getWarningPoints() {
-        return warningPoints;
-    }
-
-    public static void setWarningPoints(Map<Integer, Integer> warningPoints) {
-        ImageUtils.warningPoints = warningPoints;
     }
 
     public static Point getScreenSizeInPixels(Context context) {

@@ -15,7 +15,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,11 +29,10 @@ import java.net.InetAddress;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
 import java.text.DateFormat;
-import java.text.NumberFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 import de.keyboardsurfer.android.widget.crouton.Configuration;
@@ -125,7 +123,7 @@ public class AppUtils {
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
     }
 
-    private static SharedPreferences getSharedPreferences(Context context, String id, boolean getter) {
+    private static SharedPreferences getSharedPreferences(Context context, String id) {
         // afeltes - 2017-01-23
         //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences(AppConstants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
@@ -176,7 +174,7 @@ public class AppUtils {
 
     public static void addPrefs(Context context, String id, long value) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id, false);
+            SharedPreferences prefs = getSharedPreferences(context, id);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putLong(id, value);
             edit.commit();
@@ -218,195 +216,15 @@ public class AppUtils {
         return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Mboehao/");
     }
 
-
-    public static boolean isValidTime(String exactTime) {
-
-        //TODO: utilizar un DateFormat http://javatechniques.com/blog/dateformat-and-simpledateformat-examples/
-        if (StringUtils.isBlank(exactTime)) {
-            return false;
-        } else {
-            try {
-                return Utils.valideTimeAsString(exactTime);
-            } catch (NumberFormatException e) {
-                Log.e(LOG_TAG, e.getMessage(), e);
-                return false;
-            } catch (ArrayIndexOutOfBoundsException arrayEx) {
-                Log.e(LOG_TAG, arrayEx.getMessage(), arrayEx);
-                return false;
-            }
-        }
-    }
-
-    private static boolean isValidMinute(int minuto) {
-        return minuto >= 0 && minuto <= 59;
-    }
-
-    private static boolean isValidHour(int hora) {
-        return hora >= 0 && hora <= 23;
-    }
-
-    public static void setVisibility(ViewGroup layout, int flag) {
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            View child = layout.getChildAt(i);
-            if (child instanceof ViewGroup) {
-                child.setVisibility(flag);
-                setVisibility((ViewGroup) child, flag);
-            } else {
-                child.setVisibility(flag);
-            }
-        }
-    }
-
-    public static String getTimeFromDate(Date date) {
-        DateFormat df = new SimpleDateFormat("HH:mm", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        df.setTimeZone(io.github.jokoframework.mboehaolib.constants.Constants.TIME_ZONE);
-
-        return df.format(date);
-    }
-
     public static boolean isDnsWorking(String hostname) {
         boolean working = false;
         try {
-            InetAddress i = InetAddress.getByName(hostname);
-            working = true;
+            InetAddress inetAddress = InetAddress.getByName(hostname);
+            working = inetAddress != null;
         } catch (UnknownHostException e1) {
             Log.e(LOG_TAG, String.format("No se puede resolver el nombre %s, %s", hostname, e1.getMessage()), e1);
         }
         return working;
-    }
-
-    public static String getDateStringToRequest(Calendar calendar) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        df.setTimeZone(io.github.jokoframework.mboehaolib.constants.Constants.TIME_ZONE);
-
-        return df.format(calendar.getTime());
-    }
-
-    public static Date parseDate(String dateString) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        Date date;
-        try {
-            if (dateString != null) {
-                date = df.parse(dateString);
-            } else {
-                throw new ParseException("date string is null", 1);
-            }
-        } catch (NullPointerException | ParseException e) {
-            date = Calendar.getInstance().getTime();
-        }
-        return date;
-    }
-
-    public static String reformatDate(SimpleDateFormat simpleDateFormat, String dateString) {
-        Date date;
-        SimpleDateFormat iso8601Format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        try {
-            if (simpleDateFormat == null) {
-                throw new NullPointerException();
-            }
-            date = iso8601Format.parse(dateString);
-        } catch (NullPointerException | ParseException e) {
-            date = Calendar.getInstance().getTime();
-        }
-        return simpleDateFormat.format(date);
-    }
-
-    public static String getDateString(Calendar calendar) {
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        return df.format(calendar.getTime());
-    }
-
-    public static String getDateStringToField(Calendar calendar) {
-        DateFormat df = new SimpleDateFormat("dd/MM/yyyy", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        df.setTimeZone(io.github.jokoframework.mboehaolib.constants.Constants.TIME_ZONE);
-
-        return df.format(calendar.getTime());
-    }
-
-    public static String formatPhoneNumberWithoutZero(String phoneNumber) {
-        String formatted = phoneNumber;
-        if (phoneNumber.length() > 2 && phoneNumber.startsWith("0")) {
-            formatted = phoneNumber.substring(1, phoneNumber.length());
-        }
-        return formatted;
-    }
-
-    public static boolean atLeastOneAlpha(String string) {
-        return string.matches(".*[a-zA-Z]+.*|.*\\p{Punct}+.*");
-    }
-
-    public static Number parseNumber(String montoString) {
-        NumberFormat format = NumberFormat.getInstance(io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        Number number = null;
-        try {
-            number = format.parse(montoString);
-        } catch (ParseException e) {
-            Log.i(LOG_TAG, "No es número: " + montoString);
-        }
-        return number;
-    }
-
-    public static Long parseLong(String montoString) {
-        Number number = parseNumber(montoString);
-        Long monto = null;
-
-        if (number != null) {
-            monto = number.longValue();
-        }
-
-        return monto;
-    }
-
-    public static Double parseDouble(String montoString) {
-        Number number = parseNumber(montoString);
-        Double monto = null;
-
-        if (number != null) {
-            monto = number.doubleValue();
-        }
-
-        return monto;
-    }
-
-    public static String getFullDate(Date date) {
-        DateFormat df = new SimpleDateFormat("'El' EEEE, dd MMMM yyyy 'a las' HH:mm:ss", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        df.setTimeZone(io.github.jokoframework.mboehaolib.constants.Constants.TIME_ZONE);
-
-        return df.format(date);
-    }
-
-    public static String getShortDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE); // 3-letter month name & 2-char day of month
-
-        return formatter.format(date);
-    }
-
-    /**
-     * Retorna una fecha formateada con un estilo compacto en dos líneas
-     *
-     * @param date
-     * @return
-     */
-    public static String getCompactDate(Date date) {
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm EEE dd\nMMM yyyy", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-
-        return formatter.format(date).toUpperCase();
-    }
-
-    /**
-     * Retorna la fecha (sin año) y la hora, el formato que se intenta conseguir es como sigue:
-     * "6:40 PM Lunes 17": El nombre del mes debe ser completo y capitalizado, la hora debe ir
-     * en formato AM/PM en mayúsuculas sin los puntos de la abreviatura.
-     *
-     * @param date
-     * @return
-     */
-    public static String getDayAndTime(Date date) {
-        SimpleDateFormat dayFormatter = new SimpleDateFormat("EEEE dd", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        String day = dayFormatter.format(date);
-        String finalDay = capitalize(day);
-        String hour = new SimpleDateFormat(" h:mm a", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE).format(date).toUpperCase().replace(".", "");
-        return finalDay + hour;
     }
 
     //Sample method to validate and read the JWT
@@ -419,22 +237,6 @@ public class AppUtils {
         Log.i(LOG_TAG, "Subject: " + claims.getSubject());
         Log.i(LOG_TAG, "Issuer: " + claims.getIssuer());
         Log.i(LOG_TAG, "Expiration: " + claims.getExpiration());
-    }
-
-    public static long secondsToReachExpiration(long expiration) {
-        long now = new Date().getTime() / 1000;
-        return secondsDifference(expiration, now);
-    }
-
-    public static long secondsDifference(long expiration, long now) {
-
-        Date expirationDate = new Date();
-        //multiply the timestampt with 1000 as java expects the time in milliseconds
-        expirationDate.setTime(expiration);
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        Log.i(LOG_TAG, "Expiración de Refresh token: " + format.format(expirationDate));
-
-        return expiration - now;
     }
 
     public static void showError(String message, View view, View.OnClickListener action) {
@@ -511,25 +313,6 @@ public class AppUtils {
         return Math.abs(d1 - d2) < EPSILON;
     }
 
-    public static String formatCurrency(Number pNumber, boolean addSimbol, int decimals) {
-        Number number;
-        String quantityOut;
-        if (pNumber == null) {
-            number = 0;
-        } else {
-            number = pNumber;
-        }
-        NumberFormat numberFormatter = NumberFormat.getNumberInstance(io.github.jokoframework.mboehaolib.constants.Constants.LOCALE);
-        numberFormatter.setMaximumFractionDigits(decimals);
-        numberFormatter.setMinimumFractionDigits(decimals);
-        if (addSimbol) {
-            quantityOut = io.github.jokoframework.mboehaolib.constants.Constants.CURRENCY_SYMBOL + numberFormatter.format(number);
-        } else {
-            quantityOut = numberFormatter.format(number);
-        }
-
-        return quantityOut;
-    }
 
     private static void showActivityWithMessage(Context applicationContext, String intentFilter) {
         Intent errorActivity = new Intent(intentFilter);//this has to match your intent filter
@@ -702,6 +485,22 @@ public class AppUtils {
                 }
             }
         };
+    }
+
+    public static long secondsToReachExpiration(long expiration) {
+        long now = new Date().getTime() / 1000;
+        return secondsDifference(expiration, now);
+    }
+
+    public static long secondsDifference(long expiration, long now) {
+
+        Date expirationDate = new Date();
+        //multiply the timestampt with 1000 as java expects the time in milliseconds
+        expirationDate.setTime(expiration);
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'", Locale.getDefault());
+        Log.i(LOG_TAG, "Expiración de Refresh token: " + format.format(expirationDate));
+
+        return expiration - now;
     }
 
 }

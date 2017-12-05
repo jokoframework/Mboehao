@@ -124,12 +124,6 @@ public class Utils {
         //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
         return context.getSharedPreferences("SimplePref", Context.MODE_MULTI_PROCESS);
     }
-
-    private static SharedPreferences getSharedPreferences(Context context, String id) {
-        // afeltes - 2017-01-23
-        //Para revisar con más cuidado, no sabemos si antes del mboehaolib se usaba el "id" para algo
-        return context.getSharedPreferences(Constants.SHARED_MBOEHAO_PREF, Context.MODE_MULTI_PROCESS);
-    }
     //BEGIN-IGNORE-SONARQUBE
 
     public static boolean getBoolPrefs(Context context, String id) {
@@ -187,7 +181,7 @@ public class Utils {
 
     public static void addPrefs(Context context, String id, long value) {
         if (context != null) {
-            SharedPreferences prefs = getSharedPreferences(context, id);
+            SharedPreferences prefs = getSharedPreferences(context);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putLong(id, value);
             edit.commit();
@@ -227,45 +221,6 @@ public class Utils {
 
     public static File getShareImagesFolder() {
         return new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM) + "/Mboehao/");
-    }
-
-
-    public static boolean isValidTime(String exactTime) {
-
-        //TODO: utilizar un DateFormat http://javatechniques.com/blog/dateformat-and-simpledateformat-examples/
-        if (StringUtils.isBlank(exactTime)) {
-            return false;
-        } else {
-            try {
-                return valideTimeAsString(exactTime);
-            } catch (NumberFormatException e) {
-                Log.e(LOG_TAG, e.getMessage(), e);
-                return false;
-            } catch (ArrayIndexOutOfBoundsException arrayEx) {
-                Log.e(LOG_TAG, arrayEx.getMessage(), arrayEx);
-                return false;
-            }
-        }
-    }
-
-    public static boolean valideTimeAsString(String exactTime) {
-        boolean valid = false;
-        String[] parts = exactTime.split(":");
-        int hora = Integer.parseInt(parts[0]);
-        int minuto = Integer.parseInt(parts[1]);
-        if (isValidHour(hora) && isValidMinute(minuto)) {
-            valid = true;
-        }
-        return valid;
-    }
-
-
-    private static boolean isValidMinute(int minuto) {
-        return minuto >= 0 && minuto <= 59;
-    }
-
-    private static boolean isValidHour(int hora) {
-        return hora >= 0 && hora <= 23;
     }
 
     public static void showToast(final Context context, final String message) {

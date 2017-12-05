@@ -33,7 +33,9 @@ import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.eula.Eula;
+import io.github.jokoframework.login.Authenticable;
 import io.github.jokoframework.login.CredentialsTextView;
+import io.github.jokoframework.login.ParseLogin;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
@@ -53,7 +55,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
     private String LOG_TAG = LoginActivity.class.getSimpleName();
     private CallbackManager callbackManager = CallbackManager.Factory.create();
-    private ProfileTracker mProfileTracker;
     private AccessTokenTracker accessTokenTracker;
     private AccessToken accessToken;
     private Profile currentUser;
@@ -148,6 +149,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private class FacebookCallbackLogin implements FacebookCallback<LoginResult> {
         @Override
         public void onSuccess(LoginResult loginResult) {
+            ProfileTracker mProfileTracker;
             //Mostramos el progress, hasta que vaya a la pantalla de transacciones
             Log.d(LOG_TAG, "A mostrar process desde fb:onSuccess");
             showProgress(true, "Login con Facebook...");
@@ -220,11 +222,13 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             showProgress(true, "Ingresando..."); // Muestra el progress bar mientras se obtine el acceso...
 
 //            -----LOGIN WITH PARSE--------------------------
-            /*Authenticable parseLogin = new ParseLogin(enterButton,progressView, mySelf,saveCredentials);
-            parseLogin.setPassword(password);
-            parseLogin.setUser(username);
-            parseLogin.saveCredentials();
-            parseLogin.authenticate();*/
+            if(Boolean.parseBoolean(getString(R.string.parse_enabled))) {
+                Authenticable parseLogin = new ParseLogin(enterButton, mySelf, saveCredentials);
+                parseLogin.setPassword(password);
+                parseLogin.setUser(username);
+                parseLogin.saveCredentials();
+                parseLogin.authenticate();
+            }
 
 ////            ------JWT LOGIN---------------------------------
             saveCredentials(username, password);
@@ -323,8 +327,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
 
     private void doLogin(LoginRequest loginRequest, LoginRepository authApi) {
-        long startTime = System.currentTimeMillis();
-        long endTime = 15 * 1000; // after 15 second, it ends and return and Error!...
 
         UserData userData = getUserData();
         authApi.login(loginRequest, Constants.CURRENT_MBOEHAO_VERSION)

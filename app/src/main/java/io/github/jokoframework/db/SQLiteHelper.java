@@ -35,10 +35,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
     private static final String DATABASE_NAME = String.format("mboehao-v%s.db", DATABASE_VERSION);
-    protected Context context;
     private static final String SQL_DELETE_ENTRIES;
     private static SQLiteHelper _instance;
-
     public final String CREATE_TABLE_ACTIVITY = "CREATE TABLE " + DaybookEntry.TABLE_NAME + "(" +
             DaybookEntry.COLUMN_NAME_DAYBOOK_ID + " INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, \n" +
             DaybookEntry.COLUMN_NAME_AVERAGE_SECONDS + " type TEXT NOT NULL, \n" +
@@ -65,6 +63,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
             UsageStatEntry.COLUMN_NAME_LAST_TIMESTAMP + " type TEXT NOT NULL, \n" +
             UsageStatEntry.COLUMN_NAME_TOTAL_TIME_FOREGROUND + " type TEXT NOT NULL \n" +
             "); \n";
+    protected Context context;
 
     static {
         StringBuilder builder = new StringBuilder();

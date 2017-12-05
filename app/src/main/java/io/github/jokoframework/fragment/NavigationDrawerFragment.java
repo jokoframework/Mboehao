@@ -15,7 +15,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -52,9 +51,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE2 = 2L;
     private static final long MENU_ID_IMAGE3 = 3L;
     private static final long MENU_ID_LOGOUT = 4L;
-    private static final long MENU_ID_OPTIONS = 5L;
     private static final long MENU_ID_HELP = 6L;
-    private static final long MENU_ID_PREFERENCES = 7L;
     private static final long MENU_ID_CHANGEPASS = 8L;
 
     /**
@@ -69,7 +66,6 @@ public class NavigationDrawerFragment extends Fragment {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerListView;
     private View mFragmentContainerView;
-    private ImageView imageHeader;
     public View header;
     private boolean mFromSavedInstanceState;
     private boolean mUserLearnedDrawer;

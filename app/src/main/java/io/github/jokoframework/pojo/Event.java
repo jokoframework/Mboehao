@@ -1,11 +1,15 @@
 package io.github.jokoframework.pojo;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+
 import java.io.Serializable;
 
 /**
  * Created by joaquin on 23/08/17.
+ *
+ * @author joaquin
+ * @author afeltes
  */
-
 public class Event implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -14,11 +18,11 @@ public class Event implements Serializable {
     private String description;
     private Integer resourceIconId;
     private Integer iconMenu;
+    private Class activity;
 
     public Event(Long id) {
         this.id = id;
     }
-    private Class activity;
 
     public Class getActivity() {
         return activity;
@@ -64,13 +68,15 @@ public class Event implements Serializable {
         this.resourceIconId = resourceIconId;
     }
 
+
     @Override
     public String toString() {
-        return "Event{" +
-                "id=" + id +
-                ", description='" + description + '\'' +
-                ", resourceIconId=" + resourceIconId +
-                ", iconMenu=" + iconMenu +
-                '}';
+        return new ToStringBuilder(this)
+                .append("id", id)
+                .append("description", description)
+                .append("resourceIconId", resourceIconId)
+                .append("iconMenu", iconMenu)
+                .append("activity", activity)
+                .toString();
     }
 }

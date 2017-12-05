@@ -78,7 +78,7 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                 @Override
                 public Observable call(final Throwable throwable) {
                     if (throwable instanceof SocketTimeoutException || throwable instanceof UnknownHostException
-                            || throwable instanceof retrofit2.adapter.rxjava.HttpException
+                            || throwable instanceof HttpException
                             || throwable instanceof ConnectException) {
                         Observable observableWithError = Observable.create(new Observable.OnSubscribe<Object>() {
                             @Override

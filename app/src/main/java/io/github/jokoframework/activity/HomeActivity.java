@@ -45,7 +45,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
     private static final String TAG = FirebaseInstanceIdService.class.getSimpleName();
-    private NavigationDrawerFragment mNavigationDrawerFragment;
 
     @Override
     protected void onResume() {
@@ -182,6 +181,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     private void setupNavigationDrawerFragment() {
+        NavigationDrawerFragment mNavigationDrawerFragment;
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.menuFragment);
         // It might happen while rotating that   ?¿...

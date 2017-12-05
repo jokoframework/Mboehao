@@ -141,6 +141,7 @@
 
     <string name="appnews">No se olvide de dejar sus comentarios!</string>
     <string name="splash_text">Logo Mboehao</string>
+    <string name="parse_enabled">false</string>
 
 
 </resources>

@@ -4,19 +4,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.support.annotation.NonNull;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.CheckBox;
 
-import io.github.jokoframework.mboehaolib.constants.Constants;import io.github.jokoframework.dialog.SecurityDialog;
-import io.github.jokoframework.mboehaolib.util.ImageUtils;
 import io.github.jokoframework.R;
+import io.github.jokoframework.dialog.SecurityDialog;
+import io.github.jokoframework.mboehaolib.util.ImageUtils;
 
 /**
  * Created by joaquin on 04/09/17.
  */
-
 public class Eula {
     private static final String PREFERENCE_EULA_ACCEPTED = "eula.accepted";
     private static final String PREFERENCES_EULA = "eula";
@@ -50,13 +48,12 @@ public class Eula {
                     + "</p> "
                     + "</body></html>";
             mWebView.loadData(eulaBodyText, "text/html; charset=utf-8", "utf-8");
-            
+
             View acceptButton = eulaView.findViewById(R.id.eula_accept_btn);
             View refusetButton = eulaView.findViewById(R.id.eula_refuse_btn);
             final CheckBox checkBox = (CheckBox) eulaView.findViewById(R.id.checkBoxAcceptEula);
             dialogBuilder.setView(eulaView);
             final AlertDialog alert = dialogBuilder.create();
-            //TODO:se puede agregar que el check se pueda habilitar solo cuando se termina de leer el EULA...
             acceptButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -75,11 +72,6 @@ public class Eula {
             return false;
         }
         return true;
-    }
-
-    @NonNull
-    private static String getHtmlScaledFontSize() {
-        return Constants.HTML_SCALED_FONT_SIZE;
     }
 
     private static void acceptClicked(CheckBox checkBox, SharedPreferences preferences, AlertDialog alert, Activity activity) {
