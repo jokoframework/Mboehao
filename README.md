@@ -1,3 +1,5 @@
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e51c4ed171174b5b9ae437fce990e38f)](https://www.codacy.com/app/alefq/Mboehao?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jokoframework/Mboehao&amp;utm_campaign=Badge_Grade)
+
 # Mbo´ehao
 
 Trabajo para relevar lista de funcionalidades que puedan ser reutilizadas en distintos proyectos Android.
