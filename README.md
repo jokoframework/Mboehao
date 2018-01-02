@@ -2,6 +2,8 @@
 
 # Mbo´ehao
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e51c4ed171174b5b9ae437fce990e38f)](https://www.codacy.com/app/alefq/Mboehao?utm_source=github.com&utm_medium=referral&utm_content=jokoframework/Mboehao&utm_campaign=badger)
+
 Trabajo para relevar lista de funcionalidades que puedan ser reutilizadas en distintos proyectos Android.
 
 ## Que es Mbo´ehao?
