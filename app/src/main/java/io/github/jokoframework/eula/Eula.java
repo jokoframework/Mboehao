@@ -1,11 +1,13 @@
 package io.github.jokoframework.eula;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.view.View;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.CheckBox;
 
 import io.github.jokoframework.R;
@@ -30,6 +32,7 @@ public class Eula {
      * @return Whether the user has agreed already.
      */
 
+    @SuppressLint("StringFormatInvalid")
     public static boolean show(final Activity activity) {
         final SharedPreferences preferences = activity.getSharedPreferences(PREFERENCES_EULA,
                 Activity.MODE_PRIVATE);
@@ -39,15 +42,23 @@ public class Eula {
             final View eulaView = View.inflate(activity, R.layout.activity_eula, null);
 
             WebView mWebView = (WebView) eulaView.findViewById(R.id.webviewEula);
-            String eulaBodyText = "<html><body>"
-                    + "<p align=\"justify\">"
-                    + "<font size=\"" +
-                    ImageUtils.getHtmlScaledFontSize(activity) +
-                    "\">"
-                    + activity.getString(R.string.eula_body)
-                    + "</p> "
-                    + "</body></html>";
-            mWebView.loadData(eulaBodyText, "text/html; charset=utf-8", "utf-8");
+
+            mWebView.loadUrl(activity.getString(R.string.eula_URL));
+
+            mWebView.setWebViewClient(new WebViewClient() {
+                @Override
+                public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+                    String eulaBodyText = "<html><body>"
+                            + "<p align=\"justify\">"
+                            + "<font size=\"" +
+                            ImageUtils.getHtmlScaledFontSize(activity) +
+                            "\">"
+                            + activity.getString(R.string.eula_body)
+                            + "</p> "
+                            + "</body></html>";
+                    mWebView.loadData(eulaBodyText, "text/html; charset=utf-8", "utf-8");
+                }
+            });
 
             View acceptButton = eulaView.findViewById(R.id.eula_accept_btn);
             View refusetButton = eulaView.findViewById(R.id.eula_refuse_btn);

@@ -42,6 +42,7 @@
     <string name="settings_pwd_not_equal">New passwords are not equal</string>
     <string name="settings_pwd_too_short">New password must have at least 8 characters</string>
     <string name="eula_warning_body">Ud. no aceptó aún los términos de uso de la aplicación. Por favor lea hasta el final y marque la casilla de aceptación si está de acuerdo con las condiciones</string>
+    <string name="eula_URL">http://example.com/</string>
     <string name="eula_warning_title"></string>
     <string name="eula_title">Aviso Legal de Responsabilidades</string>
     <string name="eula_checkbox">I Accept the terms and Conditions</string>
