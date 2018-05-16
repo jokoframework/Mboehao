@@ -9,7 +9,11 @@ repositories {
 
 android {
     compileSdkVersion 26
+<<<<<<< develop
     //buildToolsVersion '26.0.2'
+=======
+    buildToolsVersion '27.0.3'
+>>>>>>> Agrega Login por JWT
     defaultConfig {
         applicationId "io.github.jokoframework"
         minSdkVersion 19
@@ -71,6 +75,7 @@ dependencies {
     implementation 'com.google.android.gms:play-services-gcm:11.0.2'
     implementation 'com.google.android.gms:play-services-analytics:11.0.2'
     implementation 'io.jsonwebtoken:jjwt:0.6.0'
+    implementation 'com.android.volley:volley:1.0.0'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
     implementation project(':mboehaolib')
     testImplementation 'junit:junit:4.12'

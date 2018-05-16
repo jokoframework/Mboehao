@@ -42,7 +42,7 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Google Analytics
 - Lista seleccionable (ListDialog)
 - Filtro TimeLine
-- SQLite para guardar datos localmente 
+- SQLite para guardar datos localmente
 - Extracción de datos desde Menú logueado y deslogueado con combinación de teclas
 - Manejo de pestañas o tabs
 - Listado con agrupación por proyecto de formularios y documentos
@@ -81,7 +81,7 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 ## Parse
 
 El Parse es un servidor BAAS, que en este caso se maneja como MBAAS por el tipo de proyecto. Si se necesitan alguna guia para el manejo de lo que es el servidor, se puede
-mirar la [guia](http://docs.parseplatform.org/android/guide/) para tener una mejor idea. 
+mirar la [guia](http://docs.parseplatform.org/android/guide/) para tener una mejor idea.
 
 ### Parse Dashboard
 
@@ -103,3 +103,19 @@ El proyecto siguee las convenciones del [Android Code Style Guidelines](http://s
 
 Este proyecto tiene una documentacion via Wiki, donde se va detallando con mayor precision las funcionalidades e implementaciones, y algunas referencias más
 que se pueden observar al llevar a cabo el proyecto. [Wiki Project](https://joko.miraheze.org/wiki/Mbo%60ehao).
+
+## JWT Login
+
+El login por JWT utiliza la libreria Volley de Android para REST. Utilizamos la funcion JSONObjectRequest, esperamos un archivo JSON como respuesta del servidor segun el funcionamiento de JWT.
+
+Este utiliza 5 parametros para el caso de un request de tipo POST detallados a continuacion:
+- int method: Define el metodo del request (Utilizamos el metodo "Request.Method.POST").
+- String url: URL a la que se va a hacer la solicitud.
+- JSONObject jsonRequest: JSON que se enviara a la URL definida anteriormente.
+- Response.Listener<JSONObject> listener: Variable donde se recibira la respuesta del servidor.
+- Response.ErrorListener errorListener: Variable donde se guarda el error en caso de existir.
+
+Para cambiar a cualquier login JWT, se deben cambiar algunos parametros en loginActivity.Java:
+- url: Esta debe apuntar al servidor que se desea consultar.
+- jsonRequest: Debe contener los datos necesarios para el servidor. En este caso se utilizaron solo 2 campos, username y password.
+- listener y errorListener: Aca se definen las acciones a tomar ya sea esperando una respuesta positiva, negativa o un error.

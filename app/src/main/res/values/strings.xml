@@ -28,6 +28,7 @@
     <string name="MediaWiki">Mbo`ehao Proyect</string>
     <string name="loading_web_page">Cargando desde la web...</string>
     <string name="urlWiki">https://joko.miraheze.org/wiki/Mbo%60ehao</string>
+    <string name="urlServerJWT">http://192.168.0.7:8080/api/login</string>
     <string name="errorLoadingPage">Error cargando la página</string>
     <string name="changePasswordDescription">Change Password</string>
     <string name="button_save">Save</string>
