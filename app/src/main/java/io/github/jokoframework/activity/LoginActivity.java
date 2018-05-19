@@ -396,8 +396,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
         // Instanciar el RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://192.168.14.145:8080/api/login";
-        //String url = getString(R.string.eula_URL);
+        String url = getString(R.string.jwt_URL);
 
         Map<String, String> params = new HashMap();
         params.put("username",loginRequest.getUsername());
@@ -416,10 +415,8 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
                     // Verificar login exitoso
                     String loginSuccess;
-                    //String jwt;
                     try {
                         loginSuccess = response.getString("success");
-                        //jwt = response.getString("secret");
                         if (loginSuccess.equals("true")){
                             Utils.showToast(getBaseContext(), String.format("Login succesful."));
                             thisActivity().startActivity(i);// Iniciar Home activity
@@ -429,7 +426,9 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                             showProgress(false);
                             invalidLogin();
                         }
-                    } catch (Exception e){};
+                    } catch (Exception e){
+                        Log.e(LOG_TAG, "Error at JWT Login " + e.getMessage(), e);
+                    };
                 }
             }, new Response.ErrorListener()
             {
