@@ -109,7 +109,7 @@
             android:name="io.github.jokoframework.service.TestServiceNotification"
             android:enabled="true" />
         <service
-            android:name="io.github.jokoframework.mboehaolib.service.CronService"
+            android:name="io.github.jokoframework.service.CronService"
             android:enabled="true" />
         <service android:name="io.github.jokoframework.service.FirebaseInstanceService">
             <intent-filter>

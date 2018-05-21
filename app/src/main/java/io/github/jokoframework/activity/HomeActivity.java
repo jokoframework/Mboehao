@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.iid.FirebaseInstanceIdService;
@@ -60,6 +61,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         webView.setWebViewClient(new MyWebViewClient(this));
         displayWebView(webView); //display de webUrl after set some settings of the WebView...
         startAlarmServices(this);
+        startRESTServices(this);
         sendToken();
     }
 
@@ -232,6 +234,19 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             TestServiceNotification.cancelAlarm(context);
         } else {
             Log.e(LOG_TAG, "Intentando inciar los servicios periodicos con un context null");
+        }
+    }
+
+    public void startRESTServices(Context context) {
+        try {
+            Utils.showToast(getBaseContext(), String.format("Inicio de REST"));
+            Intent mServiceIntent = new Intent(context, io.github.jokoframework.service.CronService.class);
+            context.startService(mServiceIntent);
+            Utils.showToast(getBaseContext(), String.format("Inicio2 de REST"));
+        } catch (RuntimeException e) {
+            Utils.showToast(getBaseContext(), String.format("Fallo de REST"));
+            Toast.makeText(context, context.getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+            Log.e(LOG_TAG, context.getString(R.string.no_network_connection), e);
         }
     }
 

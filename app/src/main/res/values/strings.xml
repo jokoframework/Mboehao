@@ -44,6 +44,7 @@
     <string name="eula_warning_body">Ud. no aceptó aún los términos de uso de la aplicación. Por favor lea hasta el final y marque la casilla de aceptación si está de acuerdo con las condiciones</string>
     <string name="eula_URL">http://example.com/</string>
     <string name="jwt_URL">http://192.168.14.145:8080/api/login</string>
+    <string name="rest_URL">https://restcountries.eu/rest/v2/all?fields=name;alpha2Code</string>
     <string name="eula_warning_title"></string>
     <string name="eula_title">Aviso Legal de Responsabilidades</string>
     <string name="eula_checkbox">I Accept the terms and Conditions</string>
