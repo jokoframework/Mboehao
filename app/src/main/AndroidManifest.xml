@@ -101,6 +101,11 @@
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name="io.github.jokoframework.activity.CountryActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Material"
+            android:windowSoftInputMode="stateHidden" />
 
         <service
             android:name="io.github.jokoframework.service.PeriodicService"

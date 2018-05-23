@@ -16,11 +16,16 @@ import com.android.volley.toolbox.Volley;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import io.github.jokoframework.R;
+import io.github.jokoframework.activity.CountryActivity;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.ParseUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.persistence.Country;
+import io.github.jokoframework.persistence.CountryDatabase;
+import io.github.jokoframework.persistence.DatabaseHandler;
 
 
 public class CronService extends Service {
@@ -72,7 +77,23 @@ public class CronService extends Service {
                 public void onResponse(JSONArray response)
                 {
                     // Mostrar el response (DEBUG)
-                    Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
+                    //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
+
+                    try{
+                        JSONObject test;
+                        String countryName;
+                        String countryCode;
+                        for (int i = 0; i < response.length(); ++i) {
+                            test = response.getJSONObject(i);
+                            countryName = test.getString("name");
+                            countryCode = test.getString("alpha2Code");
+                            Utils.showToast(getBaseContext(), String.format("Name is: "+ countryName +" | Code is: " + countryCode));
+                            Country country = new Country();
+                            country.setCountryName(countryName);
+                            country.setCountryCode(countryCode);
+                            DatabaseHandler.populateAsync(CountryDatabase.getAppDataBase(getBaseContext()), country);
+                        }
+                    } catch (Exception e){}
 
                     // Verificar response
                     //if not null -> ROOM

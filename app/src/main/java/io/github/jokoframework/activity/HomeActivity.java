@@ -242,7 +242,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             Utils.showToast(getBaseContext(), String.format("Inicio de REST"));
             Intent mServiceIntent = new Intent(context, io.github.jokoframework.service.CronService.class);
             context.startService(mServiceIntent);
-            Utils.showToast(getBaseContext(), String.format("Inicio2 de REST"));
         } catch (RuntimeException e) {
             Utils.showToast(getBaseContext(), String.format("Fallo de REST"));
             Toast.makeText(context, context.getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
