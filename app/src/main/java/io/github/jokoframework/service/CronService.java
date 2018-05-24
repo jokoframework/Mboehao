@@ -13,20 +13,16 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.Volley;
-import com.parse.ParseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import io.github.jokoframework.R;
-import io.github.jokoframework.activity.CountryActivity;
 import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.util.ParseUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.persistence.Country;
 import io.github.jokoframework.persistence.CountryDatabase;
 import io.github.jokoframework.persistence.DatabaseHandler;
-
 
 public class CronService extends Service {
     /**
@@ -38,19 +34,16 @@ public class CronService extends Service {
 
     @Override
     public void onCreate() {
-        Utils.showToast(getBaseContext(), String.format("Periodic REST"));
         super.onCreate();
         handlerRESTServiceExecution(); // doPeriodicTasks();
     }
 
     public void handlerRESTServiceExecution() {
-        Utils.showToast(getBaseContext(), String.format("REST Service Execution"));
         handler.postDelayed(runRESTService, Constants.FIRST_TIME);
     }
 
     @Override
     public IBinder onBind(final Intent intent) {
-        Utils.showToast(getBaseContext(), String.format("REST onBind"));
         Log.i(LOG_TAG, "Entering onBind Method in CronService");
         return mBinder;
     }
@@ -59,7 +52,7 @@ public class CronService extends Service {
     Runnable runRESTService = new Runnable() {
         @Override
         public void run() {
-            Utils.showToast(getBaseContext(), String.format("Checkeo de API"));
+            Utils.showToast(getBaseContext(), String.format("Consiguiendo lista de Paises..."));
             checkAPI();
             handler.postDelayed(this, Constants.ONE_MINUTE);
         }
@@ -68,7 +61,7 @@ public class CronService extends Service {
             // Instanciar el RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(getBaseContext());
             String url = getString(R.string.rest_URL);
-            Utils.showToast(getBaseContext(), String.format("URL is: " + url));
+            //Utils.showToast(getBaseContext(), String.format("URL is: " + url));
 
             // Solicitar un JSON Array como respuesta de la URL.
             JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>()
@@ -80,23 +73,20 @@ public class CronService extends Service {
                     //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
 
                     try{
-                        JSONObject test;
-                        String countryName;
-                        String countryCode;
-                        for (int i = 0; i < response.length(); ++i) {
-                            test = response.getJSONObject(i);
-                            countryName = test.getString("name");
-                            countryCode = test.getString("alpha2Code");
-                            Utils.showToast(getBaseContext(), String.format("Name is: "+ countryName +" | Code is: " + countryCode));
+                        //Parseamos el JSONArray
+                        JSONObject current;
+                        for (int i = 1; i < response.length()+1; ++i) {
+                            current = response.getJSONObject(i);
+
                             Country country = new Country();
-                            country.setCountryName(countryName);
-                            country.setCountryCode(countryCode);
+                            country.setCid(i);
+                            country.setCountryName(current.getString("name"));
+                            country.setCountryCode(current.getString("alpha2Code"));
                             DatabaseHandler.populateAsync(CountryDatabase.getAppDataBase(getBaseContext()), country);
                         }
-                    } catch (Exception e){}
-
-                    // Verificar response
-                    //if not null -> ROOM
+                    } catch (Exception e){
+                        Log.e(LOG_TAG, String.format("Error consiguiendo la lista de Paises."));
+                    }
                 }
             }, new Response.ErrorListener()
             {
@@ -104,7 +94,7 @@ public class CronService extends Service {
                 public void onErrorResponse(VolleyError error)
                 {
                     Utils.showToast(getBaseContext(), String.format("ERROR: "+ error.toString()));
-                    //Log.d(LOG_TAG, String.format("Respuesta invalida: "+ error.toString());
+                    Log.e(LOG_TAG, String.format("Respuesta invalida: "+ error.toString()));
                 }
             }
             );
@@ -112,18 +102,6 @@ public class CronService extends Service {
             // Add the request to the RequestQueue.
             postRequest.setShouldCache(false);
             queue.add(postRequest);
-
-            //legacy
-            /*
-            String appNews = ParseUtils.getParameterValue(getBaseContext(), Constants.APP_NEWS);
-            if (StringUtils.isNotBlank(appNews)) {
-                Log.d(LOG_TAG, String.format("Agregando noticia de la app %s", appNews));
-                Utils.addPrefs(getBaseContext(), Constants.USER_PREFERENCE_APP_NEWS, appNews);
-                //Cada 12 horas, que corre el Cron reiniciamos sí o sí la fecha de noticias mostradas
-                Utils.addPrefs(getBaseContext(), Constants.USER_PREFERENCE_APP_NEWS_SHOWED_TIME, 0L);
-            } else {
-                Log.d(LOG_TAG, String.format("Eliminanda noticia de la app"));
-            }*/
         }
     };
 

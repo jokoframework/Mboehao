@@ -30,7 +30,7 @@
     <string name="urlWiki">https://joko.miraheze.org/wiki/Mbo%60ehao</string>
     <string name="errorLoadingPage">Error cargando la página</string>
     <string name="changePasswordDescription">Change Password</string>
-    <string name="roomCountriesDescription">Room Countries DB</string>
+    <string name="roomCountriesDescription">RoomPersistence Countries</string>
     <string name="button_save">Save</string>
     <string name="button_back">Back</string>
     <string name="settings_password2">Rewrite Password</string>

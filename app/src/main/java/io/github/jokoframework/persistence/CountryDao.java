@@ -19,17 +19,17 @@ public interface CountryDao {
     //@Query("SELECT * FROM country where first_name LIKE  :firstName AND last_name LIKE :lastName")
     //Country findByName(String firstName, String lastName);
 
-    @Query("SELECT COUNT(*) from country")
-    int countCountries();
+    //@Query("SELECT COUNT(*) from country")
+    //int countCountries();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCountry(Country country);
 
-    @Insert
-    void insertAll(Country... countries);
+    //@Insert
+    //void insertAll(Country... countries);
 
-    @Delete
-    void delete(Country country);
+    //@Delete
+    //void delete(Country country);
 
     //@Query("delete from country where cid = :countryId")
     //int deleteCountriesById(String countryId);

@@ -12,8 +12,15 @@ public abstract class CountryDatabase extends RoomDatabase {
 
     public abstract CountryDao countryDao();
 
+
+
     public static CountryDatabase getAppDataBase(Context context) {
         if (INSTANCE == null) {
+
+            //Eliminar BD
+            //context.getApplicationContext().deleteDatabase("country_database");
+
+            //IniciarBD
             INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                     CountryDatabase.class, "country_database")
                     .allowMainThreadQueries()

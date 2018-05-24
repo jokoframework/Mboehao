@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "ba17304f0f21bb1df4d064e10977055b",
+    "identityHash": "892a7d6cead4a14a93be786da49561d3",
     "entities": [
       {
         "tableName": "country",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cid` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `country_name` TEXT, `country_code` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`cid` INTEGER NOT NULL, `country_name` TEXT NOT NULL, `country_code` TEXT, PRIMARY KEY(`country_name`))",
         "fields": [
           {
             "fieldPath": "cid",
@@ -18,7 +18,7 @@
             "fieldPath": "countryName",
             "columnName": "country_name",
             "affinity": "TEXT",
-            "notNull": false
+            "notNull": true
           },
           {
             "fieldPath": "countryCode",
@@ -29,9 +29,9 @@
         ],
         "primaryKey": {
           "columnNames": [
-            "cid"
+            "country_name"
           ],
-          "autoGenerate": true
+          "autoGenerate": false
         },
         "indices": [],
         "foreignKeys": []
@@ -39,7 +39,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"ba17304f0f21bb1df4d064e10977055b\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"892a7d6cead4a14a93be786da49561d3\")"
     ]
   }
 }
