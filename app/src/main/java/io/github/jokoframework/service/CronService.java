@@ -54,7 +54,7 @@ public class CronService extends Service {
         public void run() {
             Utils.showToast(getBaseContext(), String.format("Consiguiendo lista de Paises..."));
             checkAPI();
-            handler.postDelayed(this, Constants.ONE_MINUTE);
+            handler.postDelayed(this, Constants.ONE_HOUR);
         }
 
         private void checkAPI() {
