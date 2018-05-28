@@ -117,6 +117,9 @@
         <service
             android:name="io.github.jokoframework.service.CronService"
             android:enabled="true" />
+        <service
+            android:name="io.github.jokoframework.service.CountryHelper"
+            android:enabled="true" />
         <service android:name="io.github.jokoframework.service.FirebaseInstanceService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />

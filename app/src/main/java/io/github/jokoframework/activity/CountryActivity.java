@@ -15,18 +15,37 @@ import io.github.jokoframework.databinding.ActivityCountryBinding;
 
 public class CountryActivity extends Activity {
 
+    private static final String LOG_TAG = "COUNTRYACTIVITY";
+
+    public static List<Country> countryList;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         ActivityCountryBinding activityCountryBinding = DataBindingUtil.setContentView(this, R.layout.activity_country);
 
         //Clearing old records from database
         //CountryDatabase.getAppDataBase(this).countryDao().deleteAll();
 
-        // show all user from database
+        // show all country from database
+        activityCountryBinding.tableLayout.removeAllViews();
+
+        for (int i = 0; i < countryList.size(); i++) {
+            View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
+            TextView cID = tableRow.findViewById(R.id.cid);
+            TextView countryName = tableRow.findViewById(R.id.countryName);
+            TextView countryCode = tableRow.findViewById(R.id.countryCode);
+
+            cID.setText(String.valueOf(countryList.get(i).getCid()));
+            countryName.setText(countryList.get(i).getCountryName());
+            countryCode.setText(countryList.get(i).getCountryCode());
+            activityCountryBinding.tableLayout.addView(tableRow);
+        }
+
+        // force update button
         activityCountryBinding.showCountries
                 .setOnClickListener(view -> {
-                    List<Country> countryList = CountryDatabase.getAppDataBase(CountryActivity.this).countryDao().getAll();
                     activityCountryBinding.tableLayout.removeAllViews();
                     for (int i = 0; i < countryList.size(); i++) {
                         View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
@@ -42,8 +61,8 @@ public class CountryActivity extends Activity {
                 });
 
 
-
     }
+
 
     @Override
     protected void onDestroy() {

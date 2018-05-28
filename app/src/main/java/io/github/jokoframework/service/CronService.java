@@ -6,23 +6,11 @@ import android.os.Binder;
 import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
-
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonArrayRequest;
-import com.android.volley.toolbox.Volley;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
+import android.widget.Toast;
 
 import io.github.jokoframework.R;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.Utils;
-import io.github.jokoframework.persistence.Country;
-import io.github.jokoframework.persistence.CountryDatabase;
-import io.github.jokoframework.persistence.DatabaseHandler;
 
 public class CronService extends Service {
     /**
@@ -39,7 +27,7 @@ public class CronService extends Service {
     }
 
     public void handlerRESTServiceExecution() {
-        handler.postDelayed(runRESTService, Constants.FIRST_TIME);
+        handler.post(runRESTService);
     }
 
     @Override
@@ -52,56 +40,19 @@ public class CronService extends Service {
     Runnable runRESTService = new Runnable() {
         @Override
         public void run() {
-            Utils.showToast(getBaseContext(), String.format("Consiguiendo lista de Paises..."));
             checkAPI();
             handler.postDelayed(this, Constants.ONE_HOUR);
         }
 
         private void checkAPI() {
-            // Instanciar el RequestQueue.
-            RequestQueue queue = Volley.newRequestQueue(getBaseContext());
-            String url = getString(R.string.rest_URL);
-            //Utils.showToast(getBaseContext(), String.format("URL is: " + url));
-
-            // Solicitar un JSON Array como respuesta de la URL.
-            JsonArrayRequest postRequest = new JsonArrayRequest(Request.Method.GET, url, null, new Response.Listener<JSONArray>()
-            {
-                @Override
-                public void onResponse(JSONArray response)
-                {
-                    // Mostrar el response (DEBUG)
-                    //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
-
-                    try{
-                        //Parseamos el JSONArray
-                        JSONObject current;
-                        for (int i = 1; i < response.length()+1; ++i) {
-                            current = response.getJSONObject(i);
-
-                            Country country = new Country();
-                            country.setCid(i);
-                            country.setCountryName(current.getString("name"));
-                            country.setCountryCode(current.getString("alpha2Code"));
-                            DatabaseHandler.populateAsync(CountryDatabase.getAppDataBase(getBaseContext()), country);
-                        }
-                    } catch (Exception e){
-                        Log.e(LOG_TAG, String.format("Error consiguiendo la lista de Paises."));
-                    }
-                }
-            }, new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    Utils.showToast(getBaseContext(), String.format("ERROR: "+ error.toString()));
-                    Log.e(LOG_TAG, String.format("Respuesta invalida: "+ error.toString()));
-                }
+            try {
+                Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
+                getBaseContext().startService(mServiceIntent);
+            } catch (RuntimeException e) {
+                Utils.showToast(getBaseContext(), String.format("Fallo de CountryHelper"));
+                Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
             }
-            );
-
-            // Add the request to the RequestQueue.
-            postRequest.setShouldCache(false);
-            queue.add(postRequest);
         }
     };
 
