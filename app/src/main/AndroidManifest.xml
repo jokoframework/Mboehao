@@ -31,7 +31,7 @@
         <activity
             android:name="io.github.jokoframework.activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:theme="@android:style/Theme.Material.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -40,7 +40,7 @@
         <activity
             android:name="io.github.jokoframework.activity.HomeActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -65,12 +65,12 @@
         <activity
             android:name="io.github.jokoframework.activity.LineChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.BarChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.LogOutActivity"
@@ -78,7 +78,7 @@
         <activity
             android:name="io.github.jokoframework.activity.HorizontalBarChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.SettingsActivity"
@@ -89,17 +89,17 @@
             android:name="io.github.jokoframework.activity.ChangePasswordActivity"
             android:label="@string/app_name"
             android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.ShareActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:theme="@android:style/Theme.Material.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.AboutActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.NoActionBar"
+            android:theme="@android:style/Theme.Material.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name="io.github.jokoframework.activity.CountryActivity"

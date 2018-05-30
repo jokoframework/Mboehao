@@ -1,14 +1,19 @@
 package io.github.jokoframework.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.List;
 
 import io.github.jokoframework.R;
+import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.persistence.CountryDatabase;
 import io.github.jokoframework.persistence.Country;
 import io.github.jokoframework.databinding.ActivityCountryBinding;
@@ -46,6 +51,14 @@ public class CountryActivity extends Activity {
         // force update button
         activityCountryBinding.showCountries
                 .setOnClickListener(view -> {
+                    try {
+                        Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
+                        getBaseContext().startService(mServiceIntent);
+                    } catch (RuntimeException e) {
+                        Utils.showToast(getBaseContext(), String.format("Fallo de CountryHelper"));
+                        Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                        Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
+                    }
                     activityCountryBinding.tableLayout.removeAllViews();
                     for (int i = 0; i < countryList.size(); i++) {
                         View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
