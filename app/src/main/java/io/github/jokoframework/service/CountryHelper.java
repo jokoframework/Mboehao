@@ -106,7 +106,7 @@ public class CountryHelper extends Service {
         }
 
         private void saveToActivity() {
-            CountryActivity.countryList = CountryDatabase.getAppDataBase(getBaseContext()).countryDao().getAll();
+            CountryActivity.countryList = getAppDataBase(getBaseContext()).countryDao().getAll();
         }
     };
 
