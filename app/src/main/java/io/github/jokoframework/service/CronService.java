@@ -20,6 +20,8 @@ public class CronService extends Service {
 
     private IBinder mBinder = new MyBinder();
 
+    private final Handler handler = new Handler();
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -36,7 +38,6 @@ public class CronService extends Service {
         return mBinder;
     }
 
-    private final Handler handler = new Handler();
     Runnable runRESTService = new Runnable() {
         @Override
         public void run() {

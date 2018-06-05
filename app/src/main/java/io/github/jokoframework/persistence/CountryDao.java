@@ -22,7 +22,7 @@ public interface CountryDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertCountry(Country country);
 
-    //@Insert
+    //@Insert(onConflict = OnConflictStrategy.REPLACE)
     //void insertAll(Country... countries);
 
     //@Delete

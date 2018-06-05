@@ -12,8 +12,6 @@ public abstract class CountryDatabase extends RoomDatabase {
 
     public abstract CountryDao countryDao();
 
-
-
     public static CountryDatabase getAppDataBase(Context context) {
         if (INSTANCE == null) {
 

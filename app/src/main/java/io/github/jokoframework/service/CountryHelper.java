@@ -42,6 +42,7 @@ public class CountryHelper extends Service {
 
     public void handlerRESTServiceExecution() {
         handler.post(runRESTService);
+        this.stopSelf();
     }
 
     @Override
@@ -56,7 +57,7 @@ public class CountryHelper extends Service {
         runRESTService = new Runnable() {
             @Override
             public void run() {
-                Utils.showToast(getBaseContext(), String.format("Consiguiendo lista de Paises..."));
+                //Utils.showToast(getBaseContext(), String.format("Consiguiendo lista de Paises..."));
                 checkAPIandSave();
                 saveToActivity();
             }
@@ -65,6 +66,7 @@ public class CountryHelper extends Service {
                 // Instanciar el RequestQueue.
                 RequestQueue queue = Volley.newRequestQueue(getBaseContext());
                 String url = getString(R.string.rest_URL);
+                CountryDatabase countryDatabase = getAppDataBase(getBaseContext());
                 //Utils.showToast(getBaseContext(), String.format("URL is: " + url));
 
                 // Solicitar un JSON Array como respuesta de la URL.
@@ -77,17 +79,17 @@ public class CountryHelper extends Service {
                         try {
                             //Parseamos el JSONArray
                             JSONObject current;
-                            for (int i = 1; i < response.length() + 1; ++i) {
+                            for (int i = 1; i < response.length(); ++i) {
                                 current = response.getJSONObject(i);
 
                                 Country country = new Country();
                                 country.setCid(i);
                                 country.setCountryName(current.getString("name"));
                                 country.setCountryCode(current.getString("alpha2Code"));
-                                DatabaseHandler.populateAsync(getAppDataBase(getBaseContext()), country);
+                                DatabaseHandler.populateAsync(countryDatabase, country);
                             }
                         } catch (Exception e) {
-                            Log.e(LOG_TAG, String.format("Error consiguiendo la lista de Paises."));
+                            Log.e(LOG_TAG, String.format("Error consiguiendo la lista de Paises -> " + e));
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -105,10 +107,6 @@ public class CountryHelper extends Service {
             }
 
             private void saveToActivity() {
-
-                //Clearing old records from database
-                //CountryDatabase.getAppDataBase(this).countryDao().deleteAll();
-
                 CountryActivity.countryList = CountryDatabase.getAppDataBase(getBaseContext()).countryDao().getAll();
             }
         };
