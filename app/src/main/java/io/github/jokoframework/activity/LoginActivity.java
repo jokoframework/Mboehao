@@ -13,7 +13,9 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -26,6 +28,19 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
+
+import com.android.volley.RequestQueue;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 
@@ -322,7 +337,8 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private void makeLoginRequest(LoginRequest loginRequest, LoginRepository authApi) {
         loginRequest.getCustom().put("deviceType", Constants.DEVICE_TYPE);
         loginRequest.getCustom().put("deviceName", Build.MODEL);
-        doLogin(loginRequest, authApi);
+        loginJWT(loginRequest);
+        //doLogin(loginRequest, authApi);
     }
 
 
@@ -351,7 +367,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                         showProgress(true, "Login exitoso.");
                         // Se accede al home... todavia los token no son necesarios...
                         // ...para acceder a ningun servicio, ya que no hay todavia ninguno disponible...
-                        loginJWT();
+                        //loginJWT(loginRequest);
                     } else {
                         Log.i(LOG_TAG, "login: Success false");
                         sendErrorLoginMessage("Login: False Success");
@@ -372,10 +388,66 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         userData.logout();
     }
 
-    private void loginJWT() {
+    private void loginJWT(LoginRequest loginRequest) {
+        final TextView mTextView = (TextView) findViewById(R.id.text);
+
         Intent i = new Intent(thisActivity, HomeActivity.class);
-        thisActivity().startActivity(i);
-        thisActivity().finish();
+        //thisActivity().startActivity(i);// Instantiate the RequestQueue.
+
+        // Instanciar el RequestQueue.
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = getString(R.string.jwt_URL);
+
+        Map<String, String> params = new HashMap();
+        params.put("username",loginRequest.getUsername());
+        params.put("password",loginRequest.getPassword());
+
+        JSONObject parameters = new JSONObject(params);
+
+        // Solicitar un JSON como respuesta de la URL.
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
+            {
+                @Override
+                public void onResponse(JSONObject response)
+                {
+                    // Mostrar el response (DEBUG)
+                    //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
+
+                    // Verificar login exitoso
+                    String loginSuccess;
+                    try {
+                        loginSuccess = response.getString("success");
+                        if (loginSuccess.equals("true")){
+                            Utils.showToast(getBaseContext(), String.format("Login succesful."));
+                            thisActivity().startActivity(i);// Iniciar Home activity
+                            //loginSuccessful();
+                        } else {
+                            Utils.showToast(getBaseContext(), String.format("Login failed."));
+                            showProgress(false);
+                            invalidLogin();
+                        }
+                    } catch (Exception e){
+                        Log.e(LOG_TAG, "Error at JWT Login " + e.getMessage(), e);
+                    };
+                }
+            }, new Response.ErrorListener()
+            {
+                @Override
+                public void onErrorResponse(VolleyError error)
+                {
+                    Utils.showToast(getBaseContext(), String.format("ERROR: "+ error.toString()));
+                    showProgress(false);
+                    invalidLogin();
+                }
+            }
+        );
+
+
+        // Add the request to the RequestQueue.
+        postRequest.setShouldCache(false);
+        queue.add(postRequest);
+
+        //thisActivity().finish();
         showProgress(false);
     }
 
