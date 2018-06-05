@@ -38,7 +38,7 @@ public class CronService extends Service {
         return mBinder;
     }
 
-    Runnable runRESTService = new Runnable() {
+    private Runnable runRESTService = new Runnable() {
         @Override
         public void run() {
             checkAPI();
