@@ -30,6 +30,7 @@ import io.github.jokoframework.activity.ChangePasswordActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
 import io.github.jokoframework.activity.LogOutActivity;
+import io.github.jokoframework.activity.MultipleLineChartActivity;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
@@ -50,7 +51,8 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE1 = 1L;
     private static final long MENU_ID_IMAGE2 = 2L;
     private static final long MENU_ID_IMAGE3 = 3L;
-    private static final long MENU_ID_LOGOUT = 4L;
+    private static final long MENU_ID_IMAGE4 = 4L;
+    private static final long MENU_ID_LOGOUT = 5L;
     private static final long MENU_ID_HELP = 6L;
     private static final long MENU_ID_CHANGEPASS = 8L;
 
@@ -168,6 +170,7 @@ public class NavigationDrawerFragment extends Fragment {
      * ---> LineChart
      * ---> BarChart
      * ---> HorizontalBarChart
+     * ---> MultipleLineChart
      * > Options
      * > Help
      * > Salir
@@ -226,6 +229,13 @@ public class NavigationDrawerFragment extends Fragment {
         thirdChartEvent.setActivity(HorizontalBarChartActivity.class);
         thirdChartEvent.setIconMenu(R.drawable.picture);
         eventsList.add(thirdChartEvent);
+
+        // 4. MultipleLineChart
+        Event fourthChartEvent = new Event(MENU_ID_IMAGE4);
+        firstChartEvent.setDescription(getString(R.string.multiple_line_chart));
+        firstChartEvent.setActivity(MultipleLineChartActivity.class);
+        firstChartEvent.setIconMenu(R.drawable.picture);
+        eventsList.add(fourthChartEvent);
 
         mEventParents.add(new EventParent(getString(R.string.parent_charts), eventsList));
     }
