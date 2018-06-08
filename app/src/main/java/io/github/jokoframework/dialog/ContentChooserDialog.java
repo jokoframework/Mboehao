@@ -13,6 +13,10 @@ import java.util.List;
 
 import io.github.jokoframework.R;
 
+/**
+ * Created by Alejandro on 08/06/18.
+ */
+
 public class ContentChooserDialog extends Dialog {
     private List<String> mList;
     private Context mContext;
