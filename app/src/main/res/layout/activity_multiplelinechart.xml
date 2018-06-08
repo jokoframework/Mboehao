@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <Spinner
-        android:id="@+id/content_selector_spinner"
+        android:id="@+id/content_chooser_spinner"
         style="@android:style/TextAppearance.DeviceDefault.Small"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"

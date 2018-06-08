@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin">
+
+    <TextView
+        android:id="@+id/textViewTitleLifeEventChooser"
+        style="@style/Theme.Simple.Welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/action_bar_bg"
+        android:padding="12dp"
+        android:text="@string/life_event_chooser_dialog_title"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="#ffffff" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <Spinner
+            android:id="@+id/dialog_spinner"
+            style="@android:style/TextAppearance.DeviceDefault.Small"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:spinnerMode="dialog"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
+
+        <ScrollView
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TableLayout
+                android:id="@+id/buttons_layout"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:textAlignment="center">
+
+                    <Button
+                        android:id="@+id/dialogCancel"
+                        android:layout_height="wrap_content"
+                        android:layout_column="0"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginLeft="12dp"
+                        android:background="@drawable/button_cancel"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="@string/boton_cancelar_titulo"
+                        android:textColor="#FFFFFF" />
+
+                    <Space
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_column="1" />
+
+                    <Button
+                        android:id="@+id/dialogOK"
+                        android:layout_height="wrap_content"
+                        android:layout_column="2"
+                        android:layout_marginBottom="12dp"
+                        android:layout_marginRight="12dp"
+                        android:background="@drawable/button_custom"
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:paddingLeft="20dp"
+                        android:paddingRight="20dp"
+                        android:text="@string/boton_ok_titulo"
+                        android:textColor="#FFFFFF"
+                        android:layout_width="wrap_content"
+                        android:width="90dp" />
+                </TableRow>
+            </TableLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>
