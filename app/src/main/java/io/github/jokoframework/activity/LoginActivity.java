@@ -55,8 +55,8 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
-import io.github.jokoframework.repository.LoginRepository;
-import io.github.jokoframework.repository.RepoBuilder;
+//import io.github.jokoframework.repository.LoginRepository;
+//import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -312,7 +312,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     }
 
     private void userLogin(LoginRequest loginRequest) {
-        LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
+        //LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
         Observable.defer(() -> {
             String token = getGcmDeviceIdentifier();
             return Observable.just(token);
@@ -332,20 +332,20 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                     @Override
                     public void onNext(String deviceIdentifier) {
                         loginRequest.getCustom().put("deviceIdentifier", deviceIdentifier);
-                        makeLoginRequest(loginRequest, authApi);
+                        makeLoginRequest(loginRequest);
                     }
                 });
     }
 
 
-    private void makeLoginRequest(LoginRequest loginRequest, LoginRepository authApi) {
+    private void makeLoginRequest(LoginRequest loginRequest) {
         loginRequest.getCustom().put("deviceType", Constants.DEVICE_TYPE);
         loginRequest.getCustom().put("deviceName", Build.MODEL);
         loginJWT(loginRequest);
-        doLogin(loginRequest, authApi);
+        //doLogin(loginRequest, authApi);
     }
 
-
+    /*
     private void doLogin(LoginRequest loginRequest, LoginRepository authApi) {
 
         UserData userData = getUserData();
@@ -379,6 +379,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                     }
                 }, AppUtils.errorHandler(LoginActivity.this));
     }
+    */
 
     private void invalidLogin() {
         logout();
