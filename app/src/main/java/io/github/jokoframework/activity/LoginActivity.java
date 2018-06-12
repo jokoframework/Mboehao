@@ -13,7 +13,6 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.crashlytics.android.Crashlytics;
@@ -33,9 +32,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.google.gson.JsonObject;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -58,8 +55,8 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
-import io.github.jokoframework.repository.LoginRepository;
-import io.github.jokoframework.repository.RepoBuilder;
+//import io.github.jokoframework.repository.LoginRepository;
+//import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -117,6 +114,13 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private void initializeUI() {
         setContentView(R.layout.activity_login);
         HomeActivity.cancelAlarmServices(this);
+        try {
+            Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
+            getBaseContext().startService(mServiceIntent);
+        } catch (RuntimeException e) {
+            Utils.showToast(getBaseContext(), String.format("Fallo de CountryHelper"));
+            Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
+        }
         setActivity(this);
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());
@@ -308,7 +312,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     }
 
     private void userLogin(LoginRequest loginRequest) {
-        LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
+        //LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
         Observable.defer(() -> {
             String token = getGcmDeviceIdentifier();
             return Observable.just(token);
@@ -328,20 +332,20 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                     @Override
                     public void onNext(String deviceIdentifier) {
                         loginRequest.getCustom().put("deviceIdentifier", deviceIdentifier);
-                        makeLoginRequest(loginRequest, authApi);
+                        makeLoginRequest(loginRequest);
                     }
                 });
     }
 
 
-    private void makeLoginRequest(LoginRequest loginRequest, LoginRepository authApi) {
+    private void makeLoginRequest(LoginRequest loginRequest) {
         loginRequest.getCustom().put("deviceType", Constants.DEVICE_TYPE);
         loginRequest.getCustom().put("deviceName", Build.MODEL);
         loginJWT(loginRequest);
         //doLogin(loginRequest, authApi);
     }
 
-
+    /*
     private void doLogin(LoginRequest loginRequest, LoginRepository authApi) {
 
         UserData userData = getUserData();
@@ -375,6 +379,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                     }
                 }, AppUtils.errorHandler(LoginActivity.this));
     }
+    */
 
     private void invalidLogin() {
         logout();
@@ -389,7 +394,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     }
 
     private void loginJWT(LoginRequest loginRequest) {
-        final TextView mTextView = (TextView) findViewById(R.id.text);
 
         Intent i = new Intent(thisActivity, HomeActivity.class);
         //thisActivity().startActivity(i);// Instantiate the RequestQueue.

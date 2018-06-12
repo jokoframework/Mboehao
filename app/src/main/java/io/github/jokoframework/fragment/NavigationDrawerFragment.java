@@ -30,6 +30,7 @@ import io.github.jokoframework.activity.ChangePasswordActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
 import io.github.jokoframework.activity.LogOutActivity;
+import io.github.jokoframework.activity.CountryActivity;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
@@ -53,6 +54,7 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_LOGOUT = 4L;
     private static final long MENU_ID_HELP = 6L;
     private static final long MENU_ID_CHANGEPASS = 8L;
+    private static final long MENU_ID_COUNTRIES = 9L;
 
     /**
      * A pointer to the current callbacks instance (the Activity).
@@ -168,6 +170,7 @@ public class NavigationDrawerFragment extends Fragment {
      * ---> LineChart
      * ---> BarChart
      * ---> HorizontalBarChart
+     * > Room DB
      * > Options
      * > Help
      * > Salir
@@ -181,20 +184,27 @@ public class NavigationDrawerFragment extends Fragment {
             buildChartsGroup();
 
             // 2.Options...
+            Event countriesEvent = new Event(MENU_ID_COUNTRIES);
+            countriesEvent.setDescription(getString(R.string.roomCountriesDescription));
+            countriesEvent.setActivity(CountryActivity.class);
+            countriesEvent.setIconMenu(R.drawable.picture);
+            mEventParents.add(new EventParent(countriesEvent));
+
+            // 3.Options...
             Event passwordChangeEvent = new Event(MENU_ID_CHANGEPASS);
             passwordChangeEvent.setDescription(getString(R.string.changePasswordDescription));
             passwordChangeEvent.setActivity(ChangePasswordActivity.class);
             passwordChangeEvent.setIconMenu(R.drawable.picture);
             mEventParents.add(new EventParent(passwordChangeEvent));
 
-            // 3. Help
+            // 4. Help
             Event helpEvent = new Event(MENU_ID_HELP);
             helpEvent.setDescription(getString(R.string.aboutDescription));
             helpEvent.setActivity(AboutActivity.class);
             helpEvent.setIconMenu(R.drawable.picture);
             mEventParents.add(new EventParent(helpEvent));
 
-            // 4. LogOUT
+            // 5. LogOUT
             Event exitEvent = new Event(MENU_ID_LOGOUT);
             exitEvent.setDescription(getString(R.string.action_logout));
             exitEvent.setActivity(LogOutActivity.class);
