@@ -232,9 +232,9 @@ public class NavigationDrawerFragment extends Fragment {
 
         // 4. MultipleLineChart
         Event fourthChartEvent = new Event(MENU_ID_IMAGE4);
-        firstChartEvent.setDescription(getString(R.string.multiple_line_chart));
-        firstChartEvent.setActivity(MultipleLineChartActivity.class);
-        firstChartEvent.setIconMenu(R.drawable.picture);
+        fourthChartEvent.setDescription(getString(R.string.multiple_line_chart));
+        fourthChartEvent.setActivity(MultipleLineChartActivity.class);
+        fourthChartEvent.setIconMenu(R.drawable.picture);
         eventsList.add(fourthChartEvent);
 
         mEventParents.add(new EventParent(getString(R.string.parent_charts), eventsList));
