@@ -55,6 +55,7 @@ public class MultipleLineChartActivity extends Activity {
         mSpinner = (Spinner) findViewById(R.id.content_chooser_spinner);
         initializeSpinner();
         initializeChart();
+        displayDialog();
 
     }
 
@@ -67,13 +68,18 @@ public class MultipleLineChartActivity extends Activity {
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, contentLabels);
         mSpinner.setAdapter(adapter);
-        mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                graphChart(i);
+            public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
+                graphChart(position + 1);
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parentView) {
+                // your code here
+            }
+
         });
-        displayDialog();
     }
 
     private void initializeChart() {
@@ -105,10 +111,11 @@ public class MultipleLineChartActivity extends Activity {
                     }
 
                     public void ready(int idSelected) {
-                        graphChart(idSelected);
+                        graphChart(idSelected + 1);
                         mSpinner.setSelection(idSelected);
                     }
                 });
+        mSpinnerDialog.show();
     }
 
     private void graphChart(int idSelected) {

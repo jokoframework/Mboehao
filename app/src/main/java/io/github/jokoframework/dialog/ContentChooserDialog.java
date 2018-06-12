@@ -44,6 +44,7 @@ public class ContentChooserDialog extends Dialog {
         setContentView(R.layout.dialog_content_chooser);
         mSpinner = (Spinner) findViewById(R.id.dialog_spinner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(mContext, android.R.layout.simple_spinner_dropdown_item, mList);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
 
         Button buttonOK = (Button) findViewById(R.id.dialogOK);
