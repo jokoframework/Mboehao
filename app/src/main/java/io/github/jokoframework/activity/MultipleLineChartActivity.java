@@ -8,6 +8,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Description;
@@ -32,6 +36,9 @@ import io.github.jokoframework.mboehaolib.mark.MyMarkView;
 public class MultipleLineChartActivity extends Activity {
 
     private static final String LOG_TAG = MultipleLineChartActivity.class.getSimpleName();
+    private Spinner mSpinner;
+    private LineChart mlineChart;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -43,10 +50,47 @@ public class MultipleLineChartActivity extends Activity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        showDialog();
+        // The Chart whe are gonna use...
+        mlineChart = (LineChart) findViewById(R.id.multiple_line_chart);
+        mSpinner = (Spinner) findViewById(R.id.content_chooser_spinner);
+        initializeSpinner();
+        initializeChart();
+
     }
 
-    private void showDialog() {
+    private void initializeSpinner() {
+        List<String> contentLabels = new ArrayList<>();
+        contentLabels.add("Contenido 1");
+        contentLabels.add("Contenido 2");
+        contentLabels.add("Contenido 3");
+        contentLabels.add("Contenido 4");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, contentLabels);
+        mSpinner.setAdapter(adapter);
+        mSpinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                graphChart(i);
+            }
+        });
+        displayDialog();
+    }
+
+    private void initializeChart() {
+
+        //Configs...
+        mlineChart.setMarker(new MyMarkView(this));
+        mlineChart.setDrawMarkers(true);
+        mlineChart.setBackgroundColor(getResources().getColor(R.color.white));
+        mlineChart.animateX(3000);
+        mlineChart.setHighlightPerDragEnabled(false);
+        mlineChart.setHighlightPerTapEnabled(true);
+
+        //More configs to Axis representation...
+        setFormatAxis(mlineChart);
+    }
+
+    private void displayDialog() {
         List<String> contentLabels = new ArrayList<>();
         contentLabels.add("Contenido 1");
         contentLabels.add("Contenido 2");
@@ -61,12 +105,13 @@ public class MultipleLineChartActivity extends Activity {
                     }
 
                     public void ready(int idSelected) {
-                        showChart(idSelected);
+                        graphChart(idSelected);
+                        mSpinner.setSelection(idSelected);
                     }
                 });
     }
 
-    private void showChart(int idSelected) {
+    private void graphChart(int idSelected) {
 
         //Points to be in the graph...
         List<FloatDataPair> data = new ArrayList<>();
@@ -76,26 +121,12 @@ public class MultipleLineChartActivity extends Activity {
         data.add(new FloatDataPair(idSelected*0.3f,18500f));
         data.add(new FloatDataPair(idSelected*0.4f,20500f));
 
-        // The Chart whe are gonna use...
-        LineChart lineChart = findViewById(R.id.multiple_line_chart);
-
         //Configs...
         Description desc = new Description();
-        desc.setText((Integer.toString(idSelected)));
-        desc.setTextColor(R.color.white);
-        lineChart.setMarker(new MyMarkView(this));
-        lineChart.setDrawMarkers(true);
-        lineChart.setDescription(desc);
-        lineChart.setBackgroundColor(getResources().getColor(R.color.white));
-        lineChart.animateX(3000);
-        lineChart.setHighlightPerDragEnabled(false);
-        lineChart.setHighlightPerTapEnabled(true);
-
-        //More configs to Axis representation...
-        setFormatAxis(lineChart);
-
+        desc.setText("Contenido " + (Integer.toString(idSelected)));
+        mlineChart.setDescription(desc);
         // insertion of the entries ...
-        dataChartInsertion(data, lineChart,this); // data introduccio & styling,others...
+        dataChartInsertion(data, mlineChart,this); // data introduccio & styling,others...
 
     }
 
