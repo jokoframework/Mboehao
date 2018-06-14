@@ -23,7 +23,10 @@ import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 import io.github.jokoframework.R;
 import io.github.jokoframework.datacharts.FloatDataPair;
@@ -38,6 +41,7 @@ public class MultipleLineChartActivity extends Activity {
     private static final String LOG_TAG = MultipleLineChartActivity.class.getSimpleName();
     private Spinner mSpinner;
     private LineChart mlineChart;
+    private HashMap<String, List<FloatDataPair>> mMultipleChartData;
 
 
     @Override
@@ -53,25 +57,50 @@ public class MultipleLineChartActivity extends Activity {
         // The Chart whe are gonna use...
         mlineChart = (LineChart) findViewById(R.id.multiple_line_chart);
         mSpinner = (Spinner) findViewById(R.id.content_chooser_spinner);
+        mMultipleChartData = new HashMap<String, List<FloatDataPair>>();
+        loadMultipleChartData();
         initializeSpinner();
         initializeChart();
         displayDialog();
 
     }
 
+    private void loadMultipleChartData() {
+        List<String> contentLabels = Arrays.asList(getResources().getStringArray(
+                R.array.test_label_array));
+
+
+        List<FloatDataPair> data1 = getFloatDataPairs();;
+        List<FloatDataPair> data2 = getFloatDataPairs();;
+        List<FloatDataPair> data3 = getFloatDataPairs();;
+
+        mMultipleChartData.put(contentLabels.get(0), data1);
+        mMultipleChartData.put(contentLabels.get(1), data2);
+        mMultipleChartData.put(contentLabels.get(2), data3);
+    }
+
+    private List<FloatDataPair> getFloatDataPairs() {
+        Random random = new Random(System.currentTimeMillis());
+        //Points to be in the graph...
+        List<FloatDataPair> data = new ArrayList<>();
+        data.add(new FloatDataPair(0f,Float.valueOf(random.nextInt(20000))));
+        data.add(new FloatDataPair(0.1f,Float.valueOf((random.nextInt(20000)))));
+        data.add(new FloatDataPair(0.2f,Float.valueOf((random.nextInt(20000)))));
+        data.add(new FloatDataPair(0.3f,Float.valueOf((random.nextInt(20000)))));
+        data.add(new FloatDataPair(0.4f,Float.valueOf((random.nextInt(20000)))));
+        return data;
+    }
+
     private void initializeSpinner() {
-        List<String> contentLabels = new ArrayList<>();
-        contentLabels.add("Contenido 1");
-        contentLabels.add("Contenido 2");
-        contentLabels.add("Contenido 3");
-        contentLabels.add("Contenido 4");
+        List<String> contentLabels = Arrays.asList(getResources().getStringArray(
+                R.array.test_label_array));
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, contentLabels);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parentView, View selectedItemView, int position, long id) {
-                graphChart(position + 1);
+                graphChart(position);
             }
 
             @Override
@@ -97,11 +126,8 @@ public class MultipleLineChartActivity extends Activity {
     }
 
     private void displayDialog() {
-        List<String> contentLabels = new ArrayList<>();
-        contentLabels.add("Contenido 1");
-        contentLabels.add("Contenido 2");
-        contentLabels.add("Contenido 3");
-        contentLabels.add("Contenido 4");
+        List<String> contentLabels = Arrays.asList(getResources().getStringArray(
+                R.array.test_label_array));
 
         ContentChooserDialog mSpinnerDialog = new ContentChooserDialog(this, contentLabels,
                 new ContentChooserDialog.DialogListener() {
@@ -111,30 +137,28 @@ public class MultipleLineChartActivity extends Activity {
                     }
 
                     public void ready(int idSelected) {
-                        graphChart(idSelected + 1);
+                        graphChart(idSelected);
                         mSpinner.setSelection(idSelected);
                     }
                 });
         mSpinnerDialog.show();
     }
 
-    private void graphChart(int idSelected) {
+    private void graphChart(int id) {
+        String label = (String) mMultipleChartData.keySet().toArray()[id];
+        List<FloatDataPair> data = (List<FloatDataPair>) mMultipleChartData.get(label);
 
-        //Points to be in the graph...
-        List<FloatDataPair> data = new ArrayList<>();
-        data.add(new FloatDataPair(idSelected*0f,15000f));
-        data.add(new FloatDataPair(idSelected*0.1f,17500f));
-        data.add(new FloatDataPair(idSelected*0.2f,16500f));
-        data.add(new FloatDataPair(idSelected*0.3f,18500f));
-        data.add(new FloatDataPair(idSelected*0.4f,20500f));
+        for (int i = 0; i < data.size(); i++) {
+            String y = Integer.toString((int) data.get(i).getY());
+            Log.i("Prueba", y);
+        }
 
         //Configs...
         Description desc = new Description();
-        desc.setText("Contenido " + (Integer.toString(idSelected)));
+        desc.setText(label);
         mlineChart.setDescription(desc);
         // insertion of the entries ...
         dataChartInsertion(data, mlineChart,this); // data introduccio & styling,others...
-
     }
 
     public void dataChartInsertion(List<FloatDataPair> dataObjects, LineChart chart, Context context){
