@@ -30,12 +30,12 @@ import io.github.jokoframework.activity.ChangePasswordActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
 import io.github.jokoframework.activity.LogOutActivity;
-import io.github.jokoframework.activity.MultipleLineChartActivity;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
 import io.github.jokoframework.mboehaolib.pojo.EventParent;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.activity.MultipleLineChartActivity;
 
 /**
  * Created by joaquin on 23/08/17.
@@ -170,7 +170,6 @@ public class NavigationDrawerFragment extends Fragment {
      * ---> LineChart
      * ---> BarChart
      * ---> HorizontalBarChart
-     * ---> MultipleLineChart
      * > Options
      * > Help
      * > Salir
