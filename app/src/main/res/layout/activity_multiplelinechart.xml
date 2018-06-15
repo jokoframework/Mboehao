@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Spinner
+        android:id="@+id/content_chooser_spinner"
+        style="@android:style/TextAppearance.DeviceDefault.Small"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="12dp"
+        android:popupBackground="@color/com_facebook_button_background_color_disabled"
+        />
+
+    <com.github.mikephil.charting.charts.LineChart
+        android:id="@+id/multiple_line_chart"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        />
+
+</LinearLayout>

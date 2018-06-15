@@ -36,6 +36,7 @@ import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
 import io.github.jokoframework.mboehaolib.pojo.EventParent;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.activity.MultipleLineChartActivity;
 
 /**
  * Created by joaquin on 23/08/17.
@@ -51,7 +52,8 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE1 = 1L;
     private static final long MENU_ID_IMAGE2 = 2L;
     private static final long MENU_ID_IMAGE3 = 3L;
-    private static final long MENU_ID_LOGOUT = 4L;
+    private static final long MENU_ID_IMAGE4 = 4L;
+    private static final long MENU_ID_LOGOUT = 5L;
     private static final long MENU_ID_HELP = 6L;
     private static final long MENU_ID_CHANGEPASS = 8L;
     private static final long MENU_ID_COUNTRIES = 9L;
@@ -236,6 +238,13 @@ public class NavigationDrawerFragment extends Fragment {
         thirdChartEvent.setActivity(HorizontalBarChartActivity.class);
         thirdChartEvent.setIconMenu(R.drawable.picture);
         eventsList.add(thirdChartEvent);
+
+        // 4. MultipleLineChart
+        Event fourthChartEvent = new Event(MENU_ID_IMAGE4);
+        fourthChartEvent.setDescription(getString(R.string.multiple_line_chart));
+        fourthChartEvent.setActivity(MultipleLineChartActivity.class);
+        fourthChartEvent.setIconMenu(R.drawable.picture);
+        eventsList.add(fourthChartEvent);
 
         mEventParents.add(new EventParent(getString(R.string.parent_charts), eventsList));
     }
