@@ -21,14 +21,13 @@ public class ContentChooserDialog extends Dialog {
     private List<String> mList;
     private Context mContext;
     private Spinner mSpinner;
+    private DialogListener mReadyListener;
 
     public interface DialogListener {
         void ready(int n);
 
         void cancelled();
     }
-
-    private DialogListener mReadyListener;
 
     public ContentChooserDialog(Context context, List<String> list, DialogListener readyListener) {
         super(context);
@@ -49,14 +48,14 @@ public class ContentChooserDialog extends Dialog {
 
         Button buttonOK = (Button) findViewById(R.id.dialogOK);
         Button buttonCancel = (Button) findViewById(R.id.dialogCancel);
-        buttonOK.setOnClickListener(new android.view.View.OnClickListener() {
+        buttonOK.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 int n = mSpinner.getSelectedItemPosition();
                 mReadyListener.ready(n);
                 ContentChooserDialog.this.dismiss();
             }
         });
-        buttonCancel.setOnClickListener(new android.view.View.OnClickListener() {
+        buttonCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 mReadyListener.cancelled();
                 ContentChooserDialog.this.dismiss();

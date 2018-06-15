@@ -70,12 +70,12 @@ public class MultipleLineChartActivity extends Activity {
                 R.array.test_label_array));
 
 
-        List<FloatDataPair> data1 = getFloatDataPairs();;
-        List<FloatDataPair> data2 = getFloatDataPairs();;
-        List<FloatDataPair> data3 = getFloatDataPairs();;
-        List<FloatDataPair> data4 = getFloatDataPairs();;
-        List<FloatDataPair> data5 = getFloatDataPairs();;
-        List<FloatDataPair> data6 = getFloatDataPairs();;
+        List<FloatDataPair> data1 = getFloatDataPairs();
+        List<FloatDataPair> data2 = getFloatDataPairs();
+        List<FloatDataPair> data3 = getFloatDataPairs();
+        List<FloatDataPair> data4 = getFloatDataPairs();
+        List<FloatDataPair> data5 = getFloatDataPairs();
+        List<FloatDataPair> data6 = getFloatDataPairs();
 
         mMultipleChartData.put(contentLabels.get(0), data1);
         mMultipleChartData.put(contentLabels.get(1), data2);
