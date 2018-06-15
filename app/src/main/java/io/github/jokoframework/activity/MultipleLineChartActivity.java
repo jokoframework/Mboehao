@@ -73,10 +73,16 @@ public class MultipleLineChartActivity extends Activity {
         List<FloatDataPair> data1 = getFloatDataPairs();;
         List<FloatDataPair> data2 = getFloatDataPairs();;
         List<FloatDataPair> data3 = getFloatDataPairs();;
+        List<FloatDataPair> data4 = getFloatDataPairs();;
+        List<FloatDataPair> data5 = getFloatDataPairs();;
+        List<FloatDataPair> data6 = getFloatDataPairs();;
 
         mMultipleChartData.put(contentLabels.get(0), data1);
         mMultipleChartData.put(contentLabels.get(1), data2);
         mMultipleChartData.put(contentLabels.get(2), data3);
+        mMultipleChartData.put(contentLabels.get(3), data4);
+        mMultipleChartData.put(contentLabels.get(4), data5);
+        mMultipleChartData.put(contentLabels.get(5), data6);
     }
 
     private List<FloatDataPair> getFloatDataPairs() {
@@ -147,11 +153,6 @@ public class MultipleLineChartActivity extends Activity {
     private void graphChart(int id) {
         String label = (String) mMultipleChartData.keySet().toArray()[id];
         List<FloatDataPair> data = (List<FloatDataPair>) mMultipleChartData.get(label);
-
-        for (int i = 0; i < data.size(); i++) {
-            String y = Integer.toString((int) data.get(i).getY());
-            Log.i("Prueba", y);
-        }
 
         //Configs...
         Description desc = new Description();

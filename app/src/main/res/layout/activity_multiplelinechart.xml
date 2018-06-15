@@ -10,8 +10,8 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="12dp"
-        android:spinnerMode="dialog"
-        android:textAppearance="?android:attr/textAppearanceSmall" />
+        android:popupBackground="@color/com_facebook_button_background_color_disabled"
+        />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/multiple_line_chart"
