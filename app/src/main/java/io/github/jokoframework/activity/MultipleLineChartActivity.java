@@ -32,6 +32,7 @@ import io.github.jokoframework.R;
 import io.github.jokoframework.datacharts.FloatDataPair;
 import io.github.jokoframework.dialog.ContentChooserDialog;
 import io.github.jokoframework.mboehaolib.mark.MyMarkView;
+import io.github.jokoframework.mboehaolib.util.Utils;
 
 /**
  * Created by Alejandro on 08/06/18.
@@ -71,11 +72,17 @@ public class MultipleLineChartActivity extends Activity {
 
 
         List<FloatDataPair> data1 = getFloatDataPairs();
+
         List<FloatDataPair> data2 = getFloatDataPairs();
+        Utils.sleep(100);
         List<FloatDataPair> data3 = getFloatDataPairs();
+        Utils.sleep(100);
         List<FloatDataPair> data4 = getFloatDataPairs();
+        Utils.sleep(100);
         List<FloatDataPair> data5 = getFloatDataPairs();
+        Utils.sleep(100);
         List<FloatDataPair> data6 = getFloatDataPairs();
+        Utils.sleep(100);
 
         mMultipleChartData.put(contentLabels.get(0), data1);
         mMultipleChartData.put(contentLabels.get(1), data2);
