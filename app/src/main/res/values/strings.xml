@@ -32,6 +32,9 @@
     <string name="errorLoadingPage">Error cargando la página</string>
     <string name="changePasswordDescription">Change Password</string>
     <string name="roomCountriesDescription">RoomPersistence Countries</string>
+
+    <string name="oneTimePasswordDescription">OneTimePassword</string>
+
     <string name="button_save">Save</string>
     <string name="button_back">Back</string>
     <string name="settings_password2">Rewrite Password</string>
@@ -45,7 +48,7 @@
     <string name="settings_pwd_too_short">New password must have at least 8 characters</string>
     <string name="eula_warning_body">Ud. no aceptó aún los términos de uso de la aplicación. Por favor lea hasta el final y marque la casilla de aceptación si está de acuerdo con las condiciones</string>
     <string name="eula_URL">http://example.com/</string>
-    <string name="jwt_URL">http://192.168.0.9:8080/api/login</string>
+    <string name="jwt_URL">http://10.30.140.112:8080/api/login</string>
     <string name="rest_URL">https://restcountries.eu/rest/v2/all?fields=name;alpha2Code</string>
     <string name="eula_warning_title"></string>
     <string name="eula_title">Aviso Legal de Responsabilidades</string>
@@ -76,6 +79,40 @@
     <string name="pref_title_social_recommendations">Enable social recommendations</string>
     <string name="pref_title_display_name">Display name</string>
     <string name="pref_default_display_name">John Snow</string>
+
+
+    <string name="invalid_token">The token specified was invalid!</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="restore_defaults">Restore Defaults</string>
+    <string name="no_keys">No OTP keys installed.</string>
+    <string name="add_token">Add Token</string>
+    <string name="scan_qr_code">Scan QR Code</string>
+    <string name="interval">Interval</string>
+    <string name="counter">Counter</string>
+    <string name="secret">Secret</string>
+    <string name="type">Type</string>
+    <string name="algorithm">Algorithm</string>
+    <string name="digits">Digits</string>
+    <string name="code_copied">Code copied to clipboard.</string>
+
+    <string name="about_freeotp">About FreeOTP</string>
+    <string name="about_version">FreeOTP Version %1$s (%2$d)</string>
+    <string name="about_copyright">© 2013 - Red Hat, Inc., et al.</string>
+    <string name="about_license">FreeOTP is licensed under %1$s.</string>
+    <string name="about_website">For more information, see our %s.</string>
+    <string name="about_icons">Some icons used by this application are reproduced from work created and shared by the Android Open Source Project and used according to terms described in the Creative Commons 2.5 Attribution License.</string>
+
+    <string name="link_website">&lt;a href=&quot;http://freeotp.github.io&quot;&gt;website&lt;/a&gt;</string>
+    <string name="link_apache2">&lt;a href=&quot;http://www.apache.org/licenses/LICENSE-2.0.html&quot;&gt;Apache 2.0&lt;/a&gt;</string>
+
+    <string name="error_camera_open">Error while opening camera!</string>
+    <string name="error_permission_camera_open">No permission to open the camera</string>
+    <string name="error_image_open">Error while opening image!</string>
+
+    <string name="delete_summary">This is your last chance: if you delete this token, it will be gone forever. It will not be disabled on the server.</string>
+    <string name="delete_question">Delete this token?</string>
+
     <string-array name="pref_example_list_titles">
         <item>Always</item>
         <item>When possible</item>

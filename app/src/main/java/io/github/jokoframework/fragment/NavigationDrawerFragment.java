@@ -31,6 +31,7 @@ import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
 import io.github.jokoframework.activity.LogOutActivity;
 import io.github.jokoframework.activity.CountryActivity;
+import io.github.jokoframework.otp.OtpActivity;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
@@ -55,6 +56,10 @@ public class NavigationDrawerFragment extends Fragment {
     private static final long MENU_ID_IMAGE4 = 4L;
     private static final long MENU_ID_LOGOUT = 5L;
     private static final long MENU_ID_HELP = 6L;
+
+    //OTP//
+    private static final long MENU_ID_OTP = 7L;
+
     private static final long MENU_ID_CHANGEPASS = 8L;
     private static final long MENU_ID_COUNTRIES = 9L;
 
@@ -182,8 +187,16 @@ public class NavigationDrawerFragment extends Fragment {
 
         if (mEvents == null || !mEvents.isEmpty()) {
             //Constructor de los Grupos o Elementos Padres
-            //1.Images...
+            //0.Images...
             buildChartsGroup();
+
+            //1.OTP
+            Event otpEvent = new Event(MENU_ID_OTP);
+            otpEvent.setDescription(getString(R.string.oneTimePasswordDescription));
+            otpEvent.setActivity(OtpActivity.class);
+            otpEvent.setIconMenu(R.drawable.picture);
+            mEventParents.add(new EventParent(otpEvent));
+            //
 
             // 2.Options...
             Event countriesEvent = new Event(MENU_ID_COUNTRIES);
