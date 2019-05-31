@@ -139,6 +139,13 @@
             android:windowSoftInputMode="stateVisible"
             />
 
+        <activity
+            android:name=".otp.edit.SaveActivity"
+            android:label="@string/save_question"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            />
+
+
         <service
             android:name="io.github.jokoframework.service.PeriodicService"
             android:enabled="true" />

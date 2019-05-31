@@ -39,6 +39,7 @@ import io.github.jokoframework.R;
 import io.github.jokoframework.otp.BaseReorderableAdapter;
 import io.github.jokoframework.otp.edit.DeleteActivity;
 import io.github.jokoframework.otp.edit.EditActivity;
+import io.github.jokoframework.otp.edit.SaveActivity;
 
 public class TokenAdapter extends BaseReorderableAdapter {
     private final TokenPersistence mTokenPersistence;
@@ -97,6 +98,12 @@ public class TokenAdapter extends BaseReorderableAdapter {
                 Intent i;
 
                 switch (item.getItemId()) {
+                    case R.id.action_save:
+                        i = new Intent(ctx, SaveActivity.class);
+                        i.putExtra(SaveActivity.EXTRA_POSITION, position);
+                        ctx.startActivity(i);
+                        break;
+
                     case R.id.action_edit:
                         i = new Intent(ctx, EditActivity.class);
                         i.putExtra(EditActivity.EXTRA_POSITION, position);
