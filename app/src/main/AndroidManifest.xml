@@ -144,7 +144,11 @@
             android:label="@string/save_question"
             android:theme="@android:style/Theme.Holo.Light.Dialog"
             />
-
+        <activity
+            android:name="io.github.jokoframework.activity.SecondAuthenticationActivity"
+            android:label="User's OTP"
+            android:theme="@android:style/Theme.Holo.Light.Dialog"
+            />
 
         <service
             android:name="io.github.jokoframework.service.PeriodicService"

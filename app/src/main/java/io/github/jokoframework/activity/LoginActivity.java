@@ -14,7 +14,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -28,18 +33,11 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
@@ -55,13 +53,14 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
-//import io.github.jokoframework.repository.LoginRepository;
-//import io.github.jokoframework.repository.RepoBuilder;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+//import io.github.jokoframework.repository.LoginRepository;
+//import io.github.jokoframework.repository.RepoBuilder;
 
 public class LoginActivity extends BaseActivity implements ProcessError {
 
@@ -395,7 +394,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
     private void loginJWT(LoginRequest loginRequest) {
 
-        Intent i = new Intent(thisActivity, HomeActivity.class);
+        Intent i = new Intent(thisActivity, SecondAuthenticationActivity.class);
         //thisActivity().startActivity(i);// Instantiate the RequestQueue.
 
         // Instanciar el RequestQueue.
