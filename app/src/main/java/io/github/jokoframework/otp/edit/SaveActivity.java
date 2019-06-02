@@ -54,7 +54,7 @@ public class SaveActivity extends BaseActivity {
     private void saveSeed(Token token){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = getString(R.string.saveseed_URL); //<--saveseed_URL url to request, change values/strings.xml
+        String url = getString(R.string.user_acces_URL); //<--saveseed_URL url to request, change values/strings.xml
 
         //Creates parameters
         Map<String, String> params = new HashMap();

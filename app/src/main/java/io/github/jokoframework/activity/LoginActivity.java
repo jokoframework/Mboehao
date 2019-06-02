@@ -418,9 +418,12 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
                     // Verificar login exitoso
                     String loginSuccess;
+                    String secret;
                     try {
                         loginSuccess = response.getString("success");
                         if (loginSuccess.equals("true")){
+                            secret = response.getString("secret");
+                            i.putExtra("SECRET", secret);
                             Utils.showToast(getBaseContext(), String.format("Login succesful."));
                             thisActivity().startActivity(i);// Iniciar Home activity
                             //loginSuccessful();
