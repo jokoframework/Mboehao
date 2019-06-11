@@ -13,8 +13,8 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:src="@drawable/joko_round"
-            android:layout_margin="15dp"/>
+            android:layout_margin="15dp"
+            android:src="@drawable/joko_round" />
 
         <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
@@ -38,19 +38,18 @@
                 android:id="@+id/login_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp"
                 android:layout_below="@+id/buttonEnter"
-                />
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="30dp" />
 
             <CheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
                 android:layout_below="@+id/pass"
+                android:layout_centerHorizontal="true"
                 android:text="@string/remembercredentials" />
 
             <EditText
@@ -60,8 +59,8 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="40dp"
                 android:ems="10"
-                android:padding="10dp"
                 android:hint="User"
+                android:padding="10dp"
                 android:singleLine="true">
 
                 <requestFocus />
@@ -80,6 +79,24 @@
                 android:inputType="textPassword"
                 android:nextFocusDown="@id/checkBox"
                 android:padding="10dp" />
+
+            <Button
+                android:id="@+id/buttonOtp"
+                android:layout_width="203dp"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/login_button"
+                android:layout_alignStart="@+id/buttonEnter"
+                android:layout_alignEnd="@+id/buttonEnter"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="0dp"
+                android:drawableStart="@drawable/qrcode"
+                android:gravity="left|center_vertical"
+                android:padding="3dp"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:text="OTP - QR SCANNER"
+                android:textColor="#FFFFFF" />
 
         </RelativeLayout>
 

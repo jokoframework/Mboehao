@@ -53,6 +53,7 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
+import io.github.jokoframework.otp.OtpActivity;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -75,6 +76,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private Activity thisActivity;
     private Button enterButton;
     private Activity mySelf;
+    private Button otpButton;
 
 
     public Activity thisActivity() {
@@ -129,6 +131,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_PW));
         enterButton = (Button) findViewById(R.id.buttonEnter);
+        otpButton = (Button) findViewById(R.id.buttonOtp);
         imageLogin = findViewById(R.id.imageLogin);
         LoginButton loginButton = findViewById(R.id.login_button);
         userTextField = (EditText) findViewById(R.id.user);
@@ -140,6 +143,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
         enterButton.setOnClickListener(new ClickEnterHandler());
+        otpButton.setOnClickListener(new ClickOtpHandler());
         loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -253,7 +257,13 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             attemptLogin();
         }
     }
-
+    private class ClickOtpHandler implements View.OnClickListener{
+        @Override
+        public void onClick(View view){
+            Intent i = new Intent(thisActivity, OtpActivity.class);
+            thisActivity().startActivity(i);
+        }
+    }
     private void sendErrorLoginMessage(String message) {
         Utils.showStickyMessage(this, message);
     }
