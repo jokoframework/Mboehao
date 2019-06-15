@@ -14,7 +14,12 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
 import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
@@ -28,18 +33,11 @@ import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
-import com.android.volley.RequestQueue;
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.Volley;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
@@ -55,13 +53,15 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
-//import io.github.jokoframework.repository.LoginRepository;
-//import io.github.jokoframework.repository.RepoBuilder;
+import io.github.jokoframework.otp.OtpActivity;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
+
+//import io.github.jokoframework.repository.LoginRepository;
+//import io.github.jokoframework.repository.RepoBuilder;
 
 public class LoginActivity extends BaseActivity implements ProcessError {
 
@@ -76,6 +76,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private Activity thisActivity;
     private Button enterButton;
     private Activity mySelf;
+    private Button otpButton;
 
 
     public Activity thisActivity() {
@@ -130,6 +131,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_PW));
         enterButton = (Button) findViewById(R.id.buttonEnter);
+        otpButton = (Button) findViewById(R.id.buttonOtp);
         imageLogin = findViewById(R.id.imageLogin);
         LoginButton loginButton = findViewById(R.id.login_button);
         userTextField = (EditText) findViewById(R.id.user);
@@ -141,6 +143,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
         enterButton.setOnClickListener(new ClickEnterHandler());
+        otpButton.setOnClickListener(new ClickOtpHandler());
         loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,7 +257,13 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             attemptLogin();
         }
     }
-
+    private class ClickOtpHandler implements View.OnClickListener{
+        @Override
+        public void onClick(View view){
+            Intent i = new Intent(thisActivity, OtpActivity.class);
+            thisActivity().startActivity(i);
+        }
+    }
     private void sendErrorLoginMessage(String message) {
         Utils.showStickyMessage(this, message);
     }
@@ -395,7 +404,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
     private void loginJWT(LoginRequest loginRequest) {
 
-        Intent i = new Intent(thisActivity, HomeActivity.class);
+        Intent i = new Intent(thisActivity, SecondAuthenticationActivity.class);
         //thisActivity().startActivity(i);// Instantiate the RequestQueue.
 
         // Instanciar el RequestQueue.
@@ -419,9 +428,12 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
                     // Verificar login exitoso
                     String loginSuccess;
+                    String secret;
                     try {
                         loginSuccess = response.getString("success");
                         if (loginSuccess.equals("true")){
+                            secret = response.getString("secret");
+                            i.putExtra("SECRET", secret);
                             Utils.showToast(getBaseContext(), String.format("Login succesful."));
                             thisActivity().startActivity(i);// Iniciar Home activity
                             //loginSuccessful();
