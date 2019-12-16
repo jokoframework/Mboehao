@@ -5,7 +5,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -21,15 +21,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
-import com.facebook.AccessToken;
-import com.facebook.AccessTokenTracker;
-import com.facebook.CallbackManager;
-import com.facebook.FacebookCallback;
-import com.facebook.FacebookException;
-import com.facebook.Profile;
-import com.facebook.ProfileTracker;
-import com.facebook.login.LoginResult;
-import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
@@ -45,7 +36,6 @@ import io.github.jokoframework.R;
 import io.github.jokoframework.eula.Eula;
 import io.github.jokoframework.login.Authenticable;
 import io.github.jokoframework.login.CredentialsTextView;
-import io.github.jokoframework.login.ParseLogin;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
@@ -66,10 +56,6 @@ import rx.schedulers.Schedulers;
 public class LoginActivity extends BaseActivity implements ProcessError {
 
     private String LOG_TAG = LoginActivity.class.getSimpleName();
-    private CallbackManager callbackManager = CallbackManager.Factory.create();
-    private AccessTokenTracker accessTokenTracker;
-    private AccessToken accessToken;
-    private Profile currentUser;
     private EditText userTextField, passTextField;
     private ImageView imageLogin;
     private CheckBox saveCredentials;
@@ -85,7 +71,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
     public void setActivity(Activity activity) {
@@ -133,7 +118,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         enterButton = (Button) findViewById(R.id.buttonEnter);
         otpButton = (Button) findViewById(R.id.buttonOtp);
         imageLogin = findViewById(R.id.imageLogin);
-        LoginButton loginButton = findViewById(R.id.login_button);
         userTextField = (EditText) findViewById(R.id.user);
         passTextField = (EditText) findViewById(R.id.pass);
         saveCredentials = (CheckBox) findViewById(R.id.checkBox);
@@ -144,93 +128,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         credentialsTextView.userTextListener();
         enterButton.setOnClickListener(new ClickEnterHandler());
         otpButton.setOnClickListener(new ClickOtpHandler());
-        loginButton.registerCallback(callbackManager, new FacebookCallbackLogin());
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.d(LOG_TAG, "A mostrar process desde fb:onClick");
-                if (accessToken == null) {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showProgress(true, "Login con Facebook...");
-                        }
-                    });
-                } else {
-                    runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            showProgress(false);
-                        }
-                    });
-                }
-            }
-        });
-    }
 
-    private class FacebookCallbackLogin implements FacebookCallback<LoginResult> {
-        @Override
-        public void onSuccess(LoginResult loginResult) {
-            ProfileTracker mProfileTracker;
-            //Mostramos el progress, hasta que vaya a la pantalla de transacciones
-            Log.d(LOG_TAG, "A mostrar process desde fb:onSuccess");
-            showProgress(true, "Login con Facebook...");
-            Utils.showToast(getBaseContext(),
-                    "Login Facebook Success");
-            final AccessToken fbAccessToken = loginResult.getAccessToken();
-            Log.i(LOG_TAG, String.format("Access token %s, UserId: %s",
-                    fbAccessToken.getToken(),
-                    fbAccessToken.getUserId()));
-            LoginRequest loginRequest = LoginRequest.builder(fbAccessToken);
-            loginRequest.getCustom().put("deviceIdentifier", getGcmDeviceIdentifier());
-            userLogin(loginRequest);
-            mProfileTracker = new ProfileTracker() {
-                @Override
-                protected void onCurrentProfileChanged(
-                        Profile oldProfile,
-                        Profile currentProfile) {
-                    currentUser = currentProfile;
-
-                    if (currentUser != null) {
-                        Utils.showToast(getBaseContext(),
-                                String.format("Hola %s.", currentUser.getFirstName()));
-                    }
-                    Log.d(LOG_TAG, "A ocultar process desde fb:onCurrentProfileChanged");
-                    showProgress(false);
-                }
-            };
-            accessTokenTracker = new AccessTokenTracker() {
-                @Override
-                protected void onCurrentAccessTokenChanged(
-                        AccessToken oldAccessToken,
-                        AccessToken currentAccessToken) {
-                    // Set the access token using
-                    // currentAccessToken when it's loaded or set.
-                    LoginActivity.this.accessToken = currentAccessToken;
-                    if (currentAccessToken == null) {
-                        Log.d(LOG_TAG, "A ocultar process desde fb:onCurrentAccessTokenChanged");
-                        showProgress(false);
-                    }
-                }
-            };
-            accessTokenTracker.startTracking();
-        }
-
-        @Override
-        public void onCancel() {
-            Utils.showToast(getBaseContext(),
-                    "Login Facebook cancelado");
-            Log.d(LOG_TAG, "A ocultar process desde fb:onCancel");
-            showProgress(false);
-        }
-
-        @Override
-        public void onError(FacebookException error) {
-            Utils.showToast(getBaseContext(),
-                    String.format("Login Facebook erróneo: %s", error));
-            Log.d(LOG_TAG, "A ocultar process desde fb:onError");
-            showProgress(false);
-        }
     }
 
 
@@ -243,14 +141,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             // HomeActivity progress
             showProgress(true, "Ingresando..."); // Muestra el progress bar mientras se obtine el acceso...
 
-//            -----LOGIN WITH PARSE--------------------------
-            if(Boolean.parseBoolean(getString(R.string.parse_enabled))) {
-                Authenticable parseLogin = new ParseLogin(enterButton, mySelf, saveCredentials);
-                parseLogin.setPassword(password);
-                parseLogin.setUser(username);
-                parseLogin.saveCredentials();
-                parseLogin.authenticate();
-            }
 
 ////            ------JWT LOGIN---------------------------------
             saveCredentials(username, password);

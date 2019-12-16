@@ -4,25 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.parse.ParseException;
-import com.parse.ParseUser;
-
-import io.github.jokoframework.R;
-import com.parse.SaveCallback;
 
 import org.apache.commons.lang3.StringUtils;
 
+import androidx.annotation.Nullable;
+import io.github.jokoframework.R;
 import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.util.ParseUtils;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
 
@@ -35,11 +28,9 @@ public class ChangePasswordActivity extends Activity {
     private static final String LOG_TAG = ChangePasswordActivity.class.getSimpleName();
 
     private Activity self;
-    private ParseUser currentUser;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        currentUser = ParseUser.getCurrentUser();
         self = this;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
@@ -133,24 +124,6 @@ public class ChangePasswordActivity extends Activity {
         error.setText(null);
         currentPasswodEdit.setBackgroundColor(Color.GREEN);
         currentPasswodEdit.requestFocus();
-        currentUser.setPassword(strPassword2);
-        currentUser.setACL(ParseUtils.getDefaultAcl(currentUser));
-        currentUser.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    final String msg = getString(R.string.change_password_error);
-                    Toast.makeText(self,
-                            msg, Toast.LENGTH_SHORT).show();
-                    Log.e(LOG_TAG, msg, e);
-                } else {
-                    Toast.makeText(self,
-                            getString(R.string.change_password_success), Toast.LENGTH_SHORT).show();
-                    String passwordEncrypted = SecurityUtils.encrypt(strPassword2);
-                    Utils.addPrefs(self, Constants.USER_PREFS_PW, passwordEncrypted);
-                }
-            }
-        });
     }
 
     protected void showCurrentPasswordWarning(TextView error, EditText currentPasswodEdit) {

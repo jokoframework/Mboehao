@@ -2,8 +2,6 @@ package io.github.jokoframework.model;
 
 import android.content.SharedPreferences;
 
-import com.facebook.login.LoginManager;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -62,7 +60,6 @@ public class UserData {
         id = 0L;
         showTagMessage = true;
         persistUser();
-        LoginManager.getInstance().logOut();
     }
 
     public void persistUser() {

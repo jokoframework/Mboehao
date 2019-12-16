@@ -92,7 +92,7 @@ public class ScanActivity extends Activity {
         }
 
         final ImageView image = (ImageView) findViewById(R.id.image);
-        Picasso.with(ScanActivity.this)
+        Picasso.get()
                 .load(token.getImage())
                 .placeholder(R.drawable.scan)
                 .into(image, new Callback() {
@@ -109,9 +109,10 @@ public class ScanActivity extends Activity {
                     }
 
                     @Override
-                    public void onError() {
+                    public void onError(Exception e) {
                         finish();
                     }
+
                 });
     }
 

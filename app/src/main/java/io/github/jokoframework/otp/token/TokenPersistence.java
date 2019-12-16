@@ -194,7 +194,7 @@ public class TokenPersistence {
             final TaskParams taskParams = params[0];
             if(taskParams.getToken().getImage() != null) {
                 try {
-                    Bitmap bitmap = Picasso.with(taskParams.getContext())
+                    Bitmap bitmap = Picasso.get()
                             .load(taskParams.getToken()
                             .getImage())
                             .resize(200, 200)   // it's just an icon

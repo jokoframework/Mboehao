@@ -3,9 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center|center_horizontal"
         android:orientation="vertical">
 
         <ImageView
@@ -14,43 +16,15 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_margin="15dp"
-            android:src="@drawable/joko_round" />
+            android:src="@drawable/joko_round"
+            android:contentDescription="TODO" />
 
-        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
-
-            <Button
-                android:id="@+id/buttonEnter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pass"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="50dp"
-                android:paddingLeft="80dp"
-                android:paddingRight="80dp"
-                android:text="Enter"
-                android:textColor="#FFFFFF" />
-
-
-            <com.facebook.login.widget.LoginButton
-                android:id="@+id/login_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/buttonEnter"
-                android:layout_centerHorizontal="true"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="30dp" />
-
-            <CheckBox
-                android:id="@+id/checkBox"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/pass"
-                android:layout_centerHorizontal="true"
-                android:text="@string/remembercredentials" />
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:orientation="vertical">
 
             <EditText
                 android:id="@+id/user"
@@ -80,16 +54,33 @@
                 android:nextFocusDown="@id/checkBox"
                 android:padding="10dp" />
 
+            <CheckBox
+                android:id="@+id/checkBox"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass"
+                android:layout_centerHorizontal="true"
+                android:text="@string/remembercredentials" />
+
+            <Button
+                android:id="@+id/buttonEnter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/pass"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="50dp"
+                android:paddingLeft="80dp"
+                android:paddingRight="80dp"
+                android:text="Enter"
+                android:textColor="#FFFFFF" />
+
             <Button
                 android:id="@+id/buttonOtp"
                 android:layout_width="203dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/login_button"
-                android:layout_alignStart="@+id/buttonEnter"
-                android:layout_alignEnd="@+id/buttonEnter"
+                android:layout_marginEnd="0dp"
                 android:layout_marginStart="0dp"
                 android:layout_marginTop="5dp"
-                android:layout_marginEnd="0dp"
                 android:drawableStart="@drawable/qrcode"
                 android:gravity="left|center_vertical"
                 android:padding="3dp"
@@ -98,7 +89,9 @@
                 android:text="OTP - QR SCANNER"
                 android:textColor="#FFFFFF" />
 
-        </RelativeLayout>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 
@@ -111,11 +104,6 @@
         android:orientation="vertical"
         android:visibility="invisible">
 
-        <ProgressBar
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <ImageView
             android:id="@+id/imageLogin"
             android:layout_width="match_parent"
@@ -125,6 +113,11 @@
             android:animateLayoutChanges="false"
             android:scaleType="fitCenter"
             app:srcCompat="@drawable/mboehao_ic" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

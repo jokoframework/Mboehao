@@ -6,10 +6,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -24,15 +20,18 @@ import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.FirebaseInstanceIdService;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
-import com.parse.ParseUser;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.R;
 import io.github.jokoframework.fragment.NavigationDrawerFragment;
@@ -42,10 +41,9 @@ import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.service.TestServiceNotification;
 
 
-public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks{
+public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
-    private static final String TAG = FirebaseInstanceIdService.class.getSimpleName();
 
     @Override
     protected void onResume() {
@@ -65,27 +63,28 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         sendToken();
     }
 
-    private void sendToken(){
+    private void sendToken() {
         // Get token
         String token = FirebaseInstanceId.getInstance().getToken();
         // Log,Send and toast the Token...
-        String msg = String.format("%s - %s",R.string.msg_token_fmt, token);
+        String msg = String.format("%s - %s", R.string.msg_token_fmt, token);
         sendMessage(token);
-        Log.d(TAG, msg);
+        Log.d(LOG_TAG, msg);
     }
 
-    public void sendMessage(String msg){
+    public void sendMessage(String msg) {
         FirebaseMessaging fm = FirebaseMessaging.getInstance();
-        fm.send(new RemoteMessage.Builder(String.format("%s@gcm.googleapis.com",Constants.SENDER_ID))
-                .setMessageId(String.format("%d",(Constants.msgId + 1)))
+        fm.send(new RemoteMessage.Builder(String.format("%s@gcm.googleapis.com", Constants.SENDER_ID))
+                .setMessageId(String.format("%d", (Constants.msgId + 1)))
                 .addData("token", msg)
                 .build());
     }
 
     private class MyWebViewClient extends WebViewClient {
         private final View progressBarView = findViewById(R.id.progressHomeWindow);         // progress bar Parent...
-        private WebView webView = (WebView)findViewById(R.id.webview);
+        private WebView webView = (WebView) findViewById(R.id.webview);
         private Activity activity;
+
         private MyWebViewClient(Activity activity) {
             this.activity = activity;
         }
@@ -123,12 +122,12 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
         private void showFinalResults() {
             try {
-                if(progressBarView != null && progressBarView.isActivated()){
+                if (progressBarView != null && progressBarView.isActivated()) {
                     progressBarView.setVisibility(View.INVISIBLE);
                     webView.setVisibility(View.VISIBLE);
                 }
             } catch (Exception exception) {
-                Log.e(LOG_TAG,getString(R.string.errorLoadingPage),exception);
+                Log.e(LOG_TAG, getString(R.string.errorLoadingPage), exception);
             }
         }
 
@@ -169,14 +168,13 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         if (event.getActivity().equals(LoginActivity.class)) {
             //Se quita del parseUser y ademas vuelve a mostrar la pantalla de Login por si quiera volver a entrar...
             doLogout(intent);
-        }else {
+        } else {
             startActivity(intent);
             // Si no es igual lanza la actividad, que podria ser mostrar alguns de las imagenes o alguna otra opcion...
         }
     }
 
     private void doLogout(Intent intent) {
-        ParseUser.logOut();
         cancelAlarmServices(this);
         startActivity(intent);
         finish();
@@ -197,7 +195,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
 
-    public static class MainViewFragment extends android.support.v4.app.Fragment {
+    public static class MainViewFragment extends Fragment {
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -208,12 +206,12 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         @Override
         public void onActivityCreated(Bundle savedInstanceState) {
             super.onActivityCreated(savedInstanceState);
-            final HomeActivity activity =  (HomeActivity) getActivity();
+            final HomeActivity activity = (HomeActivity) getActivity();
             activity.loadData();
         }
     }
 
-    private void displayWebView(WebView webView){
+    private void displayWebView(WebView webView) {
         webView.getSettings().setJavaScriptEnabled(true);
         webView.getSettings().setLoadWithOverviewMode(true);
         webView.getSettings().setBuiltInZoomControls(true);
@@ -254,7 +252,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         String appNews = getString(R.string.appnews);
         if (StringUtils.isNotBlank(appNews)
                 && (appNewsShowedTime <= 0L || !showedInLastHour(appNewsShowedTime))
-                ) {
+        ) {
             //Mostramos la primera vez, o cada 1 hora como máximo
             Utils.showStickyMessage(this, appNews, Style.INFO);
             //msgInfo.setConfiguration(new Configuration.Builder().setDuration(Configuration.DURATION_LONG));

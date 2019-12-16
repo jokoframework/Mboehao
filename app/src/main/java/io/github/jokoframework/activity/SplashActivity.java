@@ -7,14 +7,11 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 
-import com.parse.ParseUser;
-
 import java.net.SocketTimeoutException;
 
 import io.github.jokoframework.R;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.constants.Constants.StartUpKeys;
-import io.github.jokoframework.mboehaolib.util.ParseUtils;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.repository.LoginRepository;
@@ -57,13 +54,7 @@ public class SplashActivity extends BaseActivity {
 
     private void initializeFirstActivity() {
         int splashTimeOut = 3000;
-        ParseUser currentUser = ParseUtils.getCurrentUser();
-        Intent i;
-        if (currentUser == null) {
-            i = new Intent(SplashActivity.this, LoginActivity.class);
-        } else {
-            i = new Intent(SplashActivity.this, HomeActivity.class);
-        }
+        Intent i = new Intent(SplashActivity.this, LoginActivity.class);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {

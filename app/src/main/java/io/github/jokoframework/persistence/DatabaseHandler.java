@@ -1,7 +1,7 @@
 package io.github.jokoframework.persistence;
 
 import android.os.AsyncTask;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 
 public class DatabaseHandler {
 

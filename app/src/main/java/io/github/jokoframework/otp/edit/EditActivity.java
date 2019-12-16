@@ -57,7 +57,7 @@ public class EditActivity extends BaseActivity implements TextWatcher, View.OnCl
     private void showImage(Uri uri) {
         mImageDisplay = uri;
         onTextChanged(null, 0, 0, 0);
-        Picasso.with(this)
+        Picasso.get()
                 .load(uri)
                 .placeholder(R.mipmap.mboehao_launcher)
                 .into(mImage);

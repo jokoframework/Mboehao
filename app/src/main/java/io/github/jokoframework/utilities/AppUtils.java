@@ -9,8 +9,8 @@ import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-import android.support.design.widget.Snackbar;
-import android.support.v4.content.ContextCompat;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.content.ContextCompat;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
@@ -209,7 +209,7 @@ public class AppUtils {
     }
 
     public static boolean isParseSessionActive() {
-        return ParseUtils.getCurrentUser() != null && ParseUtils.getCurrentUser().isAuthenticated();
+        return false;
     }
 
     public static File getShareImagesFolder() {
@@ -267,7 +267,7 @@ public class AppUtils {
         View snackBarView = snackbar.getView();
 
         snackBarView.setBackgroundColor(backgroundColor);
-        TextView textView = (TextView) snackBarView.findViewById(android.support.design.R.id.snackbar_text);
+        TextView textView = (TextView) snackBarView.findViewById(com.google.android.material.R.id.snackbar_text);
         textView.setTextColor(fontColor);
 
         snackbar.show();

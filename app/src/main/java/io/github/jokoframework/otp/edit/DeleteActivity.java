@@ -20,7 +20,7 @@ public class DeleteActivity extends BaseActivity {
         final Token token = new TokenPersistence(this).get(getPosition());
         ((TextView) findViewById(R.id.issuer)).setText(token.getIssuer());
         ((TextView) findViewById(R.id.label)).setText(token.getLabel());
-        Picasso.with(this)
+        Picasso.get()
                 .load(token.getImage())
                 .placeholder(R.mipmap.mboehao_launcher)
                 .into((ImageView) findViewById(R.id.image));

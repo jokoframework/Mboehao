@@ -7,12 +7,10 @@ import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 
-import com.parse.ParseUser;
 
 import org.apache.commons.lang3.StringUtils;
 
 import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.util.ParseUtils;
 import io.github.jokoframework.mboehaolib.util.Utils;
 
 
@@ -46,27 +44,12 @@ public class CronService extends Service {
         public void run() {
             if (Utils.isParseSessionActive()) {
                 //Sólo con una sesión válida tiene sentido correr las tareas del cron
-                checkForAppNews();
             } else {
                 Log.d(LOG_TAG, "No hay usuario autenticado");
             }
             handler.postDelayed(this, Constants.CRON_INTERVAL);
         }
 
-        private void checkForAppNews() {
-            ParseUser parseUser = ParseUtils.getCurrentUser();
-            if (parseUser != null) {
-                String appNews = ParseUtils.getParameterValue(getBaseContext(), Constants.APP_NEWS);
-                if (StringUtils.isNotBlank(appNews)) {
-                    Log.d(LOG_TAG, String.format("Agregando noticia de la app %s", appNews));
-                    Utils.addPrefs(getBaseContext(), Constants.USER_PREFERENCE_APP_NEWS, appNews);
-                    //Cada 12 horas, que corre el Cron reiniciamos sí o sí la fecha de noticias mostradas
-                    Utils.addPrefs(getBaseContext(), Constants.USER_PREFERENCE_APP_NEWS_SHOWED_TIME, 0L);
-                } else {
-                    Log.d(LOG_TAG, String.format("Eliminanda noticia de la app"));
-                }
-            }
-        }
     };
 
     public class MyBinder extends Binder {

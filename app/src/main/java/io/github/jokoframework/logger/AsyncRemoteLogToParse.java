@@ -2,21 +2,15 @@ package io.github.jokoframework.logger;
 
 import android.os.AsyncTask;
 
-import com.parse.ParseACL;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.pojo.RemoteLogPojo;
-import io.github.jokoframework.utilities.ParseUtils;
 
 
 public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo, Integer, Long> {
@@ -28,13 +22,10 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo, Integer, Lon
     protected Long doInBackground(RemoteLogPojo... remoteLogPojos) {
         final List<Map<String, Object>> logsToParse = new ArrayList<>();
 
-        RemoteLogCapable remoteLogCapable = new ParseLogger();
+        RemoteLogCapable remoteLogCapable = null;
         for (RemoteLogPojo remoteLogPojo : remoteLogPojos) {
             //BEGIN-IGNORE-SONARQUBE
             Map<String, Object> log = new HashMap<>();
-
-            final ParseACL defaultAcl = ParseUtils.getDefaultAcl(ParseUser.getCurrentUser());
-            convertoParseObject(log).setACL(defaultAcl); //log no es un ParseObject...
 
             setConditionalMessage(remoteLogPojo, log);
             setConditionalUserAndDate(remoteLogPojo, log);
@@ -56,9 +47,6 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo, Integer, Lon
         if (remoteLogPojo.getLevel() != null) {
             log.put(AppConstants.PARSE_ATTRIBUTE_LEVEL, remoteLogPojo.getLevel());
         }
-        if (ParseUser.getCurrentUser() != null) {
-            log.put(AppConstants.PARSE_ATTRIBUTE_USERNAME, ParseUser.getCurrentUser().getUsername());
-        }
         if (remoteLogPojo.getSavedAt() != null) {
             log.put(AppConstants.PARSE_ATTRIBUTE_SAVED_AT, String.valueOf(remoteLogPojo.getSavedAt()));
         }
@@ -76,15 +64,5 @@ public class AsyncRemoteLogToParse extends AsyncTask<RemoteLogPojo, Integer, Lon
         }
     }
 
-    private ParseObject convertoParseObject(Map<String, Object> log) {
-        ParseObject currentParseObject = new ParseObject(AppConstants.PARSE_CLASS_REMOTE_LOG);
-        Iterator<String> keyIterator = log.keySet().iterator(); // iterador del Map...
-        while (keyIterator.hasNext()) {
-            String currentKey = keyIterator.next();
-            Object currentValue = log.get(currentKey);
-            currentParseObject.put(currentKey, currentValue);
-        }
-        return currentParseObject;
-    }
 }
 

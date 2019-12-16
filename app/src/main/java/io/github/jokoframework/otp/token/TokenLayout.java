@@ -102,7 +102,7 @@ public class TokenLayout extends FrameLayout implements View.OnClickListener, Ru
         mPlaceholder = new String(placeholder);
 
         // Show the image.
-        Picasso.with(getContext())
+        Picasso.get()
                 .load(token.getImage())
                 .placeholder(R.mipmap.mboehao_launcher)
                 .fit()

@@ -5,19 +5,19 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import android.support.multidex.MultiDex;
+import androidx.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.parse.BuildConfig;
-import com.parse.Parse;
+
 
 import java.util.concurrent.TimeUnit;
 
 import io.fabric.sdk.android.Fabric;
+import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.activity.BaseActivity;
 import io.github.jokoframework.auth.AppAuthenticator;
@@ -61,7 +61,6 @@ public class MboehaoApp extends Application {
     public void onCreate() {
         super.onCreate();
         mySelf = this;
-        Parse.initialize(this);
         initializeInternetServices(this);
         if (!BuildConfig.DEBUG) {
             Fabric.with(this, new Crashlytics());

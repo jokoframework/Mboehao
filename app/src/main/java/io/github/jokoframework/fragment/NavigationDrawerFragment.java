@@ -7,8 +7,6 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -18,29 +16,30 @@ import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.parse.ParseUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.legacy.app.ActionBarDrawerToggle;
 import io.github.jokoframework.R;
 import io.github.jokoframework.activity.AboutActivity;
 import io.github.jokoframework.activity.BarChartActivity;
 import io.github.jokoframework.activity.ChangePasswordActivity;
+import io.github.jokoframework.activity.CountryActivity;
 import io.github.jokoframework.activity.HorizontalBarChartActivity;
 import io.github.jokoframework.activity.LineChartActivity;
 import io.github.jokoframework.activity.LogOutActivity;
-import io.github.jokoframework.activity.CountryActivity;
-import io.github.jokoframework.otp.OtpActivity;
+import io.github.jokoframework.activity.MultipleLineChartActivity;
 import io.github.jokoframework.adapter.CustomExpandableListAdapter;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.pojo.Event;
 import io.github.jokoframework.mboehaolib.pojo.EventParent;
 import io.github.jokoframework.mboehaolib.util.Utils;
-import io.github.jokoframework.activity.MultipleLineChartActivity;
+import io.github.jokoframework.otp.OtpActivity;
 
 /**
  * Created by joaquin on 23/08/17.
+ *
  * @author joaquin
  * @author afeltes
  */
@@ -151,26 +150,22 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private View getSideMenuHeader(LayoutInflater inflater, ViewGroup container) {
-        ParseUser currentUserParse = ParseUser.getCurrentUser();
 
         View header = inflater.inflate(R.layout.side_menu_header, container, false);
         //Implementa la cabecera del menu...
         TextView welcomeString = (TextView) header.findViewById(R.id.personalize_welcome);
 
         if (Utils.getPrefs(getActivity(), Constants.FACEBOOK_PROFILE_DATA) == null) {
-            if (currentUserParse != null) {
-                welcomeString.setText(String.format("Bienvenido %s", currentUserParse.getUsername()));
-            } else {
-                welcomeString.setText(String.format("Bienvenido a Mboehao"));
-            }
+
+            welcomeString.setText(String.format("Bienvenido a Mboehao"));
         } else {
             welcomeString.setText(String.format("Bienvenido %s", Utils.getPrefs(getActivity(), Constants.FACEBOOK_PROFILE_DATA)));
         }
         return header;
     }
 
-/*
-    *   Menu...*/
+    /*
+     *   Menu...*/
 
     /**
      * > Charts...

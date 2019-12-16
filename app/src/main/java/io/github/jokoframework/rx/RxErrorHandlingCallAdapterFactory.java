@@ -3,14 +3,13 @@ package io.github.jokoframework.rx;
 import android.content.Context;
 import android.util.Log;
 
-import com.facebook.login.LoginManager;
-
 import java.io.IOException;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Type;
 import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.net.UnknownHostException;
+import java.util.List;
 
 import io.github.jokoframework.activity.BaseActivity;
 import io.github.jokoframework.activity.LoginActivity;
@@ -52,16 +51,16 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
     }
 
     @Override
-    public CallAdapter<?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
+    public CallAdapter<?, ?> get(Type returnType, Annotation[] annotations, Retrofit retrofit) {
         return new RxCallAdapterWrapper(retrofit, original.get(returnType, annotations, retrofit));
     }
 
-    private static class RxCallAdapterWrapper implements CallAdapter<Observable<?>> {
+    private static class RxCallAdapterWrapper<R> implements CallAdapter<R, Object> {
         private static final String LOG_TAG = RxCallAdapterWrapper.class.getName();
         private final Retrofit retrofit;
-        private final CallAdapter<?> wrapped;
+        private final CallAdapter<R, Object> wrapped;
 
-        public RxCallAdapterWrapper(Retrofit retrofit, CallAdapter<?> wrapped) {
+        public RxCallAdapterWrapper(Retrofit retrofit, CallAdapter<R, Object> wrapped) {
             this.retrofit = retrofit;
             this.wrapped = wrapped;
         }
@@ -73,7 +72,7 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
 
         @SuppressWarnings("unchecked")
         @Override
-        public <R> Observable<?> adapt(Call<R> call) {
+        public Object adapt(Call<R> call) {
             final Observable observable = ((Observable) wrapped.adapt(call)).onErrorResumeNext(new Func1<Throwable, Observable>() {
                 @Override
                 public Observable call(final Throwable throwable) {
@@ -99,14 +98,12 @@ public class RxErrorHandlingCallAdapterFactory extends CallAdapter.Factory {
                                             //Sólo mostramos de nuevo el login, sino proviene del LoginActivity
                                             AppUtils.showLogin(MboehaoApp.getSingletonApplicationContext(), (HttpException) throwable);
                                         }
-                                        LoginManager.getInstance().logOut();
                                         showErrorMessage("Credenciales incorrectas");
                                     } else if (code >= 500 && code <= 599) {
                                         final String message = String.format("No se puede contactar con el servidor en estos momentos: %s",
                                                 throwable.getMessage());
                                         Log.e(LOG_TAG, message, throwable);
                                         showErrorMessage(message);
-                                        LoginManager.getInstance().logOut();
                                     } else if (throwable instanceof SocketTimeoutException) {
                                         String message = "La conexión con el servidor es inestable, intente de vuelta en unos momentos";
                                         showErrorMessage(message);

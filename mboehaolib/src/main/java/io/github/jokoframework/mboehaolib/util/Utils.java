@@ -216,7 +216,7 @@ public class Utils {
     }
 
     public static boolean isParseSessionActive() {
-        return ParseUtils.getCurrentUser() != null && ParseUtils.getCurrentUser().isAuthenticated();
+        return false;
     }
 
     public static File getShareImagesFolder() {

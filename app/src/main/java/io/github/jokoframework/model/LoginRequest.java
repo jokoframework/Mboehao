@@ -2,8 +2,6 @@ package io.github.jokoframework.model;
 
 import android.os.Build;
 
-import com.facebook.AccessToken;
-
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -97,17 +95,4 @@ public class LoginRequest {
                 .toString();
     }
 
-    public static LoginRequest builder(AccessToken fbAccessToken) {
-        LoginRequest loginRequest = new LoginRequest();
-        if (fbAccessToken != null) {
-            final Map<String, Object> custom = loginRequest.getCustom();
-            loginRequest.setUsername(fbAccessToken.getUserId());
-            loginRequest.setPassword(AppConstants.DEFAULT_DEMO_ACCCESS_CODE);
-            custom.put(AppConstants.DEVICE_TYPE, Constants.DEVICE_TYPE);
-            custom.put(AppConstants.DEVICE_NAME, Build.MODEL);
-            custom.put(Constants.LOGIN_PROVIDER, Constants.LOGIN_PROVIDER_FACEBOOK);
-            custom.put(Constants.ACCESS_TOKEN, fbAccessToken.getToken());
-        }
-        return loginRequest;
-    }
 }
