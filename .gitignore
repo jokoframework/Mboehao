@@ -16,3 +16,4 @@ mboehaolib/app
 firebase.json
 firebase/*
 functions/*
+app/google-services.json
