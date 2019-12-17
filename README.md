@@ -1,4 +1,3 @@
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/e51c4ed171174b5b9ae437fce990e38f)](https://www.codacy.com/app/alefq/Mboehao?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=jokoframework/Mboehao&amp;utm_campaign=Badge_Grade)
 
 # Mbo´ehao
 
@@ -14,8 +13,6 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Selección de SERVIDOR antes del Login
 - Login con FaceBook y Twitter (Amazon Cognito)
 - Login con JWT
-- Almacenamiento en MBAAS
-- Logs Remotos vía API
 - Menu "hamburguer" lateral
 - Progress bar:
 	- Carga de contenido en activity
@@ -39,7 +36,7 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 - Modal con información de ayuda
 - Noticias periódicas vía API (Parse server, pero generalizable)
 - Recycler / Card view
-- Google Analytics
+- Firebird Analytics
 - Lista seleccionable (ListDialog)
 - Filtro TimeLine
 - SQLite para guardar datos localmente
@@ -54,7 +51,6 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 
 Se listan a continuación las funcionalidades básicas que ya pueden ser vistas en el repositorio:
 - Login vía API Rest
-- Login con FaceBook
 - Login con JWT
 - Almacenamiento en MBAAS
 - Logs Remotos vía API
@@ -72,23 +68,12 @@ Se listan a continuación las funcionalidades básicas que ya pueden ser vistas 
 - Uso de librería propia (mboehaolib) compartida como módulo Gradle
 - Notificaciones tipo cortina superior deslizante (Crouton)
 - Manejo de notificaciones dentro de la propia APP
-- Integración con Notification Server(Firebase)
+- Integración con Push Notification Server(Firebase)
 - Display screen/About
 - Noticias periódicas vía API (Parse server, pero generalizable)
-- Google Analytics(Firebase)
+- Firebase Analytics
 - Uso del PreferencesActvity para configuraciones minimas de la APP.
 
-## Parse
-
-El Parse es un servidor BAAS, que en este caso se maneja como MBAAS por el tipo de proyecto. Si se necesitan alguna guia para el manejo de lo que es el servidor, se puede
-mirar la [guia](http://docs.parseplatform.org/android/guide/) para tener una mejor idea.
-
-### Parse Dashboard
-
-El Dashboar es la informacion que guarda la aplicacion en nuestro servidor Parse.
-Nos muestra los usuarios, logs que se realizaron dependiendo de las acciones, y muchas cosas que se quieran y/o necesiten para el usuario.
-Por el momento la aplicacion solo guarda los logs como una forma de muestra de funcionalidades de logs remotos y alamacenamiento MBAAS.
-La idea es justamente tener este proyecto como base para agregar nuevas ideas.
 
 ## SonarRunner Tests
 
