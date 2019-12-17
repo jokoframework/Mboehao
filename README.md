@@ -11,7 +11,6 @@ Mbo`ehao, que en guaraní significa colegio, es un proyecto para realizar un rel
 
 - Login vía API Rest
 - Selección de SERVIDOR antes del Login
-- Login con FaceBook y Twitter (Amazon Cognito)
 - Login con JWT
 - Menu "hamburguer" lateral
 - Progress bar:
