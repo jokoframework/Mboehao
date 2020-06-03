@@ -5,46 +5,56 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera" android:required="false" />
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
 
     <application
-        android:name="io.github.jokoframework.singleton.MboehaoApp"
+        android:name=".singleton.MboehaoApp"
         android:allowBackup="true"
         android:fullBackupContent="@xml/backup_descriptor"
         android:icon="@mipmap/mboehao_launcher"
         android:label="@string/app_name"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
-        android:networkSecurityConfig="@xml/network_security_config">
-        <activity android:name="io.github.jokoframework.activity.SplashActivity">
+        tools:targetApi="n">
+        <activity
+            android:name=".activity.Home2Activity">
+        </activity>
+        <activity
+            android:name=".activity.PreLoginActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="io.github.jokoframework.activity.LoginActivity"
+            android:name=".activity.LoginActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material.NoActionBar"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.jokoframework.activity.SplashActivity" />
         </activity>
         <activity
-            android:name="io.github.jokoframework.activity.HomeActivity"
+            android:name=".activity.HomeActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Material"
             android:windowSoftInputMode="stateHidden">
@@ -53,119 +63,122 @@
                 android:value="io.github.jokoframework.activity.LoginActivity" />
         </activity>
         <activity
-            android:name="io.github.jokoframework.activity.LineChartActivity"
+            android:name=".activity.LineChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.MultipleLineChartActivity"
+            android:name=".activity.MultipleLineChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.BarChartActivity"
+            android:name=".activity.BarChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.LogOutActivity"
+            android:name=".activity.LogOutActivity"
             android:label="@string/app_name" />
         <activity
-            android:name="io.github.jokoframework.activity.HorizontalBarChartActivity"
+            android:name=".activity.HorizontalBarChartActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.SettingsActivity"
+            android:name=".activity.SettingsActivity"
             android:label="@string/app_name"
-            android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
+            android:parentActivityName=".activity.HomeActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.ChangePasswordActivity"
+            android:name=".activity.ChangePasswordActivity"
             android:label="@string/app_name"
-            android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
-            android:theme="@android:style/Theme.Material"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@android:style/Theme.Material.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.ShareActivity"
+            android:name=".activity.ShareActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material.NoActionBar"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".otp.OtpActivity"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material"
-            android:windowSoftInputMode="stateHidden"/>
-        <activity
-            android:name="io.github.jokoframework.activity.AboutActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material.NoActionBar"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
-            android:name="io.github.jokoframework.activity.CountryActivity"
+            android:name=".activity.AboutActivity"
             android:label="@string/app_name"
-            android:parentActivityName="io.github.jokoframework.activity.HomeActivity"
-            android:theme="@android:style/Theme.Material"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
             android:windowSoftInputMode="stateHidden" />
-
+        <activity
+            android:name=".activity.CountryActivity"
+            android:label="@string/app_name"
+            android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".otp.add.ScanActivity"
-            android:theme="@android:style/Theme.Holo.NoActionBar.Fullscreen"
-            />
-
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".otp.edit.DeleteActivity"
             android:label="@string/delete_question"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
-            />
-
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
             android:name=".otp.edit.EditActivity"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateVisible"
-            />
-
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".otp.edit.SaveActivity"
             android:label="@string/save_question"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
-            />
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <activity
-            android:name="io.github.jokoframework.activity.SecondAuthenticationActivity"
-            android:label="User's OTP"
-            android:theme="@android:style/Theme.Holo.Light.Dialog"
-            />
+            android:name=".activity.SecondAuthenticationActivity"
+            android:label="User&apos;s OTP"
+            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
+        <activity android:name=".activity.BaseActivity" />
+        <activity android:name=".activity.MenuHeaderActivity" />
+        <activity android:name=".activity.OptionsActivity" />
+        <activity android:name=".otp.OtpActivityNotLogged" />
 
         <service
-            android:name="io.github.jokoframework.service.PeriodicService"
+            android:name=".service.PeriodicService"
             android:enabled="true" />
         <service
-            android:name="io.github.jokoframework.service.TestServiceNotification"
+            android:name=".service.TestServiceNotification"
             android:enabled="true" />
         <service
-            android:name="io.github.jokoframework.service.CronService"
+            android:name=".service.CronService"
             android:enabled="true" />
         <service
-            android:name="io.github.jokoframework.service.CountryHelper"
+            android:name=".service.CountryHelper"
             android:enabled="true" />
-        <service android:name="io.github.jokoframework.service.FirebaseInstanceService">
+        <service android:name=".service.FirebaseInstanceService"
+            android:permission="TODO"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name="io.github.jokoframework.service.FirebaseMessageServiceJoko">
+        <service android:name=".service.FirebaseMessageServiceJoko"
+            android:permission="TODO"
+            tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-        See README(https://goo.gl/l4GJaQ) for more. -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+        See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_mboehao" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/progress_bar" />
@@ -175,8 +188,9 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="f66595d9e071f4871fbeda4d6d8f0957c9a85bae" />
-
-
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
