@@ -11,6 +11,8 @@ import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.button.MaterialButton;
+
 import java.util.List;
 
 import io.github.jokoframework.R;
@@ -27,17 +29,22 @@ public class CountryActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_country);
 
-        final TableLayout tableLayout = (TableLayout) findViewById(R.id.tableLayout);
+        final TableLayout tableLayout = findViewById(R.id.tableLayout);
+        final MaterialButton button = findViewById(R.id.show_countries);
 
-        final Button button = (Button) findViewById(R.id.show_countries);
+        findViewById(R.id.volver2).setOnClickListener(v -> {
+            Intent backHome = new Intent(CountryActivity.this, Home2Activity.class);
+            startActivity(backHome);
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        });
 
         //Clearing old records from database
         //CountryDatabase.getAppDataBase(this).countryDao().deleteAll();
 
-        // show all country from database
+        // Show all country from database
         tableLayout.removeAllViews();
 
         if (countryList.size() == 0){
@@ -59,44 +66,39 @@ public class CountryActivity extends Activity {
             }
         }
 
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        button.setOnClickListener(v -> {
+            try {
+                Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
+                getBaseContext().startService(mServiceIntent);
+                Utils.showToast(getBaseContext(), "Actualizando lista...");
+            } catch (RuntimeException e) {
+                Utils.showToast(getBaseContext(), "Fallo de CountryHelper");
+                Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
+                Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
+            }
 
-                try {
-                    Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
-                    getBaseContext().startService(mServiceIntent);
-                    Utils.showToast(getBaseContext(), String.format("Actualizando lista..."));
-                } catch (RuntimeException e) {
-                    Utils.showToast(getBaseContext(), String.format("Fallo de CountryHelper"));
-                    Toast.makeText(getBaseContext(), getBaseContext().getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
-                    Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
-                }
+            tableLayout.removeAllViews();
 
-                tableLayout.removeAllViews();
-
-                if (countryList.size() == 0){
+            if (countryList.size() == 0){
+                View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
+                TextView countryName = tableRow.findViewById(R.id.countryName);
+                countryName.setText("Sin paises.");
+                tableLayout.addView(tableRow);
+            } else {
+                for (int i = 0; i < countryList.size(); i++) {
                     View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
+                    TextView cID = tableRow.findViewById(R.id.cid);
                     TextView countryName = tableRow.findViewById(R.id.countryName);
-                    countryName.setText("Sin paises.");
-                    tableLayout.addView(tableRow);
-                } else {
-                    for (int i = 0; i < countryList.size(); i++) {
-                        View tableRow = LayoutInflater.from(CountryActivity.this).inflate(R.layout.table_item, null, false);
-                        TextView cID = tableRow.findViewById(R.id.cid);
-                        TextView countryName = tableRow.findViewById(R.id.countryName);
-                        TextView countryCode = tableRow.findViewById(R.id.countryCode);
+                    TextView countryCode = tableRow.findViewById(R.id.countryCode);
 
-                        cID.setText(String.valueOf(countryList.get(i).getCid()));
-                        countryName.setText(countryList.get(i).getCountryName());
-                        countryCode.setText(countryList.get(i).getCountryCode());
-                        tableLayout.addView(tableRow);
-                    }
+                    cID.setText(String.valueOf(countryList.get(i).getCid()));
+                    countryName.setText(countryList.get(i).getCountryName());
+                    countryCode.setText(countryList.get(i).getCountryCode());
+                    tableLayout.addView(tableRow);
                 }
             }
         });
-
     }
-
 
     @Override
     protected void onDestroy() {
