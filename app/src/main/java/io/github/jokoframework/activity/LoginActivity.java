@@ -5,36 +5,34 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 
+import androidx.annotation.Nullable;
+
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.crashlytics.android.Crashlytics;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
+import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.eula.Eula;
-import io.github.jokoframework.login.Authenticable;
 import io.github.jokoframework.login.CredentialsTextView;
 import io.github.jokoframework.mboehaolib.constants.Constants;
 import io.github.jokoframework.mboehaolib.util.SecurityUtils;
@@ -44,6 +42,7 @@ import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.otp.OtpActivity;
+import io.github.jokoframework.otp.OtpActivityNotLogged;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -57,13 +56,13 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
     private String LOG_TAG = LoginActivity.class.getSimpleName();
     private EditText userTextField, passTextField;
-    private ImageView imageLogin;
+    private ImageView imageLogin, imageView;
     private CheckBox saveCredentials;
     private Activity thisActivity;
     private Button enterButton;
     private Activity mySelf;
     private Button otpButton;
-
+    private String token = null;
 
     public Activity thisActivity() {
         return thisActivity;
@@ -94,17 +93,21 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initializeUI();
     }
 
     private void initializeUI() {
         setContentView(R.layout.activity_login);
-        HomeActivity.cancelAlarmServices(this);
+        // HomeActivity.cancelAlarmServices(this);
+        Home2Activity.cancelAlarmServices(this);
+
         try {
             Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
             getBaseContext().startService(mServiceIntent);
         } catch (RuntimeException e) {
-            Utils.showToast(getBaseContext(), String.format("Fallo de CountryHelper"));
+            Utils.showToast(getBaseContext(), "Fallo de CountryHelper");
             Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
         }
         setActivity(this);
@@ -115,22 +118,22 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
         final String decryptedPassword = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_PW));
-        enterButton = (Button) findViewById(R.id.buttonEnter);
-        otpButton = (Button) findViewById(R.id.buttonOtp);
         imageLogin = findViewById(R.id.imageLogin);
-        userTextField = (EditText) findViewById(R.id.user);
-        passTextField = (EditText) findViewById(R.id.pass);
-        saveCredentials = (CheckBox) findViewById(R.id.checkBox);
+        imageView = findViewById(R.id.imageView);
+        userTextField = findViewById(R.id.user);
+        passTextField = findViewById(R.id.pass);
+        saveCredentials = findViewById(R.id.checkBox);
+        enterButton = findViewById(R.id.buttonEnter);
+        otpButton = findViewById(R.id.buttonOtp);
         userTextField.setText(decryptedUser);
         passTextField.setText(decryptedPassword);
+
         //Si el usuario es diferente se tiene que vaciar el password...
         CredentialsTextView credentialsTextView = new CredentialsTextView(userTextField, passTextField);
         credentialsTextView.userTextListener();
         enterButton.setOnClickListener(new ClickEnterHandler());
         otpButton.setOnClickListener(new ClickOtpHandler());
-
     }
-
 
     private class ClickEnterHandler implements View.OnClickListener {
         @Override
@@ -150,8 +153,9 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private class ClickOtpHandler implements View.OnClickListener{
         @Override
         public void onClick(View view){
-            Intent i = new Intent(thisActivity, OtpActivity.class);
+            Intent i = new Intent(thisActivity, OtpActivityNotLogged.class);
             thisActivity().startActivity(i);
+            finish();
         }
     }
     private void sendErrorLoginMessage(String message) {
@@ -197,23 +201,22 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         }
     }
 
-    private String getGcmDeviceIdentifier() {
-        InstanceID instanceID = InstanceID.getInstance(this);
-        try {
-            String deviceIdentifier = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
-                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
-            Log.i(LOG_TAG, "GCM Device Identifier: " + deviceIdentifier);
-            return deviceIdentifier;
-        } catch (IOException e) {
-            Log.e(LOG_TAG, "Error getting GCM instanceID " + e.getMessage(), e);
-            return null;
-        }
+    private void getFcmDeviceIdentifier() {
+        FirebaseInstanceId.getInstance().getInstanceId().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                token = Objects.requireNonNull(task.getResult()).getToken();
+                Log.i(LOG_TAG, "GCM Device Identifier: " + token);
+            } else {
+                Log.i(LOG_TAG, Objects.requireNonNull(Objects.requireNonNull(task.getException()).getMessage()));
+                token = null;
+            }
+        });
     }
 
     private void userLogin(LoginRequest loginRequest) {
         //LoginRepository authApi = RepoBuilder.getInstance(LoginRepository.class);
         Observable.defer(() -> {
-            String token = getGcmDeviceIdentifier();
+            getFcmDeviceIdentifier();
             return Observable.just(token);
         }).subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -235,7 +238,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                     }
                 });
     }
-
 
     private void makeLoginRequest(LoginRequest loginRequest) {
         loginRequest.getCustom().put("deviceType", Constants.DEVICE_TYPE);
@@ -295,59 +297,47 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private void loginJWT(LoginRequest loginRequest) {
 
         Intent i = new Intent(thisActivity, SecondAuthenticationActivity.class);
-        //thisActivity().startActivity(i);// Instantiate the RequestQueue.
 
         // Instanciar el RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = getString(R.string.jwt_URL);
 
         Map<String, String> params = new HashMap();
-        params.put("username",loginRequest.getUsername());
-        params.put("password",loginRequest.getPassword());
+        params.put("username", loginRequest.getUsername());
+        params.put("password", loginRequest.getPassword());
 
         JSONObject parameters = new JSONObject(params);
 
         // Solicitar un JSON como respuesta de la URL.
-        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, new Response.Listener<JSONObject>()
-            {
-                @Override
-                public void onResponse(JSONObject response)
-                {
-                    // Mostrar el response (DEBUG)
-                    //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
+        JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, parameters, response -> {
+            // Mostrar el response (DEBUG)
+            //Utils.showToast(getBaseContext(), String.format("Response is: "+ response.toString()));
 
-                    // Verificar login exitoso
-                    String loginSuccess;
-                    String secret;
-                    try {
-                        loginSuccess = response.getString("success");
-                        if (loginSuccess.equals("true")){
-                            secret = response.getString("secret");
-                            i.putExtra("SECRET", secret);
-                            Utils.showToast(getBaseContext(), String.format("Login succesful."));
-                            thisActivity().startActivity(i);// Iniciar Home activity
-                            //loginSuccessful();
-                        } else {
-                            Utils.showToast(getBaseContext(), String.format("Login failed."));
-                            showProgress(false);
-                            invalidLogin();
-                        }
-                    } catch (Exception e){
-                        Log.e(LOG_TAG, "Error at JWT Login " + e.getMessage(), e);
-                    };
-                }
-            }, new Response.ErrorListener()
-            {
-                @Override
-                public void onErrorResponse(VolleyError error)
-                {
-                    Utils.showToast(getBaseContext(), String.format("ERROR: "+ error.toString()));
+            // Verificar login exitoso
+            String loginSuccess;
+            String secret;
+            try {
+                loginSuccess = response.getString("success");
+                if (loginSuccess.equals("true")){
+                    secret = response.getString("secret");
+                    i.putExtra("SECRET", secret);
+                    Utils.showToast(getBaseContext(), "Login succesful.");
+                    thisActivity().startActivity(i);// Iniciar Home activity
+                    //loginSuccessful();
+                } else {
+                    Utils.showToast(getBaseContext(), "Login failed.");
                     showProgress(false);
                     invalidLogin();
                 }
+            } catch (Exception e){
+                Log.e(LOG_TAG, "Error at JWT Login " + e.getMessage(), e);
             }
+        }, error -> {
+            Utils.showToast(getBaseContext(), "ERROR: "+ error.toString());
+            showProgress(false);
+            invalidLogin();
+        }
         );
-
 
         // Add the request to the RequestQueue.
         postRequest.setShouldCache(false);
@@ -358,9 +348,8 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     }
 
     private void loginSuccessful() {
-        Intent i = new Intent(thisActivity, HomeActivity.class);
-        thisActivity.startActivity(i);
-        thisActivity.finish();
+        Intent i = new Intent(LoginActivity.this, Home2Activity.class);
+        startActivity(i);
     }
 
     @Override
