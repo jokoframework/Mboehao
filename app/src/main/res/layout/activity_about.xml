@@ -1,44 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     android:background="#FFFFFF">
 
-    <FrameLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#2B2525"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/volver"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white"
+            android:clickable="true"
+            android:src="@drawable/back_button"
+            android:focusable="true" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/imageViewHelp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_centerInParent="true"
+            android:contentDescription="@string/about_image"
+            android:src="@drawable/mboehao_help" />
 
-            <ImageView
-                android:id="@+id/imageViewHelp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"
-                android:contentDescription="@string/about_image"
-                android:src="@drawable/mboehao_help" />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/version_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/version_number"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColor="#795FCA"
+            android:layout_marginTop="15dp"
+            android:layout_gravity="center"
+            android:layout_below="@+id/imageViewHelp"
+            android:layout_centerHorizontal="true"/>
 
-            <TextView
-                android:id="@+id/version_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/version_number"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="#ff397aa3"
-                android:layout_gravity="center"
-                android:layout_below="@+id/imageViewHelp"
-                android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 
-        </RelativeLayout>
-
-    </FrameLayout>
-
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

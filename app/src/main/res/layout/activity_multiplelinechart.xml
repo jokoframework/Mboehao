@@ -1,22 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Spinner
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#2B2525"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/backButton5"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/back_button"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/content_chooser_spinner"
         style="@android:style/TextAppearance.DeviceDefault.Small"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:padding="12dp"
+        android:background="@color/lightblue10alpha"
         android:popupBackground="@color/ap_gray"
-        />
+        android:layout_marginTop="?actionBarSize" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/multiple_line_chart"
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        />
+        android:layout_marginTop="102dp" />
 
-</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -1,33 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/linechart_sharing"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:visibility="visible">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/layoutToolBar"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#2B2525"
+        android:gravity="center_vertical"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/backButton"
+            android:layout_width="35dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:background="@android:color/white"
+            android:backgroundTint="@android:color/white"
+            android:src="@drawable/back_button"
+            android:clickable="true"
+            android:focusable="true" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center_horizontal" />
+        android:layout_marginTop="?actionBarSize">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:layout_alignBottom="@+id/linechart_sharing"
-        android:layout_centerInParent="true"
-        android:layout_above="@+id/linechart_sharing"
-        android:background="@android:color/transparent">
-
-        <ImageView
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/linechart_sharing"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:id="@+id/imageShareCustomPlot"
-            android:contentDescription="@string/share_label"
-            android:layout_gravity="center"
-            android:backgroundTint="@android:color/transparent"
-            android:background="@android:color/transparent"
-            android:src="@android:drawable/ic_menu_share"/>
+            android:layout_gravity="center_horizontal" />
 
-    </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignBottom="@+id/linechart_sharing"
+            android:layout_centerInParent="true"
+            android:layout_above="@+id/linechart_sharing"
+            android:background="@android:color/transparent">
 
-</RelativeLayout>
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:id="@+id/imageShareCustomPlot"
+                android:contentDescription="@string/share_label"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:backgroundTint="@android:color/transparent"
+                android:background="@android:color/transparent"
+                android:src="@android:drawable/ic_menu_share"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

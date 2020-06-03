@@ -4,25 +4,31 @@
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/cid"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:id="@+id/cid"
         android:layout_weight="0.25"
-        android:gravity="center"/>
+        android:fontFamily="@font/os_semibold"
+        android:gravity="center"
+        android:textColor="#0B9EAC" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/countryName"
         android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:id="@+id/countryName"
         android:layout_weight="0.25"
-        android:gravity="center"/>
+        android:fontFamily="@font/os_semibold"
+        android:gravity="center"
+        android:textColor="#175EAF" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:id="@+id/countryCode"
+        android:fontFamily="@font/os_semibold"
         android:layout_weight="0.25"
+        android:textColor="#175EAF"
         android:gravity="center"/>
 
 </TableRow>

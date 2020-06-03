@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:layout_marginTop="150dp"
     android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,19 +10,21 @@
         android:layout_weight="1"
         android:layout_margin="16dp"
         android:orientation="vertical">
-        <EditText
+
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/otp"
-            android:layout_width="match_parent"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
             android:layout_marginTop="16dp"
+            android:layout_gravity="center"
             android:ems="10"
             android:padding="10dp"
             android:hint="OTP"
             android:singleLine="true">
 
             <requestFocus />
-        </EditText>
+
+        </com.google.android.material.textfield.TextInputEditText>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -30,7 +33,8 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:orientation="horizontal">
-            <ImageView
+
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/image"
                 android:layout_width="48dp"
                 android:layout_height="48dp"
@@ -40,26 +44,30 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginStart="8dp"
                 android:orientation="vertical">
                 <include layout="@layout/titles" />
+
             </LinearLayout>
+
         </LinearLayout>
+
     </LinearLayout>
 
     <View style="@style/Divider" />
 
     <LinearLayout style="@style/Dialog.Button.Layout">
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             style="@style/Dialog.Button"
             android:id="@+id/cancel"
-            android:text="@android:string/cancel"
-            />
+            android:text="@android:string/cancel" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             style="@style/Dialog.Button"
             android:id="@+id/enter"
-            android:text="@string/button_accept"
-            />
+            android:text="@string/button_accept" />
+
     </LinearLayout>
+
 </LinearLayout>
