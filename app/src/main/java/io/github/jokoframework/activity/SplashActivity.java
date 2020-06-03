@@ -54,7 +54,7 @@ public class SplashActivity extends BaseActivity {
 
     private void initializeFirstActivity() {
         int splashTimeOut = 3000;
-        Intent i = new Intent(SplashActivity.this, LoginActivity.class);
+        Intent i = new Intent(SplashActivity.this, PreLoginActivity.class);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
