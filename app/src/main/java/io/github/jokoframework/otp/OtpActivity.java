@@ -1,8 +1,6 @@
 package io.github.jokoframework.otp;
 
-
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -12,15 +10,14 @@ import android.content.pm.PackageManager;
 import android.database.DataSetObserver;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.annotation.RequiresApi;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.GridView;
 
+import androidx.annotation.RequiresApi;
+
 import io.github.jokoframework.R;
+import io.github.jokoframework.activity.Home2Activity;
 import io.github.jokoframework.otp.add.ScanActivity;
 import io.github.jokoframework.otp.token.TokenAdapter;
 
@@ -28,9 +25,7 @@ import io.github.jokoframework.otp.token.TokenAdapter;
 public class OtpActivity extends Activity{
     private TokenAdapter mTokenAdapter;
     public static final String ACTION_IMAGE_SAVED = "io.github.jokoframework.otp.ACTION_IMAGE_SAVED";
-    private DataSetObserver mDataSetObserver;
-    private final int PERMISSIONS_REQUEST_CAMERA = 1;
-    private RefreshListBroadcastReceiver receiver;
+    RefreshListBroadcastReceiver receiver = new RefreshListBroadcastReceiver();
 
     private class RefreshListBroadcastReceiver extends BroadcastReceiver {
         @Override
@@ -39,23 +34,29 @@ public class OtpActivity extends Activity{
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_otp);
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+
+        findViewById(R.id.scanImage).setOnClickListener(v -> tryOpenCamera());
+
+        findViewById(R.id.back1).setOnClickListener(v -> {
+            Intent intent = new Intent(OtpActivity.this, Home2Activity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        });
+
         mTokenAdapter = new TokenAdapter(this);
-        receiver = new RefreshListBroadcastReceiver();
         registerReceiver(receiver, new IntentFilter(ACTION_IMAGE_SAVED));
         ((GridView) findViewById(R.id.grid)).setAdapter(mTokenAdapter);
 
         // Don't permit screenshots since these might contain OTP codes.
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 
-        mDataSetObserver = new DataSetObserver() {
+        DataSetObserver mDataSetObserver = new DataSetObserver() {
             @Override
             public void onChanged() {
                 super.onChanged();
@@ -80,20 +81,10 @@ public class OtpActivity extends Activity{
         mTokenAdapter.notifyDataSetChanged();
     }
 
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.otp_main, menu);
-        menu.findItem(R.id.action_scan).setVisible(ScanActivity.hasCamera(this));
-        menu.findItem(R.id.action_scan).setOnMenuItemClickListener(this::onOptionsItemSelected);
-        return true;
-    }
-
     @RequiresApi(api = Build.VERSION_CODES.M)
     private void tryOpenCamera() {
         if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            int PERMISSIONS_REQUEST_CAMERA = 1;
             requestPermissions(new String[]{Manifest.permission.CAMERA}, PERMISSIONS_REQUEST_CAMERA);
         }
         else {
@@ -106,24 +97,4 @@ public class OtpActivity extends Activity{
         startActivity(new Intent(this, ScanActivity.class));
         overridePendingTransition(R.anim.fadein, R.anim.fadeout);
     }
-
-
-    @RequiresApi(api = Build.VERSION_CODES.M)
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /**
-         * Se obtiene el id del item del action bar seleccionado
-         * y se realiza la acción de acuerdo a éste
-         */
-        if (item.getItemId() == android.R.id.home) {
-            finish();
-            return true;
-        }
-        else if (item.getItemId() == R.id.action_scan){
-            tryOpenCamera();
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
 }
