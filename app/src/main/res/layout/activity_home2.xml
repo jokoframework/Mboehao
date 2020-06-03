@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawerLayout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activity.Home2Activity">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/layoutToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="#2B2525"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
+            
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/menuImage"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@drawable/ic_menu"
+                android:tint="@color/white"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+            </com.google.android.material.imageview.ShapeableImageView>
+            
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/mainTextTitle"
+                android:layout_width="220dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="15dp"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                android:text="@string/app_name"
+                android:layout_marginBottom="1dp"
+                android:fontFamily="@font/os_semibold"
+                android:layout_weight="3">
+            </com.google.android.material.textview.MaterialTextView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/shareMain"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:src="@android:drawable/ic_menu_share"
+                android:tint="@color/white"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:focusable="true">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/optionsMain"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:src="@android:drawable/ic_menu_preferences"
+                android:tint="@color/white"
+                android:clickable="true"
+                android:focusable="true">
+
+            </com.google.android.material.imageview.ShapeableImageView>
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <fragment
+        android:id="@+id/imageFragment"
+        android:name="io.github.jokoframework.activity.Home2Activity$MainViewFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:layout="@layout/activity_show_info"
+        android:layout_marginTop="?actionBarSize"/>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/mainNavView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:menu="@menu/main_nav_menu"
+        app:headerLayout="@layout/side_menu_header"
+        android:layout_gravity="start">
+
+    </com.google.android.material.navigation.NavigationView>
+
+</androidx.drawerlayout.widget.DrawerLayout>
