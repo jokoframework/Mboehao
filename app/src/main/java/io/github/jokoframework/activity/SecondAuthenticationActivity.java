@@ -39,6 +39,7 @@ public class SecondAuthenticationActivity extends BaseActivity {
     private void initializeUI(){
         setContentView(R.layout.activity_second_authentication);
         HomeActivity.cancelAlarmServices(this);
+
         try {
             Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
             getBaseContext().startService(mServiceIntent);
@@ -60,7 +61,7 @@ public class SecondAuthenticationActivity extends BaseActivity {
         String url = getString(R.string.user_acces_URL);
 
         final Context ctx = view.getContext();
-        Intent intent = new Intent(ctx, Home2Activity.class);
+        Intent intent = new Intent(ctx, HomeActivity.class);
 
         JsonObjectRequest postRequest = new JsonObjectRequest(Request.Method.POST, url, null, response -> {
             // Mostrar el response (DEBUG)

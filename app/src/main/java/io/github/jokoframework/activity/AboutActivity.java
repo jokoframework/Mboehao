@@ -36,7 +36,7 @@ public class AboutActivity extends Activity implements ImageView.OnClickListener
         setContentView(R.layout.activity_about);
 
         findViewById(R.id.volver).setOnClickListener(v -> {
-            Intent intent = new Intent(AboutActivity.this, Home2Activity.class);
+            Intent intent = new Intent(AboutActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

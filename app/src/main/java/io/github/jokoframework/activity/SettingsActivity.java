@@ -136,7 +136,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == android.R.id.home) {
-            startActivity(new Intent(this, Home2Activity.class));
+            startActivity(new Intent(this, HomeActivity.class));
             this.finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
             return true;

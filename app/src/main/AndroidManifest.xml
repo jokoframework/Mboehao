@@ -32,7 +32,7 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".activity.Home2Activity">
+            android:name=".activity.HomeActivity">
         </activity>
         <activity
             android:name=".activity.PreLoginActivity"
@@ -52,15 +52,6 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="io.github.jokoframework.activity.SplashActivity" />
-        </activity>
-        <activity
-            android:name=".activity.HomeActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Material"
-            android:windowSoftInputMode="stateHidden">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="io.github.jokoframework.activity.LoginActivity" />
         </activity>
         <activity
             android:name=".activity.LineChartActivity"

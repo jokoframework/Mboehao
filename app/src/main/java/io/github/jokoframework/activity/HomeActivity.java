@@ -9,41 +9,42 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.iid.FirebaseInstanceId;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.google.firebase.messaging.RemoteMessage;
-
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Date;
 
-import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
 import de.keyboardsurfer.android.widget.crouton.Style;
 import io.github.jokoframework.R;
-import io.github.jokoframework.fragment.NavigationDrawerFragment;
 import io.github.jokoframework.mboehaolib.constants.Constants;
-import io.github.jokoframework.mboehaolib.pojo.Event;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.otp.OtpActivity;
 import io.github.jokoframework.service.TestServiceNotification;
 
-
-public class HomeActivity extends FragmentActivity implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+public class HomeActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final String LOG_TAG = HomeActivity.class.getSimpleName();
+    DrawerLayout drawerLayout;
+    NavigationView navigationView;
 
     @Override
     protected void onResume() {
@@ -52,24 +53,70 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
     }
 
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        setContentView(R.layout.activity_home2);
+
         WebView webView = this.findViewById(R.id.webview);
         webView.setWebViewClient(new MyWebViewClient(this));
         displayWebView(webView); //display de webUrl after set some settings of the WebView...
         startAlarmServices(this);
         startRESTServices(this);
         sendToken();
+
+        drawerLayout = findViewById(R.id.drawerLayout);
+        navigationView = findViewById(R.id.mainNavView);
+
+        navigationView.setNavigationItemSelectedListener(this);
+
+        findViewById(R.id.menuImage).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        findViewById(R.id.shareMain).setOnClickListener(v -> {
+            Intent iShare = new Intent(HomeActivity.this, ShareActivity.class);
+            startActivity(iShare);
+            finish();
+        });
+
+        findViewById(R.id.optionsMain).setOnClickListener(v -> {
+            Intent iPref = new Intent(HomeActivity.this, SettingsActivity.class);
+            startActivity(iPref);
+            finish();
+        });
+
+        navigationView.setItemIconTintList(null);
+    }
+
+    @Override
+    public void onBackPressed() {
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(HomeActivity.this);
+
+        dialogBuilder.setTitle("LOG OUT?").setMessage("You will return to Login Screen if you leave.")
+        .setPositiveButton("YES", (dialog, which) -> {
+            Intent leave = new Intent(HomeActivity.this, LogOutActivity.class);
+            startActivity(leave);
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+        })
+        .setNegativeButton("NO", (dialog, which) -> {
+
+        });
+
+        dialogBuilder.show();
     }
 
     private void sendToken() {
         // Get token
-        String token = FirebaseInstanceId.getInstance().getToken();
-        // Log,Send and toast the Token...
-        String msg = String.format("%s - %s", R.string.msg_token_fmt, token);
-        sendMessage(token);
-        Log.d(LOG_TAG, msg);
+        FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(instanceIdResult -> {
+            String token = instanceIdResult.getToken();
+
+            // Log,Send and toast the Token...
+            String msg = String.format("%s - %s", R.string.msg_token_fmt, token);
+            sendMessage(token);
+            Log.d(LOG_TAG, msg);
+        });
     }
 
     public void sendMessage(String msg) {
@@ -80,9 +127,71 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
                 .build());
     }
 
+    @Override
+    public boolean onNavigationItemSelected(MenuItem menuItem) {
+        drawerLayout.closeDrawer(GravityCompat.START);
+        Intent option;
+
+        switch (menuItem.getItemId()) {
+            case R.id.lineChart:
+                option = new Intent(HomeActivity.this, LineChartActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.barChart:
+                option = new Intent(HomeActivity.this, BarChartActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.horiBarChart:
+                option = new Intent(HomeActivity.this, HorizontalBarChartActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.multipleLineChart:
+                option = new Intent(HomeActivity.this, MultipleLineChartActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.oneTimePass:
+                option = new Intent(HomeActivity.this, OtpActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.roomPersistanceC:
+                option = new Intent(HomeActivity.this, CountryActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.changePass:
+                option = new Intent(HomeActivity.this, OptionsActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.about:
+                option = new Intent(HomeActivity.this, AboutActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
+            case R.id.logOut:
+                onBackPressed();
+                break;
+        }
+
+        return true;
+    }
+
     private class MyWebViewClient extends WebViewClient {
         private final View progressBarView = findViewById(R.id.progressHomeWindow);         // progress bar Parent...
-        private WebView webView = (WebView) findViewById(R.id.webview);
+        private WebView webView = findViewById(R.id.webview);
         private Activity activity;
 
         private MyWebViewClient(Activity activity) {
@@ -138,62 +247,11 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
 
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.activity_home_menu_bar, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onMenuItemSelected(int featureId, MenuItem item) {
-
-        if (item.getItemId() == R.id.menu_item_share) {
-            Intent share = new Intent(HomeActivity.this, ShareActivity.class);
-            startActivity(share);
-            finish();
-        }
-        if (item.getItemId() == R.id.menu_item_preferences) {
-            Intent pref = new Intent(HomeActivity.this, SettingsActivity.class);
-            startActivity(pref);
-            finish();
-        }
-        return super.onMenuItemSelected(featureId, item);
-    }
-
-    @Override
-    public void navigationDrawerMenuSelected(Event event) {
-        Intent intent = new Intent(this, event.getActivity());
-        //Si el evento es Login, que es el que se asimila al Logout...
-        if (event.getActivity().equals(LoginActivity.class)) {
-            //Se quita del parseUser y ademas vuelve a mostrar la pantalla de Login por si quiera volver a entrar...
-            doLogout(intent);
-        } else {
-            startActivity(intent);
-            // Si no es igual lanza la actividad, que podria ser mostrar alguns de las imagenes o alguna otra opcion...
-        }
-    }
-
-    private void doLogout(Intent intent) {
+    /*private void doLogout(Intent intent) {
         cancelAlarmServices(this);
         startActivity(intent);
         finish();
-    }
-
-    private void setupNavigationDrawerFragment() {
-        NavigationDrawerFragment mNavigationDrawerFragment;
-        mNavigationDrawerFragment = (NavigationDrawerFragment)
-                getFragmentManager().findFragmentById(R.id.menuFragment);
-        // It might happen while rotating that   ?¿...
-        if (mNavigationDrawerFragment != null) {
-            mNavigationDrawerFragment.setUp(R.id.menuFragment, (DrawerLayout) findViewById(R.id.drawer_layout));
-        }
-    }
-
-    public void loadData() {
-        setupNavigationDrawerFragment();
-    }
-
+    }*/
 
     public static class MainViewFragment extends Fragment {
 
@@ -201,13 +259,6 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             return inflater.inflate(R.layout.activity_show_info, container, false);
-        }
-
-        @Override
-        public void onActivityCreated(Bundle savedInstanceState) {
-            super.onActivityCreated(savedInstanceState);
-            final HomeActivity activity = (HomeActivity) getActivity();
-            activity.loadData();
         }
     }
 
@@ -240,7 +291,7 @@ public class HomeActivity extends FragmentActivity implements NavigationDrawerFr
             Intent mServiceIntent = new Intent(context, io.github.jokoframework.service.CronService.class);
             context.startService(mServiceIntent);
         } catch (RuntimeException e) {
-            Utils.showToast(getBaseContext(), String.format("Fallo de API REST"));
+            Utils.showToast(getBaseContext(), "Fallo de API REST");
             Toast.makeText(context, context.getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
             Log.e(LOG_TAG, context.getString(R.string.no_network_connection), e);
         }

@@ -8,7 +8,6 @@ import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -100,7 +99,7 @@ public class OptionsActivity extends Activity {
 
         backtoHome.setOnClickListener(view -> {
             Log.d(LOG_TAG, "No se guarda la contraseña");
-            Intent intent = new Intent(self, Home2Activity.class);
+            Intent intent = new Intent(self, HomeActivity.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

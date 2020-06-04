@@ -17,7 +17,6 @@ import android.widget.GridView;
 import androidx.annotation.RequiresApi;
 
 import io.github.jokoframework.R;
-import io.github.jokoframework.activity.Home2Activity;
 import io.github.jokoframework.activity.LoginActivity;
 import io.github.jokoframework.otp.add.ScanActivity;
 import io.github.jokoframework.otp.token.TokenAdapter;

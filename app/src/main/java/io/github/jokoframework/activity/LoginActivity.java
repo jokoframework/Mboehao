@@ -41,7 +41,6 @@ import io.github.jokoframework.misc.ProcessError;
 import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
-import io.github.jokoframework.otp.OtpActivity;
 import io.github.jokoframework.otp.OtpActivityNotLogged;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
@@ -101,7 +100,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     private void initializeUI() {
         setContentView(R.layout.activity_login);
         // HomeActivity.cancelAlarmServices(this);
-        Home2Activity.cancelAlarmServices(this);
+        HomeActivity.cancelAlarmServices(this);
 
         try {
             Intent mServiceIntent = new Intent(getBaseContext(), io.github.jokoframework.service.CountryHelper.class);
@@ -348,7 +347,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
     }
 
     private void loginSuccessful() {
-        Intent i = new Intent(LoginActivity.this, Home2Activity.class);
+        Intent i = new Intent(LoginActivity.this, HomeActivity.class);
         startActivity(i);
     }
 

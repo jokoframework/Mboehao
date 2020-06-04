@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 
-import android.view.View;
 import android.widget.ImageView;
 
 import io.github.jokoframework.R;
@@ -136,7 +135,7 @@ public class BarChartActivity extends Activity {
     }
 
     private void backToHome() {
-        Intent intent = new Intent(this, Home2Activity.class);
+        Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
         overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

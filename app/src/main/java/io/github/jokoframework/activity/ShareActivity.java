@@ -50,7 +50,7 @@ public class ShareActivity extends FragmentActivity {
             setContentView(R.layout.activity_custom_share_chart);
 
             findViewById(R.id.backButton).setOnClickListener(v -> {
-                Intent iShare = new Intent(ShareActivity.this, Home2Activity.class);
+                Intent iShare = new Intent(ShareActivity.this, HomeActivity.class);
                 startActivity(iShare);
                 finish();
                 overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

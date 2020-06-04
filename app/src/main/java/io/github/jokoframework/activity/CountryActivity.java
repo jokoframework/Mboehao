@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TableLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,7 +34,7 @@ public class CountryActivity extends Activity {
         final MaterialButton button = findViewById(R.id.show_countries);
 
         findViewById(R.id.volver2).setOnClickListener(v -> {
-            Intent backHome = new Intent(CountryActivity.this, Home2Activity.class);
+            Intent backHome = new Intent(CountryActivity.this, HomeActivity.class);
             startActivity(backHome);
             finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);

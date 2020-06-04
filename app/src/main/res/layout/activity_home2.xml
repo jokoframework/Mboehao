@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activity.Home2Activity">
+    tools:context=".activity.HomeActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -77,7 +77,7 @@
 
     <fragment
         android:id="@+id/imageFragment"
-        android:name="io.github.jokoframework.activity.Home2Activity$MainViewFragment"
+        android:name="io.github.jokoframework.activity.HomeActivity$MainViewFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:layout="@layout/activity_show_info"

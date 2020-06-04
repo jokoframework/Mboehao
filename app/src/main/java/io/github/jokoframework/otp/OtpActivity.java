@@ -17,7 +17,7 @@ import android.widget.GridView;
 import androidx.annotation.RequiresApi;
 
 import io.github.jokoframework.R;
-import io.github.jokoframework.activity.Home2Activity;
+import io.github.jokoframework.activity.HomeActivity;
 import io.github.jokoframework.otp.add.ScanActivity;
 import io.github.jokoframework.otp.token.TokenAdapter;
 
@@ -43,7 +43,7 @@ public class OtpActivity extends Activity{
         findViewById(R.id.scanImage).setOnClickListener(v -> tryOpenCamera());
 
         findViewById(R.id.back1).setOnClickListener(v -> {
-            Intent intent = new Intent(OtpActivity.this, Home2Activity.class);
+            Intent intent = new Intent(OtpActivity.this, HomeActivity.class);
             startActivity(intent);
             finish();
             overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
