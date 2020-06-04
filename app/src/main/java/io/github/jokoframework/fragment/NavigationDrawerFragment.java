@@ -15,12 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.List;
-
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.legacy.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import io.github.jokoframework.R;
 import io.github.jokoframework.activity.AboutActivity;
 import io.github.jokoframework.activity.BarChartActivity;
@@ -278,7 +276,7 @@ public class NavigationDrawerFragment extends Fragment {
 
         // ActionBarDrawerToggle ties together the the proper interactions
         // between the navigation drawer and the action bar app icon.
-        mDrawerToggle = new SimpleActionBarDrawerToggle(getActivity(), mDrawerLayout, R.drawable.ic_drawer, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerToggle = new SimpleActionBarDrawerToggle(getActivity(), mDrawerLayout,  R.string.navigation_drawer_open, R.string.navigation_drawer_close);
 
         // If the user hasn't 'learned' about the drawer, open it to introduce them to the drawer,
         // per the navigation drawer design guidelines.
@@ -391,8 +389,8 @@ public class NavigationDrawerFragment extends Fragment {
     }
 
     private class SimpleActionBarDrawerToggle extends ActionBarDrawerToggle {
-        public SimpleActionBarDrawerToggle(Activity activity, DrawerLayout mDrawerLayout, int icDrawer, int navigationDrawerOpen, int navigationDrawerClose) {
-            super(activity, mDrawerLayout, icDrawer, navigationDrawerOpen, navigationDrawerClose);
+        public SimpleActionBarDrawerToggle(Activity activity, DrawerLayout mDrawerLayout, int navigationDrawerOpen, int navigationDrawerClose) {
+            super(activity, mDrawerLayout, navigationDrawerOpen, navigationDrawerClose);
         }
 
         @Override

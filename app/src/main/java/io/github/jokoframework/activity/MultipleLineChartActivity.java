@@ -1,16 +1,15 @@
 package io.github.jokoframework.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.Spinner;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -44,35 +43,30 @@ public class MultipleLineChartActivity extends Activity {
     private LineChart mlineChart;
     private HashMap<String, List<FloatDataPair>> mMultipleChartData;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_multiplelinechart);
 
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        ImageView backButton = findViewById(R.id.backButton5);
+
+        backButton.setOnClickListener(v -> backToHome());
 
         // The Chart whe are gonna use...
-        mlineChart = (LineChart) findViewById(R.id.multiple_line_chart);
-        mSpinner = (Spinner) findViewById(R.id.content_chooser_spinner);
-        mMultipleChartData = new HashMap<String, List<FloatDataPair>>();
+        mlineChart = findViewById(R.id.multiple_line_chart);
+        mSpinner = findViewById(R.id.content_chooser_spinner);
+        mMultipleChartData = new HashMap<>();
         loadMultipleChartData();
         initializeSpinner();
         initializeChart();
         displayDialog();
-
     }
 
     private void loadMultipleChartData() {
         List<String> contentLabels = Arrays.asList(getResources().getStringArray(
                 R.array.test_label_array));
 
-
         List<FloatDataPair> data1 = getFloatDataPairs();
-
         List<FloatDataPair> data2 = getFloatDataPairs();
         Utils.sleep(100);
         List<FloatDataPair> data3 = getFloatDataPairs();
@@ -108,7 +102,7 @@ public class MultipleLineChartActivity extends Activity {
         List<String> contentLabels = Arrays.asList(getResources().getStringArray(
                 R.array.test_label_array));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_dropdown_item, contentLabels);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, contentLabels);
         mSpinner.setAdapter(adapter);
         mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -120,7 +114,6 @@ public class MultipleLineChartActivity extends Activity {
             public void onNothingSelected(AdapterView<?> parentView) {
                 // your code here
             }
-
         });
     }
 
@@ -159,13 +152,14 @@ public class MultipleLineChartActivity extends Activity {
 
     private void graphChart(int id) {
         String label = (String) mMultipleChartData.keySet().toArray()[id];
-        List<FloatDataPair> data = (List<FloatDataPair>) mMultipleChartData.get(label);
+        List<FloatDataPair> data = mMultipleChartData.get(label);
 
         //Configs...
         Description desc = new Description();
         desc.setText(label);
         mlineChart.setDescription(desc);
         // insertion of the entries ...
+        assert data != null;
         dataChartInsertion(data, mlineChart,this); // data introduccio & styling,others...
     }
 
@@ -186,7 +180,6 @@ public class MultipleLineChartActivity extends Activity {
         List<Integer> colorText = new ArrayList();
         colorText.add(R.color.progress_bar);
         dataSet.setValueTextColors(colorText);
-
 
         List<ILineDataSet> dataSets = new ArrayList<>(); // if it must be more than 1 dataset...
         dataSets.add(dataSet);
@@ -217,22 +210,10 @@ public class MultipleLineChartActivity extends Activity {
         mLineChart.setDrawGridBackground(false);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /**
-         * Se obtiene el id del item del action bar seleccionado
-         * y se realiza la acción de acuerdo a éste
-         */
-        if (item.getItemId() == android.R.id.home) {
-            backToHome();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void backToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

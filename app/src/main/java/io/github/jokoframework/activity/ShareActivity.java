@@ -8,6 +8,8 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import androidx.fragment.app.FragmentActivity;
+
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -40,12 +42,20 @@ public class ShareActivity extends FragmentActivity {
     private LineChart lineChartSharing;
     private static final String LOG_TAG = ShareActivity.class.getSimpleName();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (Utils.isNetworkAvailable(this)) {
             setContentView(R.layout.activity_custom_share_chart);
+
+            findViewById(R.id.backButton).setOnClickListener(v -> {
+                Intent iShare = new Intent(ShareActivity.this, HomeActivity.class);
+                startActivity(iShare);
+                finish();
+                overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
+            });
+
             try {
                 initializeChart();
             } catch (IOException e) {
@@ -55,20 +65,17 @@ public class ShareActivity extends FragmentActivity {
     }
 
     private void initializeChart() throws IOException {
+        StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
+        StrictMode.setVmPolicy(builder.build());
         lineChartSharing = findViewById(R.id.linechart_sharing);
         setUpChart(getLineChart());
         if (isExternalStorageWritable()) {
             if (wasImageGeneratedSave()) {
                 final View share = findViewById(R.id.imageShareCustomPlot);
-                share.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        startActivity(Intent.createChooser(getShareIntent(), "Share images to.."));
-                    }
-                });
+                share.setOnClickListener(v -> startActivity(Intent.createChooser(getShareIntent(), "Share images to..")));
             } else {
                 //still do not do anything...
-                Toast.makeText(this, String.format("Something went WRONG!"), Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "Something went WRONG!", Toast.LENGTH_LONG).show();
                 Log.e(LOG_TAG, "Imagen del Share Activity sin guardar correctamente!");
             }
         }
@@ -150,13 +157,11 @@ public class ShareActivity extends FragmentActivity {
         }
     }
 
-    public boolean store(Bitmap bitmap) throws IOException {
+    public void store(Bitmap bitmap) throws IOException {
         try {
             writeBitmapToFile(this, bitmap);
-            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -164,7 +169,7 @@ public class ShareActivity extends FragmentActivity {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
         byte[] byteArray = stream.toByteArray();
-        OutputStream os = null;
+        OutputStream os;
         try {
             File rootDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
             File imageFileName = new File(rootDirectory, String.format("MboehaoApplication-%s.png", Utils.getFormattedDate(new Date())));

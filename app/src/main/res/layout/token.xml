@@ -24,16 +24,15 @@
     xmlns:freeotp="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/token"
-    >
-    <ImageView
+    android:background="@drawable/token" >
+
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/image"
         android:layout_width="96dp"
         android:layout_height="96dp"
-        android:layout_gravity="left"
+        android:layout_gravity="start"
         android:src="@mipmap/mboehao_launcher"
-        android:scaleType="fitCenter"
-        />
+        android:scaleType="fitCenter" />
 
     <io.github.jokoframework.otp.ProgressCircle
         android:id="@+id/progressInner"
@@ -41,8 +40,7 @@
         android:layout_height="96dp"
         android:padding="28dp"
         freeotp:hollow="false"
-        freeotp:max="1000"
-        />
+        freeotp:max="1000" />
 
     <io.github.jokoframework.otp.ProgressCircle
         android:id="@+id/progressOuter"
@@ -50,42 +48,41 @@
         android:layout_height="96dp"
         android:padding="24dp"
         freeotp:hollow="true"
-        freeotp:max="1000"
-        />
+        freeotp:max="1000" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/code"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginLeft="96dp"
+        android:layout_marginStart="96dp"
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
-        android:gravity="left|center"
+        android:gravity="start|center"
         android:text="01234567"
         android:textSize="34sp"
-        android:textStyle="bold"
+        android:fontFamily="@font/open_sans_bold"
         android:typeface="monospace"
-        android:textColor="#000000"
-        />
+        android:textColor="#000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginLeft="96dp"
+        android:layout_marginStart="96dp"
         android:layout_marginTop="48dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="32dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="32dp"
         android:orientation="vertical">
         <include layout="@layout/titles" />
+
     </LinearLayout>
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/menu"
         android:layout_width="32dp"
         android:layout_height="48dp"
-        android:layout_gravity="bottom|right"
+        android:layout_gravity="bottom|end"
         android:paddingTop="12dp"
         android:paddingBottom="12dp"
-        android:src="@drawable/menu"
-        />
+        android:src="@drawable/menu" />
+
 </io.github.jokoframework.otp.token.TokenLayout>

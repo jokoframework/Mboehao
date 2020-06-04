@@ -1,13 +1,14 @@
 package io.github.jokoframework.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import android.view.MenuItem;
+
+import android.view.View;
+import android.widget.ImageView;
 
 import io.github.jokoframework.mboehaolib.mark.MyMarkView;
 
@@ -38,10 +39,15 @@ public class LineChartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_linechart);
 
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        ImageView backButton = findViewById(R.id.backButton2);
+
+        backButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                backToHome();
+            }
+        });
+
         //Points to be in the graph...
         List<FloatDataPair> data = new ArrayList<>();
         data.add(new FloatDataPair(0f,15000f));
@@ -121,23 +127,11 @@ public class LineChartActivity extends Activity {
         mLineChart.setDrawGridBackground(false);
     }
 
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /**
-         * Se obtiene el id del item del action bar seleccionado
-         * y se realiza la acción de acuerdo a éste
-         */
-        if (item.getItemId() == android.R.id.home) {
-            backToHome();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void backToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 
 }

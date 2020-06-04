@@ -10,7 +10,7 @@
         android:gravity="center|center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageView"
             android:layout_width="150dp"
             android:layout_height="150dp"
@@ -26,72 +26,84 @@
             android:gravity="center"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/user"
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginTop="40dp"
-                android:ems="10"
-                android:hint="User"
-                android:padding="10dp"
-                android:singleLine="true">
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_gravity="center"
+                android:fontFamily="@font/os_semibold"
+                android:hint="USER"
+                android:textSize="18sp">
 
-                <requestFocus />
-            </EditText>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/user">
 
-            <EditText
-                android:id="@+id/pass"
-                android:layout_width="wrap_content"
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/user"
-                android:layout_centerHorizontal="true"
-                android:layout_centerVertical="true"
-                android:layout_marginTop="30dp"
-                android:ems="10"
-                android:hint="Password"
+                android:layout_gravity="center"
+                android:fontFamily="@font/os_semibold"
+                android:hint="PASSWORD"
                 android:inputType="textPassword"
                 android:nextFocusDown="@id/checkBox"
-                android:padding="10dp" />
+                android:textSize="18sp"
+                android:layout_marginTop="3dp"
+                app:passwordToggleEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
-            <CheckBox
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pass"
+                    android:inputType="textPassword">
+
+                </com.google.android.material.textfield.TextInputEditText>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.checkbox.MaterialCheckBox
                 android:id="@+id/checkBox"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pass"
-                android:layout_centerHorizontal="true"
-                android:text="@string/remembercredentials" />
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/os_regular"
+                android:text="@string/remembercredentials"
+                android:textColorLink="#AE6767" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonEnter"
-                android:layout_width="wrap_content"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/pass"
-                android:layout_centerHorizontal="true"
                 android:layout_marginTop="50dp"
-                android:paddingLeft="80dp"
-                android:paddingRight="80dp"
-                android:text="Enter"
-                android:textColor="#FFFFFF" />
+                android:fontFamily="@font/os_extrabold"
+                android:text="@string/enter"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#AE6767">
 
-            <Button
+            </com.google.android.material.button.MaterialButton>
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/buttonOtp"
-                android:layout_width="203dp"
+                android:layout_width="220dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="0dp"
-                android:layout_marginStart="0dp"
                 android:layout_marginTop="5dp"
                 android:drawableStart="@drawable/qrcode"
-                android:gravity="left|center_vertical"
+                android:fontFamily="@font/os_extrabold"
+                android:gravity="center"
                 android:padding="3dp"
-                android:paddingLeft="80dp"
-                android:paddingRight="80dp"
-                android:text="OTP - QR SCANNER"
-                android:textColor="#FFFFFF" />
+                android:text="@string/otp_qr_scanner"
+                android:textColor="#FFFFFF"
+                app:backgroundTint="#AE6767">
 
+            </com.google.android.material.button.MaterialButton>
 
         </LinearLayout>
-
 
     </LinearLayout>
 
@@ -104,7 +116,7 @@
         android:orientation="vertical"
         android:visibility="invisible">
 
-        <ImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/imageLogin"
             android:layout_width="match_parent"
             android:layout_height="120dp"

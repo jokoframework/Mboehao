@@ -4,7 +4,7 @@
     android:layout_height="100dp"
     android:background="@drawable/marker4">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textmarkerContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -15,17 +15,16 @@
         android:layout_marginRight="5dp"
         android:layout_centerInParent="true"
         android:text="Esto es una prueba de como queda"
-        android:textSize="12dp"
+        android:textSize="12sp"
         android:textColor="@android:color/white"
         android:ellipsize="end"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/dialogmarkerImage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:src="@drawable/info"
-        />
+        android:src="@drawable/info" />
 
 </RelativeLayout>

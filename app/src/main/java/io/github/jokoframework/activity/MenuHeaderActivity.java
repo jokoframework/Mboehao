@@ -1,5 +1,6 @@
 package io.github.jokoframework.activity;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Window;
@@ -10,6 +11,7 @@ import io.github.jokoframework.R;
  * Created by joaquin on 23/08/17.
  */
 
+@SuppressLint("Registered")
 public class MenuHeaderActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

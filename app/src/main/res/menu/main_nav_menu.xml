@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/groupCharts"
+        android:title="CHARTS"
+        android:icon="@drawable/picture">
+
+        <menu>
+            <item
+                android:id="@+id/lineChart"
+                android:title="@string/line_chart"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/barChart"
+                android:title="@string/bar_chart"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/horiBarChart"
+                android:title="@string/horizontal_bar_chart"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/multipleLineChart"
+                android:title="@string/multiple_line_chart"
+                android:icon="@drawable/picture">
+            </item>
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/groupOptions"
+        android:title="OPTIONS"
+        android:icon="@drawable/picture">
+
+        <menu>
+            <item
+                android:id="@+id/oneTimePass"
+                android:title="@string/oneTimePasswordDescription"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/roomPersistanceC"
+                android:title="@string/roomCountriesDescription"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/changePass"
+                android:title="@string/changePasswordDescription"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/about"
+                android:title="@string/aboutDescription"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
+                android:id="@+id/logOut"
+                android:title="@string/action_logout"
+                android:icon="@drawable/picture">
+            </item>
+        </menu>
+
+    </item>
+</menu>

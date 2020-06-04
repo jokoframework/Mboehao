@@ -65,7 +65,7 @@ public class BaseActivity extends Activity {
         } else {
             setWithInternetConnection(false);
             Utils.showStickyMessage(this, getString(R.string.no_network_connection), Style.INFO);
-            finishActivityDelayed(BaseActivity.DEFAULT_WAIT_ON_NO_CONNECTION);
+            finishActivityDelayed();
         }
     }
 
@@ -98,8 +98,8 @@ public class BaseActivity extends Activity {
         return Configuration.ORIENTATION_LANDSCAPE == getResources().getConfiguration().orientation;
     }
 
-    protected void finishActivityDelayed(long secondsToWait) {
-        new ActivityFinisherdWithDelay().execute(secondsToWait);
+    protected void finishActivityDelayed() {
+        new ActivityFinisherdWithDelay().execute((long) BaseActivity.DEFAULT_WAIT_ON_NO_CONNECTION);
     }
 
     public void setWithInternetConnection(boolean withInternetConnection) {
@@ -137,7 +137,8 @@ public class BaseActivity extends Activity {
     public void showNoConnectionAndQuit() {
         final String msg = getString(R.string.no_network_connection);
         Utils.showStickyMessage(this, msg, Style.INFO);
-        Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        final Toast toast = Toast.makeText(this, msg, Toast.LENGTH_LONG);
+        toast.show();
         setProgressMessage(msg);
         Log.d(LOG_TAG, msg);
         if (isDismisableWhenNoConnection()) {
@@ -145,7 +146,7 @@ public class BaseActivity extends Activity {
         }
     }
 
-    private class QuitterNoConnection extends AsyncTask<String, Void, String> {
+    private static class QuitterNoConnection extends AsyncTask<String, Void, String> {
         @Override
         protected String doInBackground(String... params) {
             Utils.sleep(AppConstants.ONE_SECOND * DEFAULT_WAIT_ON_NO_CONNECTION);
@@ -168,15 +169,12 @@ public class BaseActivity extends Activity {
 
     public void showProgress(final boolean show, final String message) {
         if (progressDialog != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (show) {
-                        progressDialog.setMessage(message);
-                        progressDialog.show();
-                    } else {
-                        progressDialog.hide();
-                    }
+            runOnUiThread(() -> {
+                if (show) {
+                    progressDialog.setMessage(message);
+                    progressDialog.show();
+                } else {
+                    progressDialog.hide();
                 }
             });
         }
@@ -188,14 +186,11 @@ public class BaseActivity extends Activity {
 
     public void setProgressMessage(String message) {
         if (progressDialog != null) {
-            runOnUiThread(new Runnable() {
-                @Override
-                public void run() {
-                    if (StringUtils.isNotBlank(message) && !progressDialog.isShowing()) {
-                        progressDialog.show();
-                    }
-                    progressDialog.setMessage(message);
+            runOnUiThread(() -> {
+                if (StringUtils.isNotBlank(message) && !progressDialog.isShowing()) {
+                    progressDialog.show();
                 }
+                progressDialog.setMessage(message);
             });
         }
     }

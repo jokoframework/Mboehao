@@ -11,7 +11,7 @@
     android:background="#FFFFFF"
     tools:context="io.github.jokoframework.activity.MenuHeaderActivity">
 
-    <ImageView
+    <com.google.android.material.imageview.ShapeableImageView
         android:layout_width="wrap_content"
         android:layout_height="100dp"
         android:id="@+id/imageSideMenuHeader"
@@ -19,12 +19,15 @@
         android:layout_gravity="center"
         android:contentDescription="@string/about_image" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/personalize_welcome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView"
-        android:layout_gravity="center"
-        />
+        android:text="Hope you like it!"
+        android:textColor="@color/green"
+        android:textSize="18sp"
+        android:fontFamily="@font/os_extrabold"
+        android:textAlignment="center"
+        android:layout_marginTop="8dp"/>
 
 </LinearLayout>

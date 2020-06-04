@@ -8,11 +8,14 @@ import androidx.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 ;
+
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textview.MaterialTextView;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -37,10 +40,10 @@ public class OptionsActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_options);
 
-        final EditText currentPasswordEdit = (EditText) findViewById(R.id.EditTextCurrentPassword);
-        final EditText password1 = (EditText) findViewById(R.id.EditText_Pwd1);
-        final EditText password2 = (EditText) findViewById(R.id.EditText_Pwd2);
-        final TextView error = (TextView) findViewById(R.id.TextView_PwdProblem);
+        final EditText currentPasswordEdit = findViewById(R.id.EditTextCurrentPassword);
+        final EditText password1 = findViewById(R.id.EditText_Pwd1);
+        final EditText password2 = findViewById(R.id.EditText_Pwd2);
+        final MaterialTextView error = findViewById(R.id.TextView_PwdProblem);
 
         password2.addTextChangedListener(new TextWatcher() {
             public void afterTextChanged(Editable s) {
@@ -72,38 +75,34 @@ public class OptionsActivity extends Activity {
             }
         });
 
-        View acceptButton = findViewById(R.id.save_change_password);
-        View refusetButton = findViewById(R.id.cancel_change_password);
+        MaterialButton acceptButton = findViewById(R.id.save_change_password);
+        ImageView backtoHome = findViewById(R.id.cancel_change_password);
 
-        acceptButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String currentStoredPassword = SecurityUtils.decrypt(AppUtils.getPrefs(self, AppConstants.USER_PREFS_PW));
-                Log.d(LOG_TAG, "Guardando contraseña");
-                if (currentPasswordEdit.getText() != null) {
-                    String currentPassword = currentPasswordEdit.getText().toString();
-                    if (StringUtils.isBlank(currentPassword) || !currentPassword.equals(currentStoredPassword)) { // No es doble comprobante de que esta vacia la currentPassword.?
-                        showCurrentPasswordWarning(error, currentPasswordEdit);
-                    } else {
-                        String strPassword1 = password1.getText().toString();
-                        final String strPassword2 = password2.getText().toString();
-                        if (strPassword1.equals(strPassword2)) {
-                            doChangePassword(strPassword2, error, currentPasswordEdit);
-                        }
-                    }
-                } else {
+        acceptButton.setOnClickListener(view -> {
+            String currentStoredPassword = SecurityUtils.decrypt(AppUtils.getPrefs(self, AppConstants.USER_PREFS_PW));
+            Log.d(LOG_TAG, "Guardando contraseña");
+            if (currentPasswordEdit.getText() != null) {
+                String currentPassword = currentPasswordEdit.getText().toString();
+                if (StringUtils.isBlank(currentPassword) || !currentPassword.equals(currentStoredPassword)) { // No es doble comprobante de que esta vacia la currentPassword.?
                     showCurrentPasswordWarning(error, currentPasswordEdit);
+                } else {
+                    String strPassword1 = password1.getText().toString();
+                    final String strPassword2 = password2.getText().toString();
+                    if (strPassword1.equals(strPassword2)) {
+                        doChangePassword(strPassword2, error, currentPasswordEdit);
+                    }
                 }
+            } else {
+                showCurrentPasswordWarning(error, currentPasswordEdit);
             }
         });
 
-        refusetButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d(LOG_TAG, "No se guarda la contraseña");
-                Intent intent = new Intent(self, HomeActivity.class);
-                startActivity(intent);
-            }
+        backtoHome.setOnClickListener(view -> {
+            Log.d(LOG_TAG, "No se guarda la contraseña");
+            Intent intent = new Intent(self, HomeActivity.class);
+            startActivity(intent);
+            finish();
+            overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
         });
     }
 
@@ -133,5 +132,4 @@ public class OptionsActivity extends Activity {
         currentPasswodEdit.setBackgroundColor(getResources().getColor(R.color.warningColor));
         currentPasswodEdit.requestFocus();
     }
-
 }

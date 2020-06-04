@@ -22,6 +22,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -30,27 +31,32 @@
         android:orientation="vertical">
         <include layout="@layout/metadata" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/restore"
             style="@android:style/Widget.Holo.Light.Button.Borderless.Small"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:enabled="false"
+            android:fontFamily="@font/os_semibold"
             android:text="@string/restore_defaults" />
+
     </LinearLayout>
 
     <View style="@style/Divider" />
 
     <LinearLayout style="@style/Dialog.Button.Layout">
-        <Button
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/cancel"
             style="@style/Dialog.Button"
             android:text="@android:string/cancel" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/save"
             style="@style/Dialog.Button"
             android:enabled="false"
             android:text="@string/button_save" />
+
     </LinearLayout>
+
 </LinearLayout>

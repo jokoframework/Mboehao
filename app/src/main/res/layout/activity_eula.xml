@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textvieweula"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,11 +22,11 @@
         <WebView
             android:id="@+id/webviewEula"
             android:layout_width="fill_parent"
-            android:layout_height="400dp"
+            android:layout_height="0dp"
             android:layout_weight="1">
         </WebView>
 
-        <CheckBox
+        <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/checkBoxAcceptEula"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -35,26 +35,19 @@
             android:text="@string/eula_checkbox"
             android:enabled="true"/>
 
-        <TableLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:textAlignment="center">
-        </TableLayout>
-
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:textAlignment="center">
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/eula_refuse_btn"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_column="0"
                 android:layout_marginBottom="12dp"
-                android:layout_marginLeft="12dp"
+                android:layout_marginStart="12dp"
                 android:paddingRight="20dp"
                 android:text="@string/button_cancel"
                 android:paddingLeft="20dp" />
@@ -64,14 +57,13 @@
                 android:layout_height="20dp"
                 android:layout_column="1" />
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/eula_accept_btn"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:layout_column="2"
                 android:layout_marginBottom="12dp"
-                android:layout_marginRight="12dp"
-                android:clickable="true"
+                android:layout_marginEnd="12dp"
                 android:enabled="true"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"

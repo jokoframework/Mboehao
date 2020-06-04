@@ -1,11 +1,11 @@
 package io.github.jokoframework.activity;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.annotation.Nullable;
-import android.view.MenuItem;
+
+import android.widget.ImageView;
 
 import io.github.jokoframework.R;
 import com.github.mikephil.charting.charts.BarChart;
@@ -33,10 +33,9 @@ public class BarChartActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_barchart);
 
-        ActionBar actionBar = getActionBar();
-        if (actionBar != null) {
-            actionBar.setDisplayHomeAsUpEnabled(true);
-        }
+        ImageView backButton = findViewById(R.id.backButton3);
+
+        backButton.setOnClickListener(v -> backToHome());
 
         //Points to be in the graph...
         List<FloatDataPair> data = new ArrayList<>();
@@ -77,11 +76,11 @@ public class BarChartActivity extends Activity {
 
         BarDataSet dataSet = new BarDataSet(entries, "Testing BarChart");
         // add entries to dataset
-        dataSet.setColors(new int[]{getResources().getColor(R.color.background_drawer_group),
+        dataSet.setColors(getResources().getColor(R.color.background_drawer_group),
                 getResources().getColor(R.color.colorAccent),
                 getResources().getColor(R.color.colorPrimary),
                 getResources().getColor(R.color.black),
-                getResources().getColor(R.color.drawer_text)});
+                getResources().getColor(R.color.drawer_text));
         dataSet.setHighlightEnabled(true);
         dataSet.setValueTextColor(getResources().getColor(R.color.progress_bar));
 
@@ -135,21 +134,10 @@ public class BarChartActivity extends Activity {
 
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        /**
-         * Se obtiene el id del item del action bar seleccionado
-         * y se realiza la acción de acuerdo a éste
-         */
-        if (item.getItemId() == android.R.id.home) {
-            backToHome();
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
     private void backToHome() {
         Intent intent = new Intent(this, HomeActivity.class);
         startActivity(intent);
         finish();
+        overridePendingTransition(R.anim.left_to_right, R.anim.right_to_left);
     }
 }

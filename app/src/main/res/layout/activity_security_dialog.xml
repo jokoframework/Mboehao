@@ -3,8 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewBlockout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,23 +13,26 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textSize="24sp" />
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/blockout_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAlignment="center"
         android:padding="12dp"
         android:text="@string/security_dialog_body"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/blockout_accept_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10dp"
         android:clickable="true"
         android:enabled="true"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="@string/continue_button" />
+        android:text="@string/continue_button"
+        android:focusable="true" />
 
 </LinearLayout>

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin">
 
-    <TextView
+    <com.google.android.material.textview.MaterialTextView
         android:id="@+id/textViewTitleLifeEventChooser"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,53 +39,56 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent">
 
-            <TableLayout
-                android:id="@+id/buttons_layout"
-                android:layout_width="fill_parent"
+            <TableRow
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center">
+                android:layout_gravity="center"
+                android:layout_marginTop="12dp"
+                android:textAlignment="center">
 
-                <TableRow
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
-                    android:textAlignment="center">
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dialogCancel"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_width="50dp"
+                    android:background="@color/darkGray5"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:layout_weight="2"
+                    android:text="Cancelar"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:textColor="#FFFFFF" />
 
-                    <Button
-                        android:id="@+id/dialogCancel"
-                        android:layout_height="wrap_content"
-                        android:layout_column="0"
-                        android:layout_marginBottom="12dp"
-                        android:layout_marginLeft="12dp"
-                        android:background="@color/darkGray5"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="Cancelar"
-                        android:textColor="#FFFFFF" />
+                <Space
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_column="1" />
 
-                    <Space
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:layout_column="1" />
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/dialogOK"
+                    android:layout_height="wrap_content"
+                    android:layout_column="2"
+                    android:layout_marginBottom="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:background="@color/black"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:layout_weight="1"
+                    android:paddingLeft="20dp"
+                    android:fontFamily="@font/open_sans_bold"
+                    android:paddingRight="20dp"
+                    android:text="Ok"
+                    android:textColor="#FFFFFF"
+                    android:layout_width="50dp"
+                    android:width="90dp"
+                    android:focusable="true" />
 
-                    <Button
-                        android:id="@+id/dialogOK"
-                        android:layout_height="wrap_content"
-                        android:layout_column="2"
-                        android:layout_marginBottom="12dp"
-                        android:layout_marginRight="12dp"
-                        android:background="@color/black"
-                        android:clickable="true"
-                        android:enabled="true"
-                        android:paddingLeft="20dp"
-                        android:paddingRight="20dp"
-                        android:text="Ok"
-                        android:textColor="#FFFFFF"
-                        android:layout_width="wrap_content"
-                        android:width="90dp" />
-                </TableRow>
-            </TableLayout>
+            </TableRow>
+
         </ScrollView>
+
     </LinearLayout>
+
 </LinearLayout>
