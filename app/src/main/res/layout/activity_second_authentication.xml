@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:ems="10"
             android:padding="10dp"
-            android:hint="OTP"
+            android:hint="OTP or Press Accept if none"
             android:singleLine="true">
 
             <requestFocus />
