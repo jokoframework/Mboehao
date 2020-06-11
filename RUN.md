@@ -95,3 +95,8 @@ El usuario/password default que se crea con la base de datos, es admin/123456
  <string name="jwt_URL">http://10.1.1.117:8080/api/login</string>
  <string name="user_acces_URL">http://10.1.1.117:8080/api/token/user-access</string>
   ```
+
+
+OBS: Para habilitar las APIs de Google o servicios de Firebase es necesario agregar el archivo google-services.json en el directorio de /app. Este proceso es obligatorio para cada vez que se importe el proyecto.
+
+Fuente: https://developers.google.com/android/guides/google-services-plugin
