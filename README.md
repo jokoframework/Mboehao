@@ -108,6 +108,6 @@ Para cambiar a cualquier login JWT, se deben cambiar algunos parametros en login
 
 Configurar el nombre de servidor en los siguientes archivos:
 
-app/src/main/res/xml/network_security_config.xml (<domain>)
+app/src/main/res/xml/network_security_config.xml ( etiqueta: domain )
 	
 app/src/debug/res/values/strings.xml (host_name)
