@@ -58,7 +58,10 @@ public class SecondAuthenticationActivity extends BaseActivity {
 
     private void otpValid(View view){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.user_acces_URL);
+
+        String host_name = getString(R.string.host_name);
+        String end_point = getString(R.string.user_acces_URL);
+        String url = host_name + end_point;
 
         final Context ctx = view.getContext();
         Intent intent = new Intent(ctx, HomeActivity.class);

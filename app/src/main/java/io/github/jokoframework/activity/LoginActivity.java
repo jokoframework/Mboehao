@@ -299,7 +299,9 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
         // Instanciar el RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.jwt_URL);
+        String host_name = getString(R.string.host_name);
+        String end_point = getString(R.string.jwt_URL);
+        String url = host_name + end_point;
 
         Map<String, String> params = new HashMap();
         params.put("username", loginRequest.getUsername());
