@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="host_name">http://192.168.0.33:8080</string>
+</resources>
