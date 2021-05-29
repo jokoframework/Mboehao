@@ -103,3 +103,11 @@ Para cambiar a cualquier login JWT, se deben cambiar algunos parametros en login
 - url: Esta debe apuntar al servidor que se desea consultar. Ubicado en app/src/main/res/values/strings.xml como jwt_URL.
 - jsonRequest: Debe contener los datos necesarios para el servidor. En este caso se utilizaron solo 2 campos, username y password.
 - listener y errorListener: Aca se definen las acciones a tomar ya sea esperando una respuesta positiva, negativa o un error.
+	
+## Configurar Entorno de Desarrollo
+
+Configurar el nombre de servidor en los siguientes archivos:
+
+app/src/main/res/xml/network_security_config.xml (<domain>)
+	
+app/src/debug/res/values/strings.xml (host_name)
