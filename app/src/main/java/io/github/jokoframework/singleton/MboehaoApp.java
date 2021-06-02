@@ -1,12 +1,17 @@
 package io.github.jokoframework.singleton;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
 import androidx.multidex.MultiDex;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.crashlytics.android.Crashlytics;
@@ -35,6 +40,9 @@ public class MboehaoApp extends Application {
 
     private static Context singletonApplicationContext;
     private static MboehaoApp mySelf;
+    private static String hostName = "https://sodep.com.py";
+    private static Boolean devHostNameDefined = false;
+
     /**
      * Instance variables
      */
@@ -80,6 +88,45 @@ public class MboehaoApp extends Application {
         MboehaoApp.setSingletonApplicationContext(this.getApplicationContext());
     }
 
+    public static void setHostName(String newHostName){
+        hostName = newHostName;
+    }
+
+    public static String getHostName(){
+        return hostName;
+    }
+
+    public static void prompDevHostName(Activity ctx) {
+        if ( BuildConfig.DEBUG ) {
+            if ( !devHostNameDefined ) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                LayoutInflater inflater = ctx.getLayoutInflater();
+
+                View view = inflater.inflate(R.layout.prompt_hostname_view, null);
+                EditText inputHostName = view.findViewById(R.id.hostNameInput);
+
+                builder.setView(view)
+                        .setPositiveButton(R.string.button_accept, (dialog, id) -> {
+                            if ( inputHostName.getText().toString().equals("") ) {
+                                MboehaoApp.prompDevHostName(ctx);
+                                return;
+                            }
+                            MboehaoApp.setHostName(inputHostName.getText().toString());
+                            devHostNameDefined = true;
+                        })
+                        .setNegativeButton(R.string.button_cancel, (dialog, id) -> {
+                            if ( inputHostName.getText().toString().equals("") ) {
+                                MboehaoApp.prompDevHostName(ctx);
+                            }
+                            dialog.cancel();
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+    }
+
     public OkHttpClient.Builder getHttpClient() {
         return httpClient;
     }
@@ -122,7 +169,7 @@ public class MboehaoApp extends Application {
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
             this.analytics = GoogleAnalytics.getInstance(this);
-            analytics.getInstance(this).setLocalDispatchPeriod(1);
+            GoogleAnalytics.getInstance(this).setLocalDispatchPeriod(1);
             // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(0x7f070000);
             mTracker.enableAutoActivityTracking(true);
