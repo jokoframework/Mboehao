@@ -4,8 +4,6 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
-
-
 android {
     compileSdkVersion 30
     buildToolsVersion '28.0.3'
@@ -101,9 +99,6 @@ dependencies {
 
 buildscript {
     repositories {
-
-        //jcenter()////////////////////////////////////////////////////////////////////
-       // maven { url "https://jitpack.io" }/////////////////////////////////////////////
         google()
         mavenCentral()
     }
@@ -118,4 +113,3 @@ buildscript {
         classpath 'com.google.firebase:firebase-crashlytics-gradle:2.8.1'
     }
 }
-//apply plugin: 'com.google.gms.google-services'////////////////////////////////////////////////
