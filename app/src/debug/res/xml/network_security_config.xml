@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false"/>
+    <domain-config cleartextTrafficPermitted="true">
+        <!--- whitelist of secure host/domains -->
+        <domain includeSubdomains="true">192.168.43.143</domain>
+        <domain includeSubdomains="true">10.1.1.113</domain>
+    </domain-config>
+</network-security-config>

@@ -68,6 +68,7 @@ public class AppConstants {
     public static final String DEVICE_NAME = "deviceName";
     //Default code para la app de ejemplo de Joko Security
     public static final String DEFAULT_DEMO_ACCCESS_CODE = "123456";
+    public static final String SECRET = "SECRET";
     public static Integer msgId = 0;
 
     public static final String FROM_BACKGROUND_SERVICE = "FROM_BACKGROUND_SERVICE";
