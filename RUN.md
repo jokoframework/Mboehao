@@ -85,32 +85,23 @@ aplicación de Spring Boot, o con la línea de comando (se requiere maven instal
 
 El usuario/password default que se crea con la base de datos, es admin/123456
 
-## Configuración de red dentro de Android Studio:
-1.- Agregar un archivo "network_security_config" en res/xml.
-
-2.- Agregar una configuración de dominio y establecer cleartextTrafficPermitted="true":
+### Step 7) Configuración de red dentro de Android Studio:
+1.- Modificar el archivo "network_security_config" en res/xml.
+Agregar una configuración de dominio y establecer cleartextTrafficPermitted="true":
   ```shell
- <?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
+    <base-config cleartextTrafficPermitted="false"/>
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">yourip</domain>
     </domain-config>
 </network-security-config>
   ```
-3.- Agregar configuración de seguridad de red al archivo AndroidManifest.xml:
-  ```shell
-<application
-    android:name=".MyApplication"
-    android:networkSecurityConfig="@xml/network_security_config"
-    ...
-  ```
-3.- Cambiar ip existente en jwt_URL y user_acces_URL dentro del archivo xml :
-  ```shell
- <string name="jwt_URL">http://10.1.1.117:8080/api/login</string>
- <string name="user_acces_URL">http://10.1.1.117:8080/api/token/user-access</string>
-  ```
+ Obs: En "yourip" debes agregar la ip de tu máquina.
+ 
+2.- Habilitar APIs de Google o servicios de Firebase
 
-
-OBS: Para habilitar las APIs de Google o servicios de Firebase es necesario agregar el archivo google-services.json en el directorio de /app. Este proceso es obligatorio para cada vez que se importe el proyecto.
+Para habilitar las APIs de Google o servicios de Firebase es necesario agregar el archivo google-services.json en el directorio de /app. Este proceso es obligatorio para cada vez que se importe el proyecto. 
+Puedes seguir las indicaciones de: https://support.google.com/firebase/answer/7015592?hl=en#zippy=%2Cin-this-article
 
 Fuente: https://developers.google.com/android/guides/google-services-plugin
