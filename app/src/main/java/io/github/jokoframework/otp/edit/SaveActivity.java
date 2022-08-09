@@ -21,9 +21,9 @@ import io.github.jokoframework.R;
 import io.github.jokoframework.mboehaolib.util.Utils;
 import io.github.jokoframework.otp.token.Token;
 import io.github.jokoframework.otp.token.TokenPersistence;
+import io.github.jokoframework.singleton.MboehaoApp;
 
 public class SaveActivity extends BaseActivity {
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,6 @@ public class SaveActivity extends BaseActivity {
         findViewById(R.id.save).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 saveSeed(token);
                 finish();
             }
@@ -54,7 +53,8 @@ public class SaveActivity extends BaseActivity {
     private void saveSeed(Token token){
         RequestQueue queue = Volley.newRequestQueue(this);
 
-        String url = getString(R.string.user_acces_URL); //<--saveseed_URL url to request, change values/strings.xml
+        // saveseed_URL url to request, change values/strings.xml
+        String url = MboehaoApp.getHostName() + getString(R.string.user_acces_URL);
 
         //Creates parameters
         Map<String, String> params = new HashMap();

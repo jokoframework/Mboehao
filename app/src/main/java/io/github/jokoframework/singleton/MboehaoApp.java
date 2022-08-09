@@ -1,21 +1,29 @@
 package io.github.jokoframework.singleton;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
+import androidx.multidex.MultiDex;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.multidex.MultiDex;
-
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-import com.google.firebase.crashlytics.FirebaseCrashlytics;
+
+
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.concurrent.TimeUnit;
 
+import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.activity.BaseActivity;
@@ -34,6 +42,9 @@ public class MboehaoApp extends Application {
 
     private static Context singletonApplicationContext;
     private static MboehaoApp mySelf;
+    private static String hostName = "https://sodep.com.py";
+    private static Boolean devHostNameDefined = false;
+
     /**
      * Instance variables
      */
@@ -61,6 +72,10 @@ public class MboehaoApp extends Application {
         super.onCreate();
         mySelf = this;
         initializeInternetServices(this);
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
+
         httpClient = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS);
@@ -75,6 +90,46 @@ public class MboehaoApp extends Application {
         MboehaoApp.setSingletonApplicationContext(this.getApplicationContext());
     }
 
+    public static void setHostName(String newHostName){
+        hostName = newHostName;
+    }
+
+    public static String getHostName(){
+        return hostName;
+    }
+
+    /* Contribución basado en https://github.com/GonzaloGaleano/Mboehao */
+    public static void prompDevHostName(Activity ctx) {
+        if ( BuildConfig.DEBUG ) {
+            if ( !devHostNameDefined ) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+                LayoutInflater inflater = ctx.getLayoutInflater();
+
+                View view = inflater.inflate(R.layout.prompt_hostname_view, null);
+                EditText inputHostName = view.findViewById(R.id.hostNameInput);
+
+                builder.setView(view)
+                        .setPositiveButton(R.string.button_accept, (dialog, id) -> {
+                            if ( StringUtils.isBlank(inputHostName.getText())) {
+                                MboehaoApp.prompDevHostName(ctx);
+                                return;
+                            }
+                            MboehaoApp.setHostName(inputHostName.getText().toString());
+                            devHostNameDefined = true;
+                        })
+                        .setNegativeButton(R.string.button_cancel, (dialog, id) -> {
+                            if ( StringUtils.isBlank(inputHostName.getText())) {
+                                MboehaoApp.prompDevHostName(ctx);
+                            }
+                            dialog.cancel();
+                        });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            }
+        }
+    }
+
     public OkHttpClient.Builder getHttpClient() {
         return httpClient;
     }
@@ -86,19 +141,14 @@ public class MboehaoApp extends Application {
         return userData;
     }
 
-
     public void initializeInternetServices(Context context) {
         try {
-            if (!BuildConfig.DEBUG) {
-                FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
-            }
             Intent mServiceIntent = new Intent(context, CronService.class);
             context.startService(mServiceIntent);
         } catch (RuntimeException e) {
             Toast.makeText(context, context.getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
             Log.e(LOG_TAG, context.getString(R.string.no_network_connection), e);
         }
-
     }
 
     public void setUserData(UserData userData) {
@@ -121,11 +171,12 @@ public class MboehaoApp extends Application {
 
     synchronized public Tracker getDefaultTracker() {
         if (mTracker == null) {
-            this.analytics = GoogleAnalytics.getInstance(this);
-            analytics.getInstance(this).setLocalDispatchPeriod(1);
+            analytics = GoogleAnalytics.getInstance(this);
+            analytics.setLocalDispatchPeriod(1);
             // To enable debug logging use: adb shell setprop log.tag.GAv4 DEBUG
             mTracker = analytics.newTracker(0x7f070000);
             mTracker.enableAutoActivityTracking(true);
+
         }
         return mTracker;
     }
@@ -135,6 +186,5 @@ public class MboehaoApp extends Application {
         MultiDex.install(base);
         super.attachBaseContext(base);
     }
-
 
 }

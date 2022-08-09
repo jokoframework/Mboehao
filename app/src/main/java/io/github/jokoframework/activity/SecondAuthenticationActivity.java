@@ -17,12 +17,15 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.github.jokoframework.R;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.mboehaolib.util.Utils;
+import io.github.jokoframework.singleton.MboehaoApp;
 
 public class SecondAuthenticationActivity extends BaseActivity {
     private EditText otpTextField;
     private String secret;
     private Activity thisActivity;
+
     public Activity thisActivity() {
         return thisActivity;
     }
@@ -33,7 +36,7 @@ public class SecondAuthenticationActivity extends BaseActivity {
         initializeUI();
         Bundle b = getIntent().getExtras();
         assert b != null;
-        secret = (String) b.get("SECRET");
+        secret = (String) b.get(AppConstants.SECRET);
     }
 
     private void initializeUI(){
@@ -58,7 +61,8 @@ public class SecondAuthenticationActivity extends BaseActivity {
 
     private void otpValid(View view){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.user_acces_URL);
+
+        String url = MboehaoApp.getHostName() + getString(R.string.user_acces_URL);
 
         final Context ctx = view.getContext();
         Intent intent = new Intent(ctx, HomeActivity.class);

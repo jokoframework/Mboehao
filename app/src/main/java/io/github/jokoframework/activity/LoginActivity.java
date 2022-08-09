@@ -20,7 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-
+import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
@@ -29,8 +29,10 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
+import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.eula.Eula;
 import io.github.jokoframework.login.CredentialsTextView;
 import io.github.jokoframework.mboehaolib.constants.Constants;
@@ -41,12 +43,15 @@ import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.otp.OtpActivityNotLogged;
+import io.github.jokoframework.singleton.MboehaoApp;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+//import io.github.jokoframework.repository.LoginRepository;
+//import io.github.jokoframework.repository.RepoBuilder;
 
 public class LoginActivity extends BaseActivity implements ProcessError {
 
@@ -92,6 +97,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initializeUI();
+        MboehaoApp.prompDevHostName(this);
     }
 
     private void initializeUI() {
@@ -107,6 +113,9 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
         }
         setActivity(this);
+        if (!BuildConfig.DEBUG) {
+            Fabric.with(this, new Crashlytics());
+        }
         mySelf = this;
         Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
@@ -293,7 +302,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
         // Instanciar el RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.jwt_URL);
+        String url = MboehaoApp.getHostName() + getString(R.string.jwt_URL);
 
         Map<String, String> params = new HashMap();
         params.put("username", loginRequest.getUsername());
@@ -313,7 +322,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                 loginSuccess = response.getString("success");
                 if (loginSuccess.equals("true")){
                     secret = response.getString("secret");
-                    i.putExtra("SECRET", secret);
+                    i.putExtra(AppConstants.SECRET, secret);
                     Utils.showToast(getBaseContext(), "Login succesful.");
                     thisActivity().startActivity(i);// Iniciar Home activity
                     //loginSuccessful();

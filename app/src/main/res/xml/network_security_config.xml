@@ -3,7 +3,7 @@
     <domain-config cleartextTrafficPermitted="true">
         <domain includeSubdomains="true">sodep.com.py</domain>
         <domain-config cleartextTrafficPermitted="true">
-            <domain includeSubdomains="true">10.1.1.125</domain>
+            <domain includeSubdomains="true">192.168.0.33</domain>
         </domain-config>
     </domain-config>
 </network-security-config>
