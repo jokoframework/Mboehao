@@ -5,18 +5,17 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.preference.PreferenceManager;
-import androidx.multidex.MultiDex;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.crashlytics.android.Crashlytics;
+import androidx.multidex.MultiDex;
+
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
-
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.concurrent.TimeUnit;
 
-import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.activity.BaseActivity;
@@ -62,10 +61,6 @@ public class MboehaoApp extends Application {
         super.onCreate();
         mySelf = this;
         initializeInternetServices(this);
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
-
         httpClient = new OkHttpClient.Builder().connectTimeout(30, TimeUnit.SECONDS)
                 .writeTimeout(30, TimeUnit.SECONDS)
                 .readTimeout(30, TimeUnit.SECONDS);
@@ -91,14 +86,19 @@ public class MboehaoApp extends Application {
         return userData;
     }
 
+
     public void initializeInternetServices(Context context) {
         try {
+            if (!BuildConfig.DEBUG) {
+                FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(true);
+            }
             Intent mServiceIntent = new Intent(context, CronService.class);
             context.startService(mServiceIntent);
         } catch (RuntimeException e) {
             Toast.makeText(context, context.getString(R.string.no_network_connection), Toast.LENGTH_SHORT).show();
             Log.e(LOG_TAG, context.getString(R.string.no_network_connection), e);
         }
+
     }
 
     public void setUserData(UserData userData) {
@@ -135,5 +135,6 @@ public class MboehaoApp extends Application {
         MultiDex.install(base);
         super.attachBaseContext(base);
     }
+
 
 }
