@@ -98,6 +98,7 @@ public class MboehaoApp extends Application {
         return hostName;
     }
 
+    /* Contribución basado en https://github.com/GonzaloGaleano/Mboehao */
     public static void prompDevHostName(Activity ctx) {
         if ( BuildConfig.DEBUG ) {
             if ( !devHostNameDefined ) {
