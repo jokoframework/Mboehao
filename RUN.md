@@ -4,11 +4,16 @@
 
 ### Step 2) Configuración del /opt/starter-kit/dev
 
+Clonar el repositorio joko_backend_starter_kit 
 Acceder y copiar el archivo "application.properties.example" y "development.vars":
     
     cd joko_backend_starter_kit/
     cp application.properties.example /opt/starter-kit/dev/
     cp development.vars /opt/starter-kit/
+
+
+Fuente: https://github.com/jokoframework/joko_backend_starter_kit
+
 ### Step 3) Configuración del archivo "development.vars"
 Se debe configurar el archivo "development.vars", que servirá para la ejecucion de liquibase. Este es un archivo bash que debe tener dos variables:
 
@@ -58,14 +63,23 @@ Se recomienda que este archivo esté fuera del workspsace en el directorio padre
 ```
     $ ./scripts/updater update
   ```
+## Opción 1: Correr con Docker
+
+Si ya se tienen instaladas las librerías Joko necesarias (joko-utils y security) entonces se puede proceder a empaquetar el proyecto (Ej: mvn package) y luego:
+La forma más simple de levantar el proyecto es con la utilización de Docker, ejecutando el siguiente comando dentro del proyecto: 
+
+```shell
+  $ docker-compose up
+```
+
     
-## Corren con Maven
+## Opción 2: Correr con Maven
 
 Una vez hechos estos cambios, solo debemos correr el proyecto como una 
 aplicación de Spring Boot, o con la línea de comando (se requiere maven instalado).
 
 ```shell
-  $ mvn spring-boot:run -Dext.prop.dir=/opt/starter-kit/dev -Dspring.config.location=file:///opt/starter-kit/dev/application.properties
+  $ mvn spring-boot:run
 ```
 
 
