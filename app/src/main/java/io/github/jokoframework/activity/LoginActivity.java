@@ -32,6 +32,7 @@ import java.util.Objects;
 import io.fabric.sdk.android.Fabric;
 import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
+import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.eula.Eula;
 import io.github.jokoframework.login.CredentialsTextView;
 import io.github.jokoframework.mboehaolib.constants.Constants;
@@ -42,6 +43,7 @@ import io.github.jokoframework.model.LoginRequest;
 import io.github.jokoframework.model.UserAccessResponse;
 import io.github.jokoframework.model.UserData;
 import io.github.jokoframework.otp.OtpActivityNotLogged;
+import io.github.jokoframework.singleton.MboehaoApp;
 import io.github.jokoframework.utilities.AppUtils;
 import rx.Observable;
 import rx.Subscriber;
@@ -95,6 +97,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         initializeUI();
+        MboehaoApp.prompDevHostName(this);
     }
 
     private void initializeUI() {
@@ -299,7 +302,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
 
         // Instanciar el RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = getString(R.string.jwt_URL);
+        String url = MboehaoApp.getHostName() + getString(R.string.jwt_URL);
 
         Map<String, String> params = new HashMap();
         params.put("username", loginRequest.getUsername());
@@ -319,7 +322,7 @@ public class LoginActivity extends BaseActivity implements ProcessError {
                 loginSuccess = response.getString("success");
                 if (loginSuccess.equals("true")){
                     secret = response.getString("secret");
-                    i.putExtra("SECRET", secret);
+                    i.putExtra(AppConstants.SECRET, secret);
                     Utils.showToast(getBaseContext(), "Login succesful.");
                     thisActivity().startActivity(i);// Iniciar Home activity
                     //loginSuccessful();
