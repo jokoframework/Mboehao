@@ -5,5 +5,6 @@
         <!--- whitelist of secure host/domains -->
         <domain includeSubdomains="true">192.168.43.143</domain>
         <domain includeSubdomains="true">10.1.1.113</domain>
+        <domain includeSubdomains="true">10.1.1.125</domain>
     </domain-config>
 </network-security-config>

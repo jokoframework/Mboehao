@@ -20,7 +20,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
-import com.crashlytics.android.Crashlytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 
 import org.json.JSONObject;
@@ -29,8 +28,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import io.fabric.sdk.android.Fabric;
-import io.github.jokoframework.BuildConfig;
 import io.github.jokoframework.R;
 import io.github.jokoframework.constants.AppConstants;
 import io.github.jokoframework.eula.Eula;
@@ -49,9 +46,6 @@ import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
-
-//import io.github.jokoframework.repository.LoginRepository;
-//import io.github.jokoframework.repository.RepoBuilder;
 
 public class LoginActivity extends BaseActivity implements ProcessError {
 
@@ -113,9 +107,6 @@ public class LoginActivity extends BaseActivity implements ProcessError {
             Log.e(LOG_TAG, getBaseContext().getString(R.string.no_network_connection), e);
         }
         setActivity(this);
-        if (!BuildConfig.DEBUG) {
-            Fabric.with(this, new Crashlytics());
-        }
         mySelf = this;
         Eula.show(mySelf);
         final String decryptedUser = SecurityUtils.decrypt(AppUtils.getPrefs(this, Constants.USER_PREFS_USER));
