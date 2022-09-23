@@ -55,7 +55,7 @@
     <string name="eula_body">El uso de esta aplicación es completamente voluntario por parte del usuario.
         Este es un mensaje de prueba para lo que sería un EULA. De lo contrario la aplicación se cerrará y no podrá ser utilizada.</string>
     <string name="button_accept">Accept</string>
-    <string name="button_cancel">Cancelar</string>
+    <string name="button_cancel">Cancel</string>
     <string name="continue_button">Continue</string>
     <string name="security_dialog_body">Por ahora la aplicación NO almacenará datos personales del usuario, no obstante, se recomienda SIEMPRE utilizar alguna medida de seguridad para bloquear su dispositivo móvil</string>
     <string name="security_dialog_title">Data Proteccion</string>
@@ -201,6 +201,22 @@
     <string name="enter">Enter</string>
     <string name="parse_server_url">https://testing.sodep.com.py/parse</string>
     <string name="parse_app_id">DqiNAD6RDWT</string>
+    <string name="title_activity_datos">DatosActivity</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="labelOfPhoneNumber">Phone Number</string>
+    <string name="descriptionPhoneNumber">Enter your phone number</string>
+    <string name="labelOfDate">Date of Birth</string>
+    <string name="descriptionDate">Enter your date of birth</string>
+    <string name="labelOfAddress">Home Address</string>
+    <string name="descriptionAddress">Enter your home address</string>
+    <string name="save_preferences">Save Personal Data</string>
 
 
 </resources>

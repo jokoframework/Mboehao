@@ -8,4 +8,14 @@
     <dimen name="navigation_drawer_width">240dp</dimen>
     <dimen name="nav_drawer_width">235dp</dimen>
     <dimen name="divider_height">0.5dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="hint_size">20dp</dimen>
+    <dimen name="marginTop_text_view">22dp</dimen>
+    <dimen name="marginTop_edit_text">10dp</dimen>
+    <dimen name="btn_textSize">24dp</dimen>
+    <dimen name="horizontal_margin">16dp</dimen>
+    <dimen name="vertical_margin">16dp</dimen>
+    <dimen name="input_height">60dp</dimen>
+    <dimen name="text_size">22dp</dimen>
+    <dimen name="button_height">64dp</dimen>
 </resources>

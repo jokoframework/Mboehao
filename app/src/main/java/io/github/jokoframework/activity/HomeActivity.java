@@ -181,6 +181,12 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
                 finish();
                 break;
 
+            case R.id.SavePersonalData:
+                option = new Intent(HomeActivity.this, SavePersonalDataActivity.class);
+                startActivity(option);
+                finish();
+                break;
+
             case R.id.logOut:
                 onBackPressed();
                 break;

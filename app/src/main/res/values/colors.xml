@@ -10,6 +10,9 @@
     <color name="background_drawer_group">#e5e3e3</color>
     <color name="warningColor">#f2685f</color>
     <color name="progress_bar">#397aa3</color>
+    <color name="color_skyblue">#0CA8BC</color>
+    <color name="color_black">#0A0A0A</color>
+    <color name="color_gray">#999191</color>
 
 
 </resources>

@@ -32,8 +32,9 @@
         android:theme="@style/AppTheme"
         tools:targetApi="n">
         <activity
-            android:name=".activity.HomeActivity">
-        </activity>
+            android:name=".activity.SavePersonalDataActivity"
+            android:exported="false" />
+        <activity android:name=".activity.HomeActivity" />
         <activity
             android:name=".activity.PreLoginActivity"
             android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
@@ -79,8 +80,8 @@
         <activity
             android:name=".activity.SettingsActivity"
             android:label="@string/app_name"
-            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
             android:parentActivityName=".activity.HomeActivity"
+            android:theme="@style/Theme.MaterialComponents.Light.DarkActionBar"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".activity.ChangePasswordActivity"
@@ -145,14 +146,16 @@
         <service
             android:name=".service.CountryHelper"
             android:enabled="true" />
-        <service android:name=".service.FirebaseInstanceService"
+        <service
+            android:name=".service.FirebaseInstanceService"
             android:permission="TODO"
             tools:ignore="ExportedService">
             <intent-filter>
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
-        <service android:name=".service.FirebaseMessageServiceJoko"
+        <service
+            android:name=".service.FirebaseMessageServiceJoko"
             android:permission="TODO"
             tools:ignore="ExportedService">
             <intent-filter>

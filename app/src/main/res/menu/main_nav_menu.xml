@@ -57,6 +57,12 @@
             </item>
 
             <item
+                android:id="@+id/SavePersonalData"
+                android:title="@string/save_preferences"
+                android:icon="@drawable/picture">
+            </item>
+
+            <item
                 android:id="@+id/about"
                 android:title="@string/aboutDescription"
                 android:icon="@drawable/picture">
@@ -67,6 +73,8 @@
                 android:title="@string/action_logout"
                 android:icon="@drawable/picture">
             </item>
+
+
         </menu>
 
     </item>

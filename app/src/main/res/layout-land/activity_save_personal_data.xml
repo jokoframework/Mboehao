@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/contentMain"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".activity.SavePersonalDataActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appBarLayId"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="#2B2525"
+            android:gravity="center_vertical"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/back_button"
+                android:layout_width="35dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/white"
+                android:backgroundTint="@android:color/white"
+                android:clickable="true"
+                android:src="@drawable/back_button"
+                android:focusable="true" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:id="@+id/llInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/appBarLayId"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:paddingRight="@dimen/horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
+            android:paddingBottom="@dimen/vertical_margin">
+
+            <TextView
+                android:id="@+id/phone_number_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelOfPhoneNumber"
+                android:theme="@style/TextViewStyle"
+                android:layout_marginTop="@dimen/marginTop_text_view"/>
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:drawableEnd="@drawable/ic_phone_number_36"
+                android:background="@drawable/edittext_border_style"
+                android:hint="@string/descriptionPhoneNumber"
+                android:inputType="phone"
+                android:theme="@style/EditTextStyle"
+                android:layout_marginTop="@dimen/marginTop_edit_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/color_gray"
+                android:layout_marginTop="36dp"/>
+
+            <TextView
+                android:id="@+id/date_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelOfDate"
+                android:theme="@style/TextViewStyle"
+                android:layout_marginTop="@dimen/marginTop_text_view"/>
+
+            <EditText
+                android:id="@+id/etDate"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:drawableEnd="@drawable/ic_date_36"
+                android:background="@drawable/edittext_border_style"
+                android:hint="@string/descriptionDate"
+                android:inputType="date"
+                android:theme="@style/EditTextStyle"
+                android:layout_marginTop="@dimen/marginTop_edit_text"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/color_gray"
+                android:layout_marginTop="36dp"/>
+
+            <TextView
+                android:id="@+id/address_label"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/labelOfAddress"
+                android:theme="@style/TextViewStyle"
+                android:layout_marginTop="@dimen/marginTop_text_view"/>
+
+            <EditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/input_height"
+                android:drawableEnd="@drawable/ic_address_36"
+                android:background="@drawable/edittext_border_style"
+                android:hint="@string/descriptionAddress"
+                android:inputType="text"
+                android:theme="@style/EditTextStyle"
+                android:layout_marginTop="@dimen/marginTop_edit_text"/>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/llActionButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_below="@+id/llInput"
+            android:layout_marginTop="50dp"
+            android:paddingLeft="@dimen/horizontal_margin"
+            android:paddingRight="@dimen/horizontal_margin"
+            android:paddingTop="@dimen/vertical_margin"
+            android:paddingBottom="@dimen/vertical_margin">
+
+            <Button
+                android:id="@+id/cancel_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_weight="50"
+                android:theme="@style/ButtonStyle"
+                android:text="@string/button_cancel"/>
+
+            <Button
+                android:id="@+id/save_button"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/button_height"
+                android:layout_weight="50"
+                android:text="@string/save"
+                android:layout_marginLeft="10dp"
+                android:theme="@style/ButtonStyle" />
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
